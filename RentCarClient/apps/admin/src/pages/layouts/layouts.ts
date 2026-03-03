@@ -4,9 +4,10 @@ import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, Renderer2, ViewEncapsulation, OnInit, OnDestroy, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NavigationModel, navigations } from '../../navigation';
+import Breadcrumb from './breadcrumb/breadcrumb';
 
 @Component({
-  imports: [NgClass, RouterLink, RouterOutlet],
+  imports: [NgClass, RouterLink, RouterOutlet,Breadcrumb],
   templateUrl: './layouts.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
