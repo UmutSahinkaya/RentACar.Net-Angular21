@@ -4,9 +4,9 @@ using System.Text;
 
 namespace RentCarServer.Domain.Abstractions;
 
-public abstract class Entiy
+public abstract class Entity
 {
-    protected Entiy()
+    protected Entity()
     {
         Id = new IdentityId(Guid.CreateVersion7());
         IsActive = true;
