@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GenericRepository;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RentCarServer.Infrastructure.Context;
@@ -19,6 +20,7 @@ public static class ServiceRegistrar
             .UsingRegistrationStrategy(RegistrationStrategy.Skip)
             .AsImplementedInterfaces()
             .WithScopedLifetime());
+        _ = services.AddScoped<IUnitOfWork>(srv => srv.GetRequiredService<ApplicationDbContext>());
         return services;
     }
 }
