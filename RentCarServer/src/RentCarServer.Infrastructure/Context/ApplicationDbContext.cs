@@ -34,8 +34,8 @@ internal class ApplicationDbContext : DbContext, IUnitOfWork
 
         HttpContextAccessor httpContextAccessor = new();
         string userIdString =
-            httpContextAccessor
-            .HttpContext!
+        httpContextAccessor
+        .HttpContext!
             .User
             .Claims
             .First(p => p.Type == ClaimTypes.NameIdentifier)

@@ -36,4 +36,6 @@ app.UseCors(x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod().SetPreflig
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers().RequireRateLimiting("fixed");
+
+//await app.CreateFirstUserAsync();
 app.Run();
