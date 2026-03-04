@@ -1,5 +1,6 @@
 ﻿using RentCarServer.Application.Auth;
 using TS.MediatR;
+using TS.Result;
 
 namespace RentCarServer.WebAPI.Modules;
 
@@ -8,11 +9,11 @@ public static class AuthModule
     public static void MapAuth(this IEndpointRouteBuilder endpointRouteBuilder)
     {
         var app = endpointRouteBuilder.MapGroup("/auth");
-        _ = app.MapPost("/login", async (LoginCommand req, ISender sender, CancellationToken cancellationToken) =>
-        {
-            var res = await sender.Send(req, cancellationToken);
-            return res.IsSuccessful ? Results.Ok(res) : Results.InternalServerError(res.ErrorMessages);
-        });
-        //Produces<Result<string>>();
+        _ = app.MapPost("/login", async (LoginCommand request, ISender sender, CancellationToken cancellationToken) =>
+       {
+           var res = await sender.Send(request, cancellationToken);
+           return res.IsSuccessful ? Results.Ok(res) : Results.InternalServerError(res.ErrorMessages);
+       }).
+       Produces<Result<string>>();
     }
 }

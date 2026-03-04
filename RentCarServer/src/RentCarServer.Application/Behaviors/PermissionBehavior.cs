@@ -1,4 +1,5 @@
 ﻿using RentCarServer.Application.Services;
+using System.Reflection;
 using TS.MediatR;
 
 namespace RentCarServer.Application.Behaviors;
@@ -9,9 +10,9 @@ public sealed class PermissionBehavior<TRequest, TResponse>(
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken = default)
     {
-        //var attr = request.GetType().GetCustomAttribute<PermissionAttribute>(inherit: true);
+        var attr = request.GetType().GetCustomAttribute<PermissionAttribute>(inherit: true);
 
-        //if (attr is null) return await next();
+        if (attr is null) return await next();
 
         _ = userContext.GetUserId();
         //var user = await userRepository.FirstOrDefaultAsync(p => p.Id == userId, cancellationToken);
