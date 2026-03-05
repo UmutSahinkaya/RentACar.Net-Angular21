@@ -21,6 +21,13 @@ builder.Services.AddRateLimiter(cfg =>
         opt.Window = TimeSpan.FromSeconds(1);
         opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
     });
+    _ = cfg.AddFixedWindowLimiter("login-fixed", opt =>
+    {
+        opt.PermitLimit = 5;
+        opt.QueueLimit = 1;
+        opt.Window = TimeSpan.FromMinutes(1);
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+    });
 });
 builder.Services.AddControllers()
                 .AddOData(opt => opt.Select().Filter().Count().Expand().OrderBy().SetMaxTop(null));
@@ -28,6 +35,10 @@ builder.Services.AddControllers()
 builder.Services.AddCors();
 builder.Services.AddOpenApi();
 builder.Services.AddExceptionHandler<ExceptionHandler>().AddProblemDetails();
+builder.Services.AddResponseCompression(opt =>
+{
+    opt.EnableForHttps = true;
+});
 
 var app = builder.Build();
 
@@ -35,10 +46,17 @@ app.MapOpenApi();
 app.MapScalarApiReference();
 app.UseHttpsRedirection();
 app.UseCors(x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod().SetPreflightMaxAge(TimeSpan.FromMinutes(10)));
-app.UseExceptionHandler();
+
+app.UseResponseCompression();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers().RequireRateLimiting("fixed").RequireAuthorization();
+app.UseRateLimiter();
+
+app.UseExceptionHandler();
+
+app.MapControllers()
+    .RequireRateLimiting("fixed")
+    .RequireAuthorization();
 app.MapAuth();
 
 app.MapGet("/", () => "hello world").RequireAuthorization();
