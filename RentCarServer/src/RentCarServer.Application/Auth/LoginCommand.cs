@@ -29,10 +29,10 @@ public sealed class LoginCommandHandler
         var user = await userRepository.FirstOrDefaultAsync
             (x => x.UserName.Value == request.EmailOrUserName || x.Email.Value == request.EmailOrUserName);
         if (user is null)
-            return Result<string>.Failure("Invalid email or username.");
+            return Result<string>.Failure("Kullanıcı adı veya şifre hatalı.");
         var checkPassword = user.VerifyPasswordHash(request.Password);
         if (!checkPassword)
-            return Result<string>.Failure("Invalid password.");
+            return Result<string>.Failure("Kullanıcı adı veya şifre hatalı.");
         var token = jwtProvider.CreateToken(user);
 
         return token;

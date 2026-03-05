@@ -1,5 +1,4 @@
 /* ===== ADMIN PANEL CSS ===== */
-
 /* Variables */
 :root {
     --primary-color: #ff6b35;
@@ -6756,6 +6755,6 @@ body {
     animation: fadeInPhoto 0.5s ease-out;
 }
 
-a.{
+a{
     cursor: pointer !important;
 }
