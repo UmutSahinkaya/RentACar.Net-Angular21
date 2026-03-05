@@ -1,3 +1,5 @@
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- Sidebar -->
 <nav class="sidebar" id="sidebar">
     <div class="sidebar-header">
@@ -183,7 +185,7 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a class="dropdown-item text-danger" href="#">
+                            <a class="dropdown-item text-danger" (click)="logout()">
                                 <i class="bi bi-box-arrow-right"></i>
                                 Çıkış Yap
                             </a>

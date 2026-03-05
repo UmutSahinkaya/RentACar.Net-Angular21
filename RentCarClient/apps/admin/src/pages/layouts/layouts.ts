@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, Renderer2, ViewEncapsulation, OnInit, OnDestroy, signal } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NavigationModel, navigations } from '../../navigation';
 import Breadcrumb from './breadcrumb/breadcrumb';
 
@@ -18,12 +18,17 @@ export default class Layouts implements OnInit, OnDestroy {
 
   readonly #elementRef = inject(ElementRef);
   readonly #renderer = inject(Renderer2);
+  readonly #router = inject(Router);
 
   ngOnInit(): void {
     this.initializeSidebar();
     this.initializeSubmenus();
     this.setActiveMenuItem();
     this.loadSidebarState();
+  }
+  logout(){
+    localStorage.clear();
+    this.#router.navigateByUrl("/login");
   }
 
   ngOnDestroy(): void {
