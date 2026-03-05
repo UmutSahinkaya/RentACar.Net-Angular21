@@ -1,3 +1,4 @@
+<!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
 <div class="login-part">
     <!-- Admin Login -->
     <div class="admin-login-wrapper">
@@ -14,7 +15,7 @@
                     <p>Admin paneline erişim için giriş yapın</p>
                 </div>
 
-                <form class="login-form" #form="ngForm" autocomplete="off" (ngSubmit)="login(form);">
+                <form class="login-form" #form="ngForm" formValidate autocomplete="off" (ngSubmit)="login(form);">
                     <!-- Email Input -->
                     <div class="form-group">
                         <label for="adminEmail" class="form-label">E-posta Adresi</label>
@@ -22,15 +23,9 @@
                             <span class="input-group-text">
                                 <i class="bi bi-person"></i>
                             </span>
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="adminEmail"
-                              name="emailOrUserName"
-                              ngModel
-                              placeholder="adminrentcar.com"
-                              required>
-                              </div>
+                            <input type="text" class="form-control" id="adminEmail" name="emailOrUserName" ngModel
+                                placeholder="adminrentcar.com" required>
+                        </div>
                     </div>
 
                     <!-- Password Input -->
@@ -40,14 +35,9 @@
                             <span class="input-group-text">
                                 <i class="bi bi-lock"></i>
                             </span>
-                            <input
-                              type="password"
-                              class="form-control"
-                              id="adminPassword"
-                              name="password"
-                              ngModel
-                              placeholder="*********"
-                              required>
+                            <input type="password" class="form-control" id="adminPassword" name="password" ngModel
+                                placeholder="*********" required>
+                            
                             <button type="button" class="input-group-text password-toggle" data-target="adminPassword">
                                 <i class="bi bi-eye"></i>
                             </button>
