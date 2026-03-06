@@ -4,12 +4,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  signal,
   ViewEncapsulation,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Result } from '../../models/result.model';
 import { Router } from '@angular/router';
 import { FormValidateDirective } from 'form-validate-angular';
+import { HttpService } from '../../services/http';
 
 @Component({
   imports: [FormsModule,FormValidateDirective],
@@ -18,15 +20,19 @@ import { FormValidateDirective } from 'form-validate-angular';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Login {
-  readonly #http = inject(HttpClient);
+  readonly #http = inject(HttpService);
   readonly #router = inject(Router);
+  readonly loading=signal(false);
 
   login(form: NgForm) {
     if (!form.valid) return;
-    
-    this.#http.post<Result<string>>('/rent/Auth/login', form.value).subscribe((res) => {
-        localStorage.setItem('response', res.data!);
-        this.#router.navigateByUrl("/");
+    this.loading.set(true);
+    this.#http.post<string>('/rent/Auth/login', form.value, (res) => {
+      localStorage.setItem('response', res!);
+      this.#router.navigateByUrl('/');
+      this.loading.set(false);
+    }, () => {
+      this.loading.set(false);
     });
   }
 }
