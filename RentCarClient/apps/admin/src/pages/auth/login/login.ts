@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpService } from './../../../services/http';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,14 +7,11 @@ import {
   inject,
   signal,
   viewChild,
-  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Result } from '../../models/result.model';
 import { Router } from '@angular/router';
 import { FormValidateDirective } from 'form-validate-angular';
-import { HttpService } from '../../services/http';
 import { FlexiToastService } from 'flexi-toast';
 
 @Component({
@@ -39,7 +36,7 @@ export default class Login {
       '/rent/Auth/login',
       form.value,
       (res) => {
-        localStorage.setItem('response', res!);
+        localStorage.setItem('response', res);
         this.#router.navigateByUrl('/');
         this.loading.set(false);
       },

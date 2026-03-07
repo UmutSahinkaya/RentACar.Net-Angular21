@@ -293,7 +293,7 @@ public sealed class ForgotPasswordCommandHandler(IUserRepository userRepository,
         body = body.Replace(
             "{UserName}", user.FirstName.Value + " " + user.LastName.Value);
         body = body.Replace(
-            "{ResetPasswordUrl}", $"http://localhost:4200/forgot-password/{user.ForgotPasswordId!.Value}");
+            "{ResetPasswordUrl}", $"http://localhost:4200/reset-password/{user.ForgotPasswordId!.Value}");
         await mailService.SendEmailAsync(to, subject, body, cancellationToken);
         return "Şifre sıfırlama mailiniz gönderilmiştir. Lütfen mail adresinizi kontrol edin";
     }
