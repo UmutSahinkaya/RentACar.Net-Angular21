@@ -1,19 +1,35 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
+import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, signal, viewChild, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  inject,
+  signal,
+  viewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from 'apps/admin/src/services/http';
 import { FlexiToastService } from 'flexi-toast';
+import { httpResource } from '@angular/common/http';
+import Loading from 'apps/admin/src/components/loading/loading';
 
 @Component({
-  imports: [FormsModule, NgClass],
+  imports: [FormsModule, NgClass, RouterLink,Loading],
   templateUrl: './reset-password.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class ResetPassword {
   readonly id = signal<string>('');
+  readonly result=httpResource(()=>`/rent/auth/check-forgot-password-code/${this.id()}`);
+  readonly resultLoading = computed(()=>this.result.isLoading());
+  readonly error=computed(() => this.result.error() ? this.#router.navigateByUrl('/login') : '');
   readonly loading = signal<boolean>(false);
   readonly password = signal<string>('');
   readonly confirmPassword = signal<string>('');
@@ -56,44 +72,53 @@ export default class ResetPassword {
     return (strength.level / 4) * 100; // 4 gereksinim var, her biri %25 katkıda bulunur
   });
 
-  readonly newPasswordEl= viewChild<ElementRef<HTMLInputElement>>('newPasswordEl');
-  readonly confirmPasswordEl= viewChild<ElementRef<HTMLInputElement>>('confirmPasswordEl');
+  readonly newPasswordEl =
+    viewChild<ElementRef<HTMLInputElement>>('newPasswordEl');
+  readonly confirmPasswordEl =
+    viewChild<ElementRef<HTMLInputElement>>('confirmPasswordEl');
 
   //service Injectişlemi burada başlar
   readonly #activated = inject(ActivatedRoute);
   readonly #toast = inject(FlexiToastService);
-  readonly #http=inject(HttpService);
-  readonly #router=inject(Router);
+  readonly #http = inject(HttpService);
+  readonly #router = inject(Router);
   //service Injectişlemi burada biter
   constructor() {
     this.#activated.params.subscribe((res) => this.id.set(res['id'])); //queryparam daki id'yi alır
   }
 
   toggleNewPassword() {
-    this.newPasswordEl()?.nativeElement.type === 'password' 
-    ? this.newPasswordEl()?.nativeElement.setAttribute('type', 'text')
-    : this.newPasswordEl()?.nativeElement.setAttribute('type', 'password');
+    this.newPasswordEl()?.nativeElement.type === 'password'
+      ? this.newPasswordEl()?.nativeElement.setAttribute('type', 'text')
+      : this.newPasswordEl()?.nativeElement.setAttribute('type', 'password');
   }
 
   toggleConfirmPassword() {
-    this.confirmPasswordEl()?.nativeElement.type === 'password' 
-    ? this.confirmPasswordEl()?.nativeElement.setAttribute('type', 'text')
-    : this.confirmPasswordEl()?.nativeElement.setAttribute('type', 'password');
+    this.confirmPasswordEl()?.nativeElement.type === 'password'
+      ? this.confirmPasswordEl()?.nativeElement.setAttribute('type', 'text')
+      : this.confirmPasswordEl()?.nativeElement.setAttribute(
+          'type',
+          'password',
+        );
   }
 
   onSubmit() {
     if (this.isFormValid()) {
-     const data={
-       forgotPasswordId:this.id(),
-        newPassword:this.password(),
-     }
-     this.loading.set(true);
-     this.#http.post<string>('/rent/auth/reset-password',data,(res)=>{
-      this.#toast.showToast('Başarılı',res,'success');
-      this.#router.navigateByUrl('/login');
-      this.loading.set(false);
-     },()=>this.loading.set(false));
-    
+      const data = {
+        forgotPasswordId: this.id(),
+        newPassword: this.password(),
+      };
+      this.loading.set(true);
+      this.#http.post<string>(
+        '/rent/auth/reset-password',
+        data,
+        (res) => {
+          this.#toast.showToast('Başarılı', res, 'success');
+          this.#router.navigateByUrl('/login');
+          this.loading.set(false);
+        },
+        () => this.loading.set(false),
+      );
     } else {
       console.log(
         'Form geçerli değil. Lütfen tüm gereksinimleri karşılayın ve şifrelerin eşleştiğinden emin olun.',
