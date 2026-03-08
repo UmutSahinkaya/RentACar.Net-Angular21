@@ -33,7 +33,7 @@ public sealed class LoginCommandHandler
         var checkPassword = user.VerifyPasswordHash(request.Password);
         if (!checkPassword)
             return Result<string>.Failure("Kullanıcı adı veya şifre hatalı.");
-        var token = jwtProvider.CreateToken(user);
+        var token = await jwtProvider.CreateTokenAsync(user, cancellationToken);
 
         return token;
     }

@@ -12,8 +12,8 @@ using RentCarServer.Infrastructure.Context;
 namespace RentCarServer.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260306090022_i_added_forgot_password_fields_to_users_table")]
-    partial class i_added_forgot_password_fields_to_users_table
+    [Migration("20260307083522_i_changed_nullable_structure_is_forgot_password_completed_field_on_the_user_model")]
+    partial class i_changed_nullable_structure_is_forgot_password_completed_field_on_the_user_model
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -228,7 +228,8 @@ namespace RentCarServer.Infrastructure.Migrations
                     b.Navigation("FullName")
                         .IsRequired();
 
-                    b.Navigation("IsForgotPasswordCompleted");
+                    b.Navigation("IsForgotPasswordCompleted")
+                        .IsRequired();
 
                     b.Navigation("LastName")
                         .IsRequired();

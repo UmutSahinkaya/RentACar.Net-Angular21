@@ -1,6 +1,10 @@
-﻿using Microsoft.Extensions.Options;
+﻿using GenericRepository;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using RentCarServer.Application.Services;
+using RentCarServer.Domain.LoginTokens;
+using RentCarServer.Domain.LoginTokens.ValueObjects;
 using RentCarServer.Domain.Users;
 using RentCarServer.WebAPI.Options;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,9 +13,9 @@ using System.Text;
 
 namespace RentCarServer.Infrastructure.Services;
 
-internal sealed class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
+internal sealed class JwtProvider(ILoginTokenRepository loginTokenRepository, IUnitOfWork unitOfWork, IOptions<JwtOptions> options) : IJwtProvider
 {
-    public string CreateToken(User user)
+    public async Task<string> CreateTokenAsync(User user, CancellationToken cancellationToken = default)
     {
         List<Claim> claims = new()
         {
@@ -23,16 +27,30 @@ internal sealed class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
         SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(options.Value.SecretKey));
         SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha512);
 
+        var expires = DateTime.UtcNow.AddDays(1);
         JwtSecurityToken securityToken = new(
                 issuer: options.Value.Issuer,
                 audience: options.Value.Audience,
                 claims: claims,
                 notBefore: DateTime.UtcNow,
-                expires: DateTime.UtcNow.AddDays(2),
+                expires: expires,
                 signingCredentials: signingCredentials
                 );
         var handler = new JwtSecurityTokenHandler();
         var token = handler.WriteToken(securityToken);
+
+        Token newToken = new(token);
+        ExpiresDate expiresDate = new(expires);
+        LoginToken loginToken = new(newToken, user.Id, expiresDate);
+        loginTokenRepository.Add(loginToken);
+        var loginTokens = await loginTokenRepository
+            .Where(x => x.UserId == user.Id && x.IsActive.Value == true).ToListAsync(cancellationToken);
+        foreach (var item in loginTokens)
+        {
+            item.SetIsActive(new(false));
+        }
+        loginTokenRepository.UpdateRange(loginTokens); // Burada aktif olan tüm tokenları pasif yapıyoruz çünkü yeni bir token oluşturduk
+        _ = await unitOfWork.SaveChangesAsync(cancellationToken);
         return token;
     }
 }

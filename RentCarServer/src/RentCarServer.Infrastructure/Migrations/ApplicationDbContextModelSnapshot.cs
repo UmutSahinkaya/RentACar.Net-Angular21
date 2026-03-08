@@ -22,6 +22,19 @@ namespace RentCarServer.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("RentCarServer.Domain.LoginTokens.LoginToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LoginTokens");
+                });
+
             modelBuilder.Entity("RentCarServer.Domain.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -54,6 +67,67 @@ namespace RentCarServer.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("RentCarServer.Domain.LoginTokens.LoginToken", b =>
+                {
+                    b.OwnsOne("RentCarServer.Domain.LoginTokens.ValueObjects.ExpiresDate", "ExpiresDate", b1 =>
+                        {
+                            b1.Property<Guid>("LoginTokenId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<DateTimeOffset>("Value")
+                                .HasColumnType("datetimeoffset");
+
+                            b1.HasKey("LoginTokenId");
+
+                            b1.ToTable("LoginTokens");
+
+                            b1.WithOwner()
+                                .HasForeignKey("LoginTokenId");
+                        });
+
+                    b.OwnsOne("RentCarServer.Domain.LoginTokens.ValueObjects.IsActive", "IsActive", b1 =>
+                        {
+                            b1.Property<Guid>("LoginTokenId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<bool>("Value")
+                                .HasColumnType("bit");
+
+                            b1.HasKey("LoginTokenId");
+
+                            b1.ToTable("LoginTokens");
+
+                            b1.WithOwner()
+                                .HasForeignKey("LoginTokenId");
+                        });
+
+                    b.OwnsOne("RentCarServer.Domain.LoginTokens.ValueObjects.Token", "Token", b1 =>
+                        {
+                            b1.Property<Guid>("LoginTokenId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("varchar(MAX)");
+
+                            b1.HasKey("LoginTokenId");
+
+                            b1.ToTable("LoginTokens");
+
+                            b1.WithOwner()
+                                .HasForeignKey("LoginTokenId");
+                        });
+
+                    b.Navigation("ExpiresDate")
+                        .IsRequired();
+
+                    b.Navigation("IsActive")
+                        .IsRequired();
+
+                    b.Navigation("Token")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RentCarServer.Domain.Users.User", b =>
@@ -92,13 +166,13 @@ namespace RentCarServer.Infrastructure.Migrations
                                 .HasForeignKey("UserId");
                         });
 
-                    b.OwnsOne("RentCarServer.Domain.Users.ValueObjects.ForgotPasswordDate", "ForgotPasswordDate", b1 =>
+                    b.OwnsOne("RentCarServer.Domain.Users.ValueObjects.ForgotPasswordCode", "ForgotPasswordCode", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<DateTimeOffset>("Value")
-                                .HasColumnType("datetimeoffset");
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier");
 
                             b1.HasKey("UserId");
 
@@ -108,13 +182,13 @@ namespace RentCarServer.Infrastructure.Migrations
                                 .HasForeignKey("UserId");
                         });
 
-                    b.OwnsOne("RentCarServer.Domain.Users.ValueObjects.ForgotPasswordId", "ForgotPasswordId", b1 =>
+                    b.OwnsOne("RentCarServer.Domain.Users.ValueObjects.ForgotPasswordDate", "ForgotPasswordDate", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<Guid>("Value")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<DateTimeOffset>("Value")
+                                .HasColumnType("datetimeoffset");
 
                             b1.HasKey("UserId");
 
@@ -218,14 +292,15 @@ namespace RentCarServer.Infrastructure.Migrations
                     b.Navigation("FirstName")
                         .IsRequired();
 
-                    b.Navigation("ForgotPasswordDate");
+                    b.Navigation("ForgotPasswordCode");
 
-                    b.Navigation("ForgotPasswordId");
+                    b.Navigation("ForgotPasswordDate");
 
                     b.Navigation("FullName")
                         .IsRequired();
 
-                    b.Navigation("IsForgotPasswordCompleted");
+                    b.Navigation("IsForgotPasswordCompleted")
+                        .IsRequired();
 
                     b.Navigation("LastName")
                         .IsRequired();

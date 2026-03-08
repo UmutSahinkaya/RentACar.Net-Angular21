@@ -35,6 +35,18 @@ builder.Services.AddRateLimiter(cfg =>
         opt.Window = TimeSpan.FromMinutes(5);
         opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
     });
+    _ = cfg.AddFixedWindowLimiter("reset-password-fixed", opt =>
+    {
+        opt.PermitLimit = 3;
+        opt.Window = TimeSpan.FromMinutes(1);
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+    });
+    _ = cfg.AddFixedWindowLimiter("check-forgot-password-code-fixed", opt =>
+    {
+        opt.PermitLimit = 2;
+        opt.Window = TimeSpan.FromMinutes(1);
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+    });
 });
 builder.Services.AddControllers()
                 .AddOData(opt => opt.Select().Filter().Count().Expand().OrderBy().SetMaxTop(null));
