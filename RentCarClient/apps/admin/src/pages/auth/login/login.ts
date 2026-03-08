@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { HttpService } from './../../../services/http';
 import {
@@ -25,10 +26,18 @@ export default class Login {
   readonly #router = inject(Router);
   readonly #toast = inject(FlexiToastService);
 
+  readonly passwordEl = viewChild<ElementRef<HTMLInputElement>>('passwordEl');
+
   readonly loading = signal(false);
   readonly email = signal<string>('');
   readonly closeBtn = viewChild<ElementRef<HTMLButtonElement>>('modalCloseBtn');
 
+  togglePassword() {
+    this.passwordEl()?.nativeElement.type === 'password'
+      ? this.passwordEl()?.nativeElement.setAttribute('type', 'text')
+      : this.passwordEl()?.nativeElement.setAttribute('type', 'password');
+  }
+  
   login(form: NgForm) {
     if (!form.valid) return;
     this.loading.set(true);
@@ -53,7 +62,7 @@ export default class Login {
       (res) => {
         this.#toast.showToast('Başarılı', res, 'info');
         this.closeBtn()!.nativeElement.click();
-      }
+      },
     );
   }
 }
