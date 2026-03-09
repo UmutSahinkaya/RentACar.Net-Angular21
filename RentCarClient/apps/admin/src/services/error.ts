@@ -23,6 +23,8 @@ export class ErrorService {
       this.#toast.showToast('Yetkisiz!', 'Giriş yapmanız gerekiyor.', 'error');
       this.#router.navigate(['/login']);
       localStorage.clear();
+    }else{
+      this.#toast.showToast("Hata!","Bir hata oluştu lütfen yöneticinize danışın","error");
     }
   }
 }
