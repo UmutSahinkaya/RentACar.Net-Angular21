@@ -58,9 +58,10 @@ builder.Services.AddResponseCompression(opt =>
 {
     opt.EnableForHttps = true;
 });
-
+//Transiet Services
 builder.Services.AddTransient<CheckTokenMiddleware>();
-
+builder.Services.AddHostedService<CheckLoginTokenBackgroundService>();
+//Transiet Services Ends
 var app = builder.Build();
 
 app.MapOpenApi();
