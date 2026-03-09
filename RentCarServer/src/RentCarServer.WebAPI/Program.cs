@@ -25,7 +25,6 @@ builder.Services.AddRateLimiter(cfg =>
     _ = cfg.AddFixedWindowLimiter("login-fixed", opt =>
     {
         opt.PermitLimit = 5;
-        opt.QueueLimit = 1;
         opt.Window = TimeSpan.FromMinutes(1);
         opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
     });

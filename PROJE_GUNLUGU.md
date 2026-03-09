@@ -533,3 +533,47 @@ Her commit atmadan önce, aşağıdaki şablonu bu dosyanın en üstüne (Geçmi
   - `Program.cs` pipeline sırası güncellendi ve token kontrol middleware'i exception handler sonrasına eklendi.
   - Dashboard, login, reset-password ve servis katmanında token/oturum akışına uyumlu güncellemeler yapıldı.
 - Not: Bu commit'te günlük dosyası (`PROJE_GUNLUGU.md`) yanlışlıkla silinmiş görünmektedir; mevcut çalışma ile dosya geri eklendi.
+
+### [2026-03-09] Birden fazla giriş ve token pasifleme servisi
+- Commit: 11b9df9
+- Kapsam: Backend - Login token yaşam döngüsü
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Infrastructure/Context/ApplicationDbContext.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/CheckLoginTokenBackgroundService.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Program.cs`
+- Yapılanlar:
+  - Aynı kullanıcı için birden fazla aktif giriş senaryosuna uyumlu token yönetimi güncellendi.
+  - Süresi dolan token kayıtlarını pasife çekmek için `CheckLoginTokenBackgroundService` eklendi.
+  - Background service uygulama başlangıcında çalışacak şekilde `Program.cs` üzerinden kaydedildi.
+
+### [2026-03-09] User modeline 2FA alanları eklendi
+- Commit: 032d124
+- Kapsam: Backend - Domain (User) ve veri tabanı şeması
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Domain/Users/User.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Users/ValueObjects/TFACode.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Users/ValueObjects/TFAConfirmCode.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Users/ValueObjects/TFAExpiresDate.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Users/ValueObjects/TFAIsCompleted.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Users/ValueObjects/TFAStatus.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Configurations/UserConfiguration.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Migrations/20260309065733_i_added_Tfa_fields_to_user_table.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Migrations/20260309065733_i_added_Tfa_fields_to_user_table.Designer.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Migrations/ApplicationDbContextModelSnapshot.cs`
+- Yapılanlar:
+  - User aggregate içine 2FA durumunu tutan alanlar eklendi.
+  - 2FA kodu, doğrulama kodu, bitiş zamanı ve tamamlanma durumu için Value Object'ler oluşturuldu.
+  - EF Core mapping ve migration dosyaları ile 2FA alanları veritabanına taşındı.
+
+### [2026-03-09] Login akisi 2FA ile güncellendi
+- Commit: 6142b35
+- Kapsam: Backend - Authentication
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Auth/LoginCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/Auth/LoginWithTFACommand.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Users/User.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Modules/AuthModule.cs`
+- Yapılanlar:
+  - Mevcut login akisi 2FA gereksinimini dikkate alacak sekilde revize edildi.
+  - `LoginWithTFACommand` ile ikinci adim dogrulama komutu eklendi.
+  - Auth modulu, 2FA tabanli login akisini destekleyecek endpoint/akislara gore guncellendi.
