@@ -20,16 +20,20 @@ import { httpResource } from '@angular/common/http';
 import Loading from 'apps/admin/src/components/loading/loading';
 
 @Component({
-  imports: [FormsModule, NgClass, RouterLink,Loading],
+  imports: [FormsModule, NgClass, RouterLink, Loading],
   templateUrl: './reset-password.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class ResetPassword {
   readonly id = signal<string>('');
-  readonly result=httpResource(()=>`/rent/auth/check-forgot-password-code/${this.id()}`);
-  readonly resultLoading = computed(()=>this.result.isLoading());
-  readonly error=computed(() => this.result.error() ? this.#router.navigateByUrl('/login') : '');
+  readonly result = httpResource(
+    () => `/rent/auth/check-forgot-password-code/${this.id()}`,
+  );
+  readonly resultLoading = computed(() => this.result.isLoading());
+  readonly error = computed(() =>
+    this.result.error() ? this.#router.navigateByUrl('/login') : '',
+  );
   readonly loading = signal<boolean>(false);
   readonly password = signal<string>('');
   readonly confirmPassword = signal<string>('');
@@ -72,6 +76,7 @@ export default class ResetPassword {
     return (strength.level / 4) * 100; // 4 gereksinim var, her biri %25 katkıda bulunur
   });
 
+  readonly logoutAllDevices = signal<boolean>(true);
   readonly newPasswordEl =
     viewChild<ElementRef<HTMLInputElement>>('newPasswordEl');
   readonly confirmPasswordEl =
@@ -105,8 +110,9 @@ export default class ResetPassword {
   onSubmit() {
     if (this.isFormValid()) {
       const data = {
-        forgotPasswordId: this.id(),
+        forgotPasswordCode: this.id(),
         newPassword: this.password(),
+        logoutAllDevices: this.logoutAllDevices(),
       };
       this.loading.set(true);
       this.#http.post<string>(

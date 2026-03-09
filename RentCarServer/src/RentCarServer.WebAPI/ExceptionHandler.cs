@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using RentCarServer.Application.Behaviors;
+using RentCarServer.WebAPI.MiddleWares;
 using TS.Result;
 
 namespace RentCarServer.WebAPI;
@@ -21,6 +22,14 @@ public sealed class ExceptionHandler : IExceptionHandler
         var exceptionType = actualException.GetType();
         var validationExceptionType = typeof(ValidationException);
         var authorizationExceptionType = typeof(AuthorizationException);
+        var tokenException = typeof(TokenException);
+        if (exceptionType == tokenException)
+        {
+            httpContext.Response.StatusCode = 401;
+            errorResult = Result<string>.Failure(401, "Geçersiz token");
+            await httpContext.Response.WriteAsJsonAsync(errorResult);
+            return true;
+        }
 
         if (exceptionType == validationExceptionType)
         {

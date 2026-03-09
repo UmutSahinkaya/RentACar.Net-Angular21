@@ -35,14 +35,15 @@
                             <span class="input-group-text">
                                 <i class="bi bi-lock"></i>
                             </span>
-                            <input #passwordEl type="password" class="form-control" id="adminPassword" name="password" ngModel
-                                placeholder="*********" required>
+                            <input #passwordEl type="password" class="form-control" id="adminPassword" name="password"
+                                ngModel placeholder="*********" required>
                             <button type="button" class="input-group-text password-toggle" (click)="togglePassword()">
                                 @if(passwordEl.type === "password"){
                                 <i class="bi bi-eye"></i>
                                 }@else {
                                 <i class="bi bi-eye-slash"></i>
                                 }
+                            </button>
                         </div>
                     </div>
 
