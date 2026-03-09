@@ -91,6 +91,11 @@ public sealed class User : Entity
         TFAIsCompleted = new(false);
         TFAConfirmCode = new(Guid.CreateVersion7().ToString());
     }
+
+    public void SetTFACompleted()
+    {
+        TFAIsCompleted = new(true);
+    }
     #endregion
 
 }
