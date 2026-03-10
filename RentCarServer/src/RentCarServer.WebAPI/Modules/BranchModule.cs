@@ -8,7 +8,7 @@ public static class BranchModule
 {
     public static void MapBranch(this IEndpointRouteBuilder routeBuilder)
     {
-        var app = routeBuilder.MapGroup("/branches").RequireRateLimiting("fixed").RequireAuthorization();
+        var app = routeBuilder.MapGroup("/branches").WithTags("branches").RequireRateLimiting("fixed").RequireAuthorization();
 
         _ = app.MapPost(string.Empty, async (BranchCreateCommand request, ISender sender, CancellationToken cancellationToken) =>
         {
