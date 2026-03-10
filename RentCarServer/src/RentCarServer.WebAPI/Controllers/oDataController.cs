@@ -20,6 +20,6 @@ public class ODataController : ControllerBase
         return builder.GetEdmModel();
     }
     [HttpGet("branches")]
-    public IQueryable<BranchGetAllQuery> Branches(ISender sender, CancellationToken cancellationToken = default)
+    public IQueryable<BranchDto> Branches(ISender sender, CancellationToken cancellationToken = default)
         => sender.Send(new BranchGetAllQuery(), cancellationToken).Result;
 }
