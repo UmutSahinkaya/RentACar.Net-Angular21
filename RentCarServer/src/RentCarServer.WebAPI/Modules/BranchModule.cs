@@ -30,6 +30,6 @@ public static class BranchModule
         {
             var res = await sender.Send(new BranchGetQuery(id), cancellationToken);
             return res.IsSuccessful ? Results.Ok(res) : Results.InternalServerError(res);
-        }).Produces<Result<string>>();
+        }).Produces<Result<BranchDto>>();
     }
 }

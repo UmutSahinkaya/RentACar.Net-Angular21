@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using RentCarServer.Domain.Users;
-
-namespace RentCarServer.Domain.Abstractions;
+﻿namespace RentCarServer.Domain.Abstractions;
 
 public abstract class Entity
 {
@@ -15,11 +11,8 @@ public abstract class Entity
     public bool IsActive { get; private set; }
     public DateTimeOffset CreatedAt { get; private set; }
     public IdentityId CreatedBy { get; private set; } = default!;
-    public string CreatedFullName => GetCreatedFullName();
     public DateTimeOffset? UpdatedAt { get; private set; }
     public IdentityId? UpdatedBy { get; private set; }
-    public string? UpdatedFullName => GetUpdatedFullName();
-
     public bool IsDeleted { get; private set; }
     public DateTimeOffset? DeletedAt { get; private set; }
     public IdentityId? DeletedBy { get; private set; }
@@ -31,41 +24,6 @@ public abstract class Entity
     public void Delete()
     {
         IsDeleted = true;
-    }
-    public string GetCreatedFullName()
-    {
-        HttpContextAccessor httpContextAccessor = new();
-        var httpContext = httpContextAccessor.HttpContext;
-        if (httpContext is null) return string.Empty;
-
-        var srv = httpContext.RequestServices;
-        using var scope = srv.CreateScope();
-        var userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
-        if (userRepository is null) return string.Empty;
-
-        var userFullName = userRepository.FirstOrDefault(x => x.Id == CreatedBy).FullName;
-        if (userFullName is null) return string.Empty;
-
-        return userFullName.Value;
-    }
-    public string? GetUpdatedFullName()
-    {
-        if (UpdatedBy is not null)
-        {
-            HttpContextAccessor httpContextAccessor = new();
-            var httpContext = httpContextAccessor.HttpContext;
-            if (httpContext is null) return string.Empty;
-
-            var srv = httpContext.RequestServices;
-            using var scope = srv.CreateScope();
-            var userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
-            if (userRepository is null) return string.Empty;
-
-            var userFullName = userRepository.FirstOrDefault(x => x.Id == UpdatedBy).FullName;
-            if (userFullName is null) return string.Empty;
-            return userFullName.Value;
-        }
-        return null;
     }
 }
 public sealed record IdentityId(Guid Value)
