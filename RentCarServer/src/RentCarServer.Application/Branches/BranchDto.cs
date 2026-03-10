@@ -1,30 +1,29 @@
 ﻿using RentCarServer.Domain.Abstractions;
-using RentCarServer.Domain.Branchs;
+using RentCarServer.Domain.Branches;
 using RentCarServer.Domain.Branchs.ValueObjects;
 using RentCarServer.Domain.Users;
-using TS.MediatR;
 
 namespace RentCarServer.Application.Branches;
 
-public sealed record BranchGetAllQuery : IRequest<IQueryable<BranchDto>>;
 public sealed class BranchDto : EntityDto
 {
     public string Name { get; set; } = default!;
     public Address Address { get; set; } = default!;
 }
-internal sealed class BranchGetAllQueryResponseHandler(IBranchRepository branchRepository, IUserRepository userRepository) : IRequestHandler<BranchGetAllQuery, IQueryable<BranchDto>>
+
+public static class BranchExtensions
 {
-    public Task<IQueryable<BranchDto>> Handle(BranchGetAllQuery request, CancellationToken cancellationToken)
+    public static IQueryable<BranchDto> MapTo(this IQueryable<Branch> entity, IQueryable<User> users)
     {
-        var response = branchRepository.GetAll()
-            .Join(userRepository.GetAll(), m => m.CreatedBy, m => m.Id, (b, user) => new { b = b, user = user })
-            .GroupJoin(userRepository.GetAll(), m => m.b.UpdatedBy, m => m.Id, (entity, user) => new { entity = entity, user = user })
+        var res = entity
+            .Join(users, m => m.CreatedBy, m => m.Id, (b, user) => new { b = b, user = user })
+            .GroupJoin(users, m => m.b.UpdatedBy, m => m.Id, (entity, user) => new { entity = entity, user = user })
             .SelectMany(s => s.user.DefaultIfEmpty(),
-            (x, user) => new
-            {
-                entity = x.entity,
-                updatedUser = user
-            })
+                (x, user) => new
+                {
+                    entity = x.entity,
+                    updatedUser = user
+                })
             .Select(s => new BranchDto
             {
                 Id = s.entity.b.Id,
@@ -40,6 +39,6 @@ internal sealed class BranchGetAllQueryResponseHandler(IBranchRepository branchR
             })
             .AsQueryable();
 
-        return Task.FromResult(response);
+        return res;
     }
 }

@@ -16,10 +16,10 @@ public class ODataController : ControllerBase
     {
         ODataConventionModelBuilder builder = new();
         _ = builder.EnableLowerCamelCase();
-        _ = builder.EntitySet<BranchDto>("branches");
+        _ = builder.EntitySet<BranchGetAllQuery>("branches");
         return builder.GetEdmModel();
     }
     [HttpGet("branches")]
-    public IQueryable<BranchDto> Branches(ISender sender, CancellationToken cancellationToken = default)
+    public IQueryable<BranchGetAllQuery> Branches(ISender sender, CancellationToken cancellationToken = default)
         => sender.Send(new BranchGetAllQuery(), cancellationToken).Result;
 }

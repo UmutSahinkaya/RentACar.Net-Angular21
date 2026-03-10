@@ -30,7 +30,7 @@ internal sealed class BranchUpdateCommandHandler(IBranchRepository branchReposit
         branch.SetName(new(request.Name));
         branch.SetAdress(request.Address);
         branch.SetStatus(request.IsActive);
-
+        branchRepository.Update(branch);
         _ = await unitOfWork.SaveChangesAsync(cancellationToken);
         return Result<string>.Succeed("Şube başarıyla güncellendi.");
     }
