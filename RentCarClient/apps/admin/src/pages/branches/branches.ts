@@ -6,9 +6,10 @@ import { BreadcrumbModel } from '../../services/breadcrumb';
 import { httpResource } from '@angular/common/http';
 import { ODataModel } from '../../models/odata.model';
 import { BranchModel } from '../../models/branch.model';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [FlexiGridModule, NgxMaskPipe],
+  imports: [FlexiGridModule, NgxMaskPipe,RouterLink],
   templateUrl: './branches.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

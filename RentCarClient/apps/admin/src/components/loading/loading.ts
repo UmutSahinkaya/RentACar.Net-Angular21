@@ -1,7 +1,8 @@
+/* eslint-disable @angular-eslint/component-selector */
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'app-loading',
+  selector: 'loading',
   imports: [],
   templateUrl: './loading.html',
   encapsulation: ViewEncapsulation.None,

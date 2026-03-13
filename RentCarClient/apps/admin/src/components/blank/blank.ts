@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/component-selector */
 import { DatePipe, Location, NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -10,7 +11,7 @@ import { RouterLink } from '@angular/router';
 import { EntityModel } from '../../models/entity.model';
 
 @Component({
-  selector: 'app-blank',
+  selector: 'blank',
   imports: [NgClass, RouterLink, DatePipe],
   templateUrl: './blank.html',
   encapsulation: ViewEncapsulation.None,
