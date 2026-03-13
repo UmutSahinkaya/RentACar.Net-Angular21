@@ -1,8 +1,7 @@
-﻿using GenericRepository;
-using RentCarServer.Domain.Branches;
+﻿using RentCarServer.Domain.Abstractions;
 
-namespace RentCarServer.Domain.Branchs;
+namespace RentCarServer.Domain.Branches;
 
-public interface IBranchRepository : IRepository<Branch>
+public interface IBranchRepository : IAuditableRepository<Branch>
 {
 }

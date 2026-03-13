@@ -1,7 +1,6 @@
 ﻿using RentCarServer.Domain.Abstractions;
 using RentCarServer.Domain.Branches;
 using RentCarServer.Domain.Branchs.ValueObjects;
-using RentCarServer.Domain.Users;
 
 namespace RentCarServer.Application.Branches;
 
@@ -13,10 +12,9 @@ public sealed class BranchDto : EntityDto
 
 public static class BranchExtensions
 {
-    public static IQueryable<BranchDto> MapTo(this IQueryable<Branch> entity, IQueryable<User> users)
+    public static IQueryable<BranchDto> MapTo(this IQueryable<EntityWithAuditDto<Branch>> entity)
     {
         var res = entity
-            .ApplyAuditDto(users)
             .Select(s => new BranchDto
             {
                 Id = s.Entity.Id,

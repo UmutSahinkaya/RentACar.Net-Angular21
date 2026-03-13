@@ -23,6 +23,183 @@ Her commit atmadan önce, aşağıdaki şablonu bu dosyanın en üstüne (Geçmi
 
 ## Geçmiş (Başlangıçtan Bugüne)
 
+### [2026-03-10] Audit için Generic Extensions yazıldı
+- Commit: fd0dca7
+- Kapsam: Backend - Audit mapping refactor
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Branches/BranchDto.cs`
+  - `RentCarServer/src/RentCarServer.Application/Branches/BranchGetAllQuery.cs`
+  - `RentCarServer/src/RentCarServer.Application/ExtensionMethods.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Controllers/oDataController.cs`
+- Yapılanlar:
+  - Audit bilgilerini (`CreatedDate`, `CreatedBy`, `UpdatedDate`, `UpdatedBy`) tekrar eden kod yazmadan DTO'lara taşıyan generic extension metotları eklendi.
+  - Branch listeleme/sorgulama tarafındaki manuel mapleme kodları kaldırılarak extension tabanlı tek bir dönüşüm standardına geçildi.
+  - OData controller çıktılarında audit alanlarının tutarlı dönmesi için projection akışı güncellendi.
+
+### [2026-03-10] Branch GetAll MapTo ve endpoint testleri tamamlandı
+- Commit: 9e2b0bd
+- Kapsam: Backend - Branch query/refactor
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Branches/BranchDeleteCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/Branches/BranchDto.cs`
+  - `RentCarServer/src/RentCarServer.Application/Branches/BranchGetAllQuery.cs`
+  - `RentCarServer/src/RentCarServer.Application/Branches/BranchGetQuery.cs`
+  - `RentCarServer/src/RentCarServer.Application/Branches/BranchUpdateCommand.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Controllers/oDataController.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Modules/BranchModule.cs`
+- Yapılanlar:
+  - `BranchGetAllQuery` içinde listeleme dönüşümleri `MapTo` yaklaşımına taşınarak handler içindeki karmaşıklık azaltıldı.
+  - `BranchDto` kullanımına göre Get/GetAll/Delete/Update komut-sorgu tarafındaki dönüşüm noktaları hizalandı.
+  - Branch endpointlerinde istek-yanıt akışları tekrar test edilerek DTO şemasının API ile uyumluluğu doğrulandı.
+
+### [2026-03-10] Branch endpoint testleri ve DTO iyileştirmeleri
+- Commit: 5cbb44f
+- Kapsam: Backend - Branch API iyileştirme
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Branches/BranchDto.cs`
+  - `RentCarServer/src/RentCarServer.Application/Branches/BranchGetQuery.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Abstractions/Entity.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Abstractions/EntityDto.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Controllers/oDataController.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Modules/AuthModule.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Modules/BranchModule.cs`
+- Yapılanlar:
+  - Branch sorgularında doğrudan entity döndürme yaklaşımı bırakılıp `BranchDto` tabanlı response modeline geçildi.
+  - `Entity` ve `EntityDto` üzerinde yapılan düzenlemelerle ortak alanlar (audit/kullanıcı bilgileri) endpoint cevaplarında standardize edildi.
+  - OData ve modül endpointlerinin aynı DTO sözleşmesini kullanması sağlanarak istemci tarafı tüketimi sadeleştirildi.
+
+### [2026-03-10] Branch GetAll için OData endpoint düzeni
+- Commit: e55f32d
+- Kapsam: Backend - OData / Branch endpoint
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.WebAPI/Controllers/oDataController.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Modules/BranchModule.cs`
+- Yapılanlar:
+  - `oDataController` içinde Branch GetAll için filtreleme/sıralama/genişletme destekli OData endpoint akışı oluşturuldu.
+  - Branch route etiketleri ve endpoint adlandırmaları OData tarafıyla uyumlu hale getirildi.
+  - BranchModule ve OData controller arasında çakışabilecek route kullanım desenleri düzenlendi.
+
+### [2026-03-10] BranchModule ile CRUD endpointleri eklendi
+- Commit: 3f36e39
+- Kapsam: Backend - Branch REST API
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.WebAPI/Modules/BranchModule.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Program.cs`
+- Yapılanlar:
+  - Branch varlığı için Create, Update, Delete ve Get operasyonlarını kapsayan `BranchModule` Minimal API uçları tanımlandı.
+  - Endpointlerin MediatR command/query akışına bağlanması yapıldı ve request binding yapıları netleştirildi.
+  - `Program.cs` üzerinde module kaydı/pipeline entegrasyonu tamamlanarak Branch endpointleri uygulama başlangıcında aktif hale getirildi.
+
+### [2026-03-10] Branch GetAll query response standardizasyonu
+- Commit: c20b5c3
+- Kapsam: Backend - Query response modeli
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Branches/BranchGetAllQueryResponse.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Abstractions/EntityDto.cs`
+- Yapılanlar:
+  - Branch listeleme senaryoları için ayrı bir `BranchGetAllQueryResponse` modeli eklenerek endpoint cevabı tip güvenli hale getirildi.
+  - `EntityDto` içinde ortak alanların standardizasyonu yapılarak farklı sorgularda aynı temel response sözleşmesi kullanılmaya başlandı.
+  - Query tarafındaki dönüşümlerde response modeli ile DTO yapısı arasında uyum sağlandı.
+
+### [2026-03-09] Entity sınıfına kullanıcı ad-soyad alanları eklendi
+- Commit: 97ff85d
+- Kapsam: Backend - Domain abstraction güncellemesi
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Domain/Abstractions/Entity.cs`
+  - `RentCarServer/src/RentCarServer.Domain/RentCarServer.Domain.csproj`
+- Yapılanlar:
+  - `Entity` base sınıfı, kayıtları oluşturan/güncelleyen kullanıcının ad-soyad bilgisini taşıyacak şekilde genişletildi.
+  - Audit ile ilişkili kullanıcı bilgileri domain seviyesinde merkezileştirildiği için alt entity'lerde tekrar tanımlama ihtiyacı azaltıldı.
+  - Domain proje ayarları ve derleme referansları yeni alanlarla uyumlu olacak şekilde güncellendi.
+
+### [2026-03-09] Branch delete/get command-query eklendi
+- Commit: 119a9f8
+- Kapsam: Backend - Branch CQRS
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Branches/BranchDeleteCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/Branches/BranchGetQuery.cs`
+- Yapılanlar:
+  - Branch silme işlemi için `BranchDeleteCommand` ve ilgili handler akışı eklendi.
+  - Tekil branch detayını döndüren `BranchGetQuery` ile sorgulama hattı oluşturuldu.
+  - Her iki akışta da CQRS ayrımı korunarak command ve query sorumlulukları netleştirildi.
+
+### [2026-03-09] Branch update metodu eklendi
+- Commit: 5d66eb0
+- Kapsam: Backend - Branch güncelleme
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Branches/BranchUpdateCommand.cs`
+- Yapılanlar:
+  - `BranchUpdateCommand` ile branch güncelleme isteğinin command modeli tanımlandı.
+  - Güncelleme handler akışında kayıt bulunurluğu, alan güncelleme ve repository persist adımları tamamlandı.
+  - Update isteğine yönelik validasyon kuralları ile hatalı payload'ların erken aşamada yakalanması sağlandı.
+
+### [2026-03-09] Branch create metodu ve namespace düzeni
+- Commit: 22cd28f
+- Kapsam: Backend - Branch oluşturma
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Branches/BranchCreateCommand.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Abstractions/Entity.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Branches/Branch.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Branches/IBranchRepository.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Branches/ValueObjects/Address.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Branches/ValueObjects/Name.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Configurations/BranchConfiguration.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Context/ApplicationDbContext.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Repositories/BranchRepository.cs`
+- Yapılanlar:
+  - Yeni branch kaydı oluşturmak için `BranchCreateCommand` ve handler yapısı eklendi.
+  - Yazım/tutarlılık için `Branchs` namespace'i `Branches` olarak tüm ilgili katmanlarda standardize edildi.
+  - EF Core configuration, DbContext tanımı ve repository implementasyonları yeni namespace/model yapısına göre revize edildi.
+  - Create akışının MediatR üzerinden çalışması için dependency ve bağlama noktaları güncellendi.
+
+### [2026-03-09] Branch modeli ve veri tabanı şeması oluşturuldu
+- Commit: 964a807
+- Kapsam: Backend - Domain (Branch) ve migration
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Domain/Branchs/Branch.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Branchs/IBranchRepository.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Branchs/ValueObjects/Address.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Branchs/ValueObjects/Name.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Configurations/BranchConfiguration.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Context/ApplicationDbContext.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Migrations/20260309144358_i_created_brach_table.Designer.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Migrations/20260309144358_i_created_brach_table.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Migrations/ApplicationDbContextModelSnapshot.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Repositories/BranchRepository.cs`
+- Yapılanlar:
+  - `Branch` entity'si ile birlikte `Name` ve `Address` value object'leri domain katmanında tanımlandı.
+  - Branch verisine erişim için repository arayüzü ve infrastructure implementasyonu oluşturuldu.
+  - EF Core tarafında entity configuration ve DbContext entegrasyonu yapıldı.
+  - Veritabanına Branch tablosunu taşıyan migration ve snapshot güncellemeleri üretildi.
+
+### [2026-03-09] Error interceptor refactoring yapıldı (Angular)
+- Commit: f43f512
+- Kapsam: Frontend - HTTP hata yönetimi
+- Etkilenen Dosyalar:
+  - `RentCarClient/apps/admin/src/app.config.ts`
+  - `RentCarClient/apps/admin/src/interceptors/error-interceptor.ts`
+  - `RentCarClient/apps/admin/src/pages/dashboard/dashboard.ts`
+  - `RentCarClient/apps/admin/src/services/error.ts`
+  - `RentCarClient/apps/admin/src/services/http.ts`
+- Yapılanlar:
+  - `error-interceptor` içinde API hatalarını merkezi biçimde yakalayan ve normalize eden akış yeniden düzenlendi.
+  - `HttpContext` tabanlı istek senaryolarında hata yönetimi davranışları (`skip/handle`) servis katmanıyla uyumlu hale getirildi.
+  - `error` ve `http` servisleri güncellenerek dashboard çağrılarındaki hata geri bildirimi daha öngörülebilir hale getirildi.
+
+### [2026-03-09] Angular login akışı 2FA'ya göre güncellendi
+- Commit: 402094e
+- Kapsam: Frontend & Backend - 2FA login entegrasyonu
+- Etkilenen Dosyalar:
+  - `PROJE_GUNLUGU.md`
+  - `RentCarClient/apps/admin/src/pages/auth/login/login.html`
+  - `RentCarClient/apps/admin/src/pages/auth/login/login.ts`
+  - `RentCarServer/src/RentCarServer.WebAPI/Program.cs`
+- Yapılanlar:
+  - Login formu, ilk kimlik doğrulama sonrası 2FA adımına geçişi destekleyecek şekilde UI ve durum yönetimi açısından revize edildi.
+  - Login component içinde 2FA gerekli/başarılı/hatalı senaryolar için kullanıcı akışları ayrıştırıldı.
+  - İstemci tarafı istekleri 2FA endpoint davranışıyla uyumlu hale getirildi.
+  - WebAPI `Program.cs` üzerinde ilgili middleware/endpoint akışının 2FA sürecini desteklemesi için gerekli düzenlemeler yapıldı.
+
 ### [2026-03-03] Proje ilk kurulum
 - Commit: a5fcdd0
 - Kapsam: Başlangıç altyapısı
