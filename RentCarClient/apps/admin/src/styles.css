@@ -6828,3 +6828,8 @@ a{
         transform: scale(1.2);
     }
 }
+.flexi-button-primary {
+    color: white !important;
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable, signal } from '@angular/core';
 
 export interface BreadcrumbModel {
@@ -13,14 +14,16 @@ export interface BreadcrumbModel {
 export class BreadcrumbService {
   readonly data = signal<BreadcrumbModel[]>([]);
   
-  reset() {
+  reset(breadcrumbs: BreadcrumbModel[]) {
     const dashboard: BreadcrumbModel = {
       title: 'Dashboard',
       url: '/',
       icon: 'bi-speedometer2',
     };
 
-    this.data.set([{ ...dashboard }]);
+    //Burası çalışmazsa aşağıya update ile ekleyelim
+    this.data.set([{ ...dashboard }, ...breadcrumbs]);
+    // this.data.update(prev => [...prev, ...breadcrumbs])
   }
 
   setDashboard() {
