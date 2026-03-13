@@ -42,14 +42,18 @@ internal sealed class JwtProvider(ILoginTokenRepository loginTokenRepository, IU
         Token newToken = new(token);
         ExpiresDate expiresDate = new(expires);
         LoginToken loginToken = new(newToken, user.Id, expiresDate);
-        loginTokenRepository.Add(loginToken);
+
+        // Önce mevcut aktif tokenları pasife çek
         var loginTokens = await loginTokenRepository
             .Where(x => x.UserId == user.Id && x.IsActive.Value == true).ToListAsync(cancellationToken);
         foreach (var item in loginTokens)
         {
             item.SetIsActive(new(false));
         }
-        loginTokenRepository.UpdateRange(loginTokens); // Burada aktif olan tüm tokenları pasif yapıyoruz çünkü yeni bir token oluşturduk
+        loginTokenRepository.UpdateRange(loginTokens);
+
+        // Yeni tokeni ekle (eskilerin pasife çekilmesinden sonra)
+        loginTokenRepository.Add(loginToken);
         _ = await unitOfWork.SaveChangesAsync(cancellationToken);
         return token;
     }

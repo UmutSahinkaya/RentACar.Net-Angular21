@@ -51,7 +51,7 @@ builder.Services.AddControllers()
                 .AddOData(opt => opt.Select().Filter().Count().Expand().OrderBy().SetMaxTop(null));
 
 builder.Services.AddCors();
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi("v1", options => { _ = options.AddDocumentTransformer<BearerSecuritySchemeTransformer>(); });
 builder.Services.AddExceptionHandler<ExceptionHandler>().AddProblemDetails();
 builder.Services.AddResponseCompression(opt =>
 {
