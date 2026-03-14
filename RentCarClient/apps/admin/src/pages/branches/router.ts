@@ -13,5 +13,9 @@ const router: Routes = [
     path: 'edit/:id',
     loadComponent: () => import('./create/create'),
   },
+  {
+    path: 'detail/:id',
+    loadComponent: () => import('./detail/detail'),
+  },
 ];
 export default router;
