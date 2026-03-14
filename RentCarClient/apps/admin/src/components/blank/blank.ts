@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-selector */
 import { DatePipe, Location, NgClass } from '@angular/common';
 import {
@@ -11,10 +12,11 @@ import {
 import { RouterLink } from '@angular/router';
 import { EntityModel } from '../../models/entity.model';
 import { FormsModule } from '@angular/forms';
+import Loading from '../loading/loading';
 
 @Component({
   selector: 'blank',
-  imports: [NgClass, RouterLink, DatePipe, FormsModule],
+  imports: [NgClass, RouterLink, DatePipe, FormsModule, Loading],
   templateUrl: './blank.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,6 +33,7 @@ export default class Blank {
   readonly editBtnUrl = input<string>('');
   readonly audit = input<EntityModel>();
   readonly showAduit = input<boolean>(false);
+  readonly loading = input<boolean>(false);
 
   readonly changeStatusEvent = output<boolean>();
 
@@ -39,7 +42,7 @@ export default class Blank {
   back() {
     this.#location.back();
   }
-  
+
   changeStatus(event: any) {
     const checked = event.target.checked;
     this.changeStatusEvent.emit(checked);

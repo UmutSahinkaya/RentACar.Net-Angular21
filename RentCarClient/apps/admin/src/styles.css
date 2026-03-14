@@ -759,7 +759,7 @@ body {
 }
 
 /* ===== DARK MODE SUPPORT ===== */
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   .content-area {
     background: #1a1a1a;
     color: #e0e0e0;

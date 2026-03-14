@@ -15,7 +15,6 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
-import Loading from 'apps/admin/src/components/loading/loading';
 import { BranchModel, initialBranch } from 'apps/admin/src/models/branch.model';
 import {
   BreadcrumbModel,
@@ -33,7 +32,6 @@ import { lastValueFrom } from 'rxjs';
     FormsModule,
     FormValidateDirective,
     NgClass,
-    Loading,
     NgxMaskDirective,
   ],
   templateUrl: './create.html',
