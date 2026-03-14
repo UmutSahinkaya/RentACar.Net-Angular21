@@ -8,8 +8,25 @@ export interface BranchModel extends EntityModel {
 export interface AddressModel {
   city: string;
   district: string;
-  fullAddress: string;
+  fullAdress: string;
   phoneNumber1: string;
   phoneNumber2: string;
   email: string;
 }
+
+export const initialBranch: BranchModel = {
+  id: '',
+  name: '',
+  address: {
+    city: '',
+    district: '',
+    fullAdress: '',
+    email: '',
+    phoneNumber1: '',
+    phoneNumber2: '',
+  },
+  isActive: true,
+  createdAt: '',
+  createdBy: '',
+  createdFullName: '',
+};

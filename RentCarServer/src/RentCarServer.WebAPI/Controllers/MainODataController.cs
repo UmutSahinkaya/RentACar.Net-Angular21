@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.OData.Edm;
@@ -20,7 +20,8 @@ public class MainODataController : ODataController
         _ = builder.EntitySet<BranchDto>("branches");
         return builder.GetEdmModel();
     }
+
     [HttpGet("branches")]
-    public IQueryable<BranchDto> Branches(ISender sender, CancellationToken cancellationToken = default)
-        => sender.Send(new BranchGetAllQuery(), cancellationToken).Result;
+    public async Task<IQueryable<BranchDto>> Branches(ISender sender, CancellationToken cancellationToken = default)
+        => await sender.Send(new BranchGetAllQuery(), cancellationToken);
 }
