@@ -46,7 +46,7 @@ export default class Grid implements AfterViewInit {
   readonly breadcrumbs = input.required<BreadcrumbModel[]>();
   readonly commandColumnWidth = input<string>('150px');
   readonly showIndex = input<boolean>(true);
-  readonly captionTitle = input<string>();
+  readonly captionTitle = input<string>('');
 
   readonly columns = contentChildren(FlexiGridColumnComponent, {
     descendants: true,
@@ -85,7 +85,7 @@ export default class Grid implements AfterViewInit {
   delete(id: string) {
     this.#toast.showSwal('Sil?', 'Kaydı silmek istiyor musunuz?', 'Sil', () => {
       this.#http.delete(`${this.deleteEndpoint()}/${id}`, (res) => {
-        this.#toast.showToast("Başarılı","Silindi", "success");
+        this.#toast.showToast('Başarılı', 'Silindi', 'success');
         this.result.reload();
       });
     });
