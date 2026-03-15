@@ -1,6 +1,6 @@
 ﻿using RentCarServer.Domain.Abstractions;
 using RentCarServer.Domain.Branches;
-using RentCarServer.Domain.Branchs.ValueObjects;
+using RentCarServer.Domain.Shared;
 
 namespace RentCarServer.Application.Branches;
 
