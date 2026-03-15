@@ -9,11 +9,5 @@ internal sealed class BranchGetAllQueryHandler(
     IBranchRepository branchRepository) : IRequestHandler<BranchGetAllQuery, IQueryable<BranchDto>>
 {
     public Task<IQueryable<BranchDto>> Handle(BranchGetAllQuery request, CancellationToken cancellationToken)
-    {
-        var response = branchRepository
-            .GetAllWithAudit()
-            .MapTo();
-
-        return Task.FromResult(response);
-    }
+        => Task.FromResult(branchRepository.GetAllWithAudit().MapTo().AsQueryable());
 }
