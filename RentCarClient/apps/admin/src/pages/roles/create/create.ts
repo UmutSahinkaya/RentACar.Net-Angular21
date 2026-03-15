@@ -15,7 +15,7 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { BranchModel, initialBranch } from 'apps/admin/src/models/branch.model';
+import { RoleModel,initialRole } from 'apps/admin/src/models/role.model';
 import {
   BreadcrumbModel,
   BreadcrumbService,
@@ -23,7 +23,6 @@ import {
 import { HttpService } from 'apps/admin/src/services/http';
 import { FlexiToastService } from 'flexi-toast';
 import { FormValidateDirective } from 'form-validate-angular';
-import { NgxMaskDirective } from 'ngx-mask';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
@@ -31,8 +30,7 @@ import { lastValueFrom } from 'rxjs';
     Blank,
     FormsModule,
     FormValidateDirective,
-    NgClass,
-    NgxMaskDirective,
+    NgClass
   ],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
@@ -48,13 +46,13 @@ export default class Create {
   readonly id = signal<string | undefined>(undefined);
   readonly bredcrumbs = signal<BreadcrumbModel[]>([
     {
-      title: 'Şubeler',
-      icon: 'bi-buildings',
-      url: '/branches',
+      title: 'Roleler',
+      icon: 'bi-shield-lock',
+      url: '/roles',
     },
   ]);
   readonly pageTitle = computed(() =>
-    this.id() ? 'Şube Güncelle' : 'Şube Ekle',
+    this.id() ? 'Role Güncelle' : 'Role Ekle',
   );
   readonly pageIcon = computed(() => (this.id() ? 'bi-pen' : 'bi-plus'));
   readonly btnName = computed(() => (this.id() ? 'Güncelle' : 'Kaydet'));
@@ -62,7 +60,7 @@ export default class Create {
     params: () => this.id(),
     loader: async () => {
       var res = await lastValueFrom(
-        this.#http.getResource<BranchModel>(`/rent/branches/${this.id()}`),
+        this.#http.getResource<RoleModel>(`/rent/roles/${this.id()}`),
       );
 
       this.bredcrumbs.update((prev) => [
@@ -70,7 +68,7 @@ export default class Create {
         {
           title: res.data!.name,
           icon: 'bi-pen',
-          url: `/branches/edit/${this.id()}`,
+          url: `/roles/edit/${this.id()}`,
           isActive: true,
         },
       ]);
@@ -78,7 +76,7 @@ export default class Create {
       return res.data;
     },
   });
-  readonly data = linkedSignal(() => this.result.value() ?? {...initialBranch});
+  readonly data = linkedSignal(() => this.result.value() ?? {...initialRole});
   readonly loading = linkedSignal(() => this.result.isLoading());
 
   constructor() {
@@ -91,7 +89,7 @@ export default class Create {
           {
             title: 'Ekle',
             icon: 'bi-plus',
-            url: '/branches/add',
+            url: '/roles/add',
             isActive: true,
           },
         ]);
@@ -105,11 +103,11 @@ export default class Create {
     if (!this.id()) {
       this.loading.set(true);
       this.#http.post<string>(
-        '/rent/branches',
+        '/rent/roles',
         this.data(),
         (res) => {
           this.#toast.showToast('Başarılı', res, 'success');
-          this.#router.navigateByUrl('/branches');
+          this.#router.navigateByUrl('/roles');
           this.loading.set(false);
         },
         () => this.loading.set(false),
@@ -117,11 +115,11 @@ export default class Create {
     } else {
       this.loading.set(true);
       this.#http.put<string>(
-        '/rent/branches',
+        '/rent/roles',
         this.data(),
         (res) => {
           this.#toast.showToast('Başarılı', res, 'info');
-          this.#router.navigateByUrl('/branches');
+          this.#router.navigateByUrl('/roles');
           this.loading.set(false);
         },
         () => this.loading.set(false),
