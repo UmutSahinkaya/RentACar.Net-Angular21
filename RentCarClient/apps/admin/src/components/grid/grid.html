@@ -1,6 +1,6 @@
 <title>RentCar | {{pageTitle()}}</title>
 <flexi-grid [data]="data()" [total]="total()" [dataBinding]="true" [loading]="loading()" language="tr"
-    [showCaption]="true" captionTitle="Şube Listesi" [customColumns]="columns()"
+    [showCaption]="true" [captionTitle]="captionTitle()" [customColumns]="columns()"
     (dataStateChange)="dataStateChange($event)" [commandColumnWidth]="commandColumnWidth()" [showIndex]="showIndex()">
     <ng-template flexiGridCaptionCommandTemplate>
         @if(commandTemplateRef() !== undefined){

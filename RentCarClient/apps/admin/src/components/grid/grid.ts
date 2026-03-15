@@ -45,7 +45,8 @@ export default class Grid implements AfterViewInit {
   readonly deleteEndpoint = input.required<string>();
   readonly breadcrumbs = input.required<BreadcrumbModel[]>();
   readonly commandColumnWidth = input<string>('150px');
-  readonly showIndex = input<boolean>(false);
+  readonly showIndex = input<boolean>(true);
+  readonly captionTitle = input<string>();
 
   readonly columns = contentChildren(FlexiGridColumnComponent, {
     descendants: true,
