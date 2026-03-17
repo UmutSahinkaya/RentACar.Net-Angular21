@@ -1,11 +1,14 @@
 ﻿using FluentValidation;
 using GenericRepository;
+using RentCarServer.Application.Behaviors;
 using RentCarServer.Domain.Roles;
 using RentCarServer.Domain.Shared;
 using TS.MediatR;
 using TS.Result;
 
 namespace RentCarServer.Application.Roles;
+
+[Permission("role:create")]
 
 public sealed record RoleCreateCommand(string Name, bool isActive) : IRequest<Result<string>>;
 

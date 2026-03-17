@@ -1,8 +1,10 @@
-﻿using RentCarServer.Domain.Branches;
+﻿using RentCarServer.Application.Behaviors;
+using RentCarServer.Domain.Branches;
 using TS.MediatR;
 
 namespace RentCarServer.Application.Branches;
 
+[Permission("branch:view")]
 public sealed record BranchGetAllQuery : IRequest<IQueryable<BranchDto>>;
 
 internal sealed class BranchGetAllQueryHandler(
