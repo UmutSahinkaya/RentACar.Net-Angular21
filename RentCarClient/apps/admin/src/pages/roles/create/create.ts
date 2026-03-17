@@ -26,12 +26,7 @@ import { FormValidateDirective } from 'form-validate-angular';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
-  imports: [
-    Blank,
-    FormsModule,
-    FormValidateDirective,
-    NgClass
-  ],
+  imports: [Blank, FormsModule, FormValidateDirective, NgClass],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -47,7 +42,7 @@ export default class Create {
   readonly bredcrumbs = signal<BreadcrumbModel[]>([
     {
       title: 'Roleler',
-      icon: 'bi-shield-lock',
+      icon: 'bi-clipboard2-check',
       url: '/roles',
     },
   ]);
@@ -76,7 +71,7 @@ export default class Create {
       return res.data;
     },
   });
-  readonly data = linkedSignal(() => this.result.value() ?? {...initialRole});
+  readonly data = linkedSignal(() => this.result.value() ?? { ...initialRole });
   readonly loading = linkedSignal(() => this.result.isLoading());
 
   constructor() {

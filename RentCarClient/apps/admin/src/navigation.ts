@@ -20,6 +20,6 @@ export const navigations: NavigationModel[] = [
   {
     title: 'Roller',
     url: '/roles',
-    icon: 'bi-shield-lock',
+    icon: 'bi-clipboard2-check'
   }
 ];

@@ -46,7 +46,7 @@ export default class Detail {
       const breadCrumbs: BreadcrumbModel[] = [
         {
           title: 'Roller',
-          icon: 'bi-shield-lock',
+          icon: 'bi-clipboard2-check',
           url: '/roles',
         },
       ];
