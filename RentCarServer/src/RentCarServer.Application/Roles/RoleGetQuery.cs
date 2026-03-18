@@ -16,7 +16,7 @@ internal sealed class RoleGetQueryHandler(IRoleRepository roleRepository) : IReq
     {
         var res = await roleRepository
                             .GetAllWithAudit()
-                            .MapTo()
+                            .MapToGet()
                             .Where(x => x.Id == request.Id)
                             .FirstOrDefaultAsync(cancellationToken);
         if (res is null) return Result<RoleDto>.Failure("Rol bulunamadı");

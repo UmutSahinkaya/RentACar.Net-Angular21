@@ -1,8 +1,11 @@
 <title>RentCar | İzinler</title>
+<div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-primary" (click)="updatePermissions()">Güncelle</button>
+</div>
 <flexi-treeview
 [data]="data()",
 [loading]="loading()",
-treeviewTitle="İzinler",
+[treeviewTitle]="treeviewTitle()",
 language="tr",
 [showDeleteButton]="false",
 [showEditButton]="false",
@@ -10,5 +13,4 @@ language="tr",
 (onRefresh)="this.result.reload()"
 (onSelected)="onSelected($event)"
 >
-
 </flexi-treeview>
