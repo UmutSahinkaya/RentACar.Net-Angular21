@@ -101,4 +101,5 @@ app.MapGet("/", () => "Hello World!").RequireAuthorization();
 //    return Results.Ok("Email gönderim işlemi başarılı .");
 //});*/
 //await app.CreateFirstUserAsync();
+await app.ClearRemovedPermissionFromRoleAsync();
 app.Run();

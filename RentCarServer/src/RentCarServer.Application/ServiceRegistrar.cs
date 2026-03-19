@@ -11,6 +11,7 @@ public static class ServiceRegistrar
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         _ = services.AddScoped<PermissionService>();
+        _ = services.AddScoped<PermissionCleanerService>();
         _ = services.AddMediatR(cfg =>
         {
             cfg.RegisterServicesFromAssembly(typeof(ServiceRegistrar).Assembly);
