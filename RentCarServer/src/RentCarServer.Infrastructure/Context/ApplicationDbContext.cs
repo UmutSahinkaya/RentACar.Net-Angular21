@@ -22,7 +22,7 @@ internal class ApplicationDbContext : DbContext, IUnitOfWork
     {
         _ = configurationBuilder.Properties<IdentityId>().HaveConversion<IdentityIdValueConverter>();
         _ = configurationBuilder.Properties<decimal>().HaveColumnType("decimal(18,2)");
-        _ = configurationBuilder.Properties<string>().HaveColumnType("varchar(MAX)");
+        _ = configurationBuilder.Properties<string>().HaveColumnType("nvarchar(MAX)");
         base.ConfigureConventions(configurationBuilder);
     }
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
