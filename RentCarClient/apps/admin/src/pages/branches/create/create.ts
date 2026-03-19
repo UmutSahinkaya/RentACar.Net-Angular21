@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-var */
 /* eslint-disable @nx/enforce-module-boundaries */
 import { NgClass } from '@angular/common';
+import { httpResource } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   linkedSignal,
   resource,
@@ -21,6 +24,7 @@ import {
   BreadcrumbService,
 } from 'apps/admin/src/services/breadcrumb';
 import { HttpService } from 'apps/admin/src/services/http';
+import { FlexiSelectModule } from 'flexi-select';
 import { FlexiToastService } from 'flexi-toast';
 import { FormValidateDirective } from 'form-validate-angular';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -33,6 +37,7 @@ import { lastValueFrom } from 'rxjs';
     FormValidateDirective,
     NgClass,
     NgxMaskDirective,
+    FlexiSelectModule,
   ],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
@@ -78,9 +83,14 @@ export default class Create {
       return res.data;
     },
   });
-  readonly data = linkedSignal(() => this.result.value() ?? {...initialBranch});
+  readonly data = linkedSignal(
+    () => this.result.value() ?? { ...initialBranch },
+  );
   readonly loading = linkedSignal(() => this.result.isLoading());
-
+  readonly ilResult = httpResource<any[]>(() => '/il-Ilce.json');
+  readonly iller = computed(() => this.ilResult.value() ?? []);
+  readonly illerLoading = computed(() => this.ilResult.isLoading());
+  readonly ilceler = signal<any[]>([]);
   constructor() {
     this.#activated.params.subscribe((res) => {
       if (res['id']) {
@@ -96,6 +106,12 @@ export default class Create {
           },
         ]);
         this.#breadcrumb.reset(this.bredcrumbs());
+      }
+    });
+
+    effect(()=>{
+      if(this.data().address.city){
+        this.getIlceler();
       }
     });
   }
@@ -136,5 +152,9 @@ export default class Create {
     }));
 
     console.log(this.data());
+  }
+  getIlceler(){
+    const il= this.iller().find(x=>x.il_adi===this.data().address.city);
+    this.ilceler.set(il ? il.ilceler : []);
   }
 }

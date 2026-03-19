@@ -10,7 +10,7 @@ namespace RentCarServer.Application.Branches;
 
 [Permission("branch:edit")]
 
-public sealed record BranchUpdateCommand(Guid Id, string Name, Address Address, bool IsActive) : IRequest<Result<string>>;
+public sealed record BranchUpdateCommand(Guid Id, string Name, Address Address, Contact Contact, bool IsActive) : IRequest<Result<string>>;
 public sealed class BranchUpdateCommandValidator : AbstractValidator<BranchUpdateCommand>
 {
     public BranchUpdateCommandValidator()
@@ -19,7 +19,7 @@ public sealed class BranchUpdateCommandValidator : AbstractValidator<BranchUpdat
         _ = RuleFor(x => x.Address.City).NotEmpty().WithMessage("Geçerli bir şehir giriniz.");
         _ = RuleFor(x => x.Address.District).NotEmpty().WithMessage("Geçerli bir ilçe giriniz.");
         _ = RuleFor(x => x.Address.FullAdress).NotEmpty().WithMessage("Geçerli bir tam adress giriniz.");
-        _ = RuleFor(x => x.Address.PhoneNumber1).NotEmpty().WithMessage("Geçerli bir telefon numarası giriniz.");
+        _ = RuleFor(x => x.Contact.PhoneNumber1).NotEmpty().WithMessage("Geçerli bir telefon numarası giriniz.");
     }
 }
 
@@ -32,6 +32,7 @@ internal sealed class BranchUpdateCommandHandler(IBranchRepository branchReposit
 
         branch.SetName(new(request.Name));
         branch.SetAdress(request.Address);
+        branch.SetContact(request.Contact);
         branch.SetStatus(request.IsActive);
         branchRepository.Update(branch);
         _ = await unitOfWork.SaveChangesAsync(cancellationToken);

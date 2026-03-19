@@ -12,5 +12,6 @@ internal sealed class BranchConfiguration : IEntityTypeConfiguration<Branch>
         _ = builder.HasKey(x => x.Id);
         _ = builder.OwnsOne(x => x.Name);
         _ = builder.OwnsOne(x => x.Address);
+        _ = builder.OwnsOne(x => x.Contact);
     }
 }

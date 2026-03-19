@@ -9,7 +9,7 @@ using TS.Result;
 namespace RentCarServer.Application.Branches;
 
 [Permission("branch:create")]
-public sealed record BranchCreateCommand(string Name, Address Address, bool IsActive) : IRequest<Result<string>>;
+public sealed record BranchCreateCommand(string Name, Address Address, Contact Contact, bool IsActive) : IRequest<Result<string>>;
 public sealed class BranchCreateCommandValidator : AbstractValidator<BranchCreateCommand>
 {
     public BranchCreateCommandValidator()
@@ -18,7 +18,7 @@ public sealed class BranchCreateCommandValidator : AbstractValidator<BranchCreat
         _ = RuleFor(x => x.Address.City).NotEmpty().WithMessage("Geçerli bir şehir giriniz.");
         _ = RuleFor(x => x.Address.District).NotEmpty().WithMessage("Geçerli bir ilçe giriniz.");
         _ = RuleFor(x => x.Address.FullAdress).NotEmpty().WithMessage("Geçerli bir tam adress giriniz.");
-        _ = RuleFor(x => x.Address.PhoneNumber1).NotEmpty().WithMessage("Geçerli bir telefon numarası giriniz.");
+        _ = RuleFor(x => x.Contact.PhoneNumber1).NotEmpty().WithMessage("Geçerli bir telefon numarası giriniz.");
     }
 }
 
@@ -31,7 +31,8 @@ public sealed class BranchCreateCommandHandler(IBranchRepository branchRepositor
 
         Name name = new(request.Name);
         Address address = request.Address;
-        Branch branch = new(name, address, request.IsActive);
+        Contact contact = request.Contact;
+        Branch branch = new(name, address, contact, request.IsActive);
         await branchRepository.AddAsync(branch, cancellationToken);
         _ = await unitOfWork.SaveChangesAsync(cancellationToken);
         return "Şube başarıyla oluşturuldu.";
