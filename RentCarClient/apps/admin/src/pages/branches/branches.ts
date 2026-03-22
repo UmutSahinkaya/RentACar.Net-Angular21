@@ -24,4 +24,5 @@ export default class Branches {
       isActive: true,
     },
   ]);
+  
 }

@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, Renderer2, ViewEncapsulation, OnInit, OnDestroy, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, Renderer2, ViewEncapsulation, OnInit, OnDestroy, signal, computed } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { NavigationModel, navigations } from '../../navigation';
 import Breadcrumb from './breadcrumb/breadcrumb';
+import { CommonService } from '../../services/common';
 
 @Component({
   imports: [NgClass, RouterLink,RouterLinkActive, RouterOutlet,Breadcrumb],
@@ -15,10 +16,12 @@ import Breadcrumb from './breadcrumb/breadcrumb';
 export default class Layouts implements OnInit, OnDestroy {
   private resizeTimer: any;
   readonly navigations = signal<NavigationModel[]>(navigations);
+  readonly decode=computed(()=>this.#common.decode());
 
   readonly #elementRef = inject(ElementRef);
   readonly #renderer = inject(Renderer2);
   readonly #router = inject(Router);
+  readonly #common= inject(CommonService);
 
   ngOnInit(): void {
     this.initializeSidebar();
@@ -250,5 +253,8 @@ export default class Layouts implements OnInit, OnDestroy {
   public showNotification(message: string): void {
     // Notification logic can be implemented here
     console.log('Notification:', message);
+  }
+  checkPermission(permission: string): boolean {
+    return this.#common.checkPermission(permission);
   }
 }
