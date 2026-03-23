@@ -33,7 +33,7 @@ internal sealed class UserUpdateCommandHandler(IClaimContext claimContext, IUser
             if (emailExist)
                 return Result<string>.Failure("Farklı bir email adresi deneyiniz.");
         }
-        if (user.UserName.Value != request.Email)
+        if (user.UserName.Value != request.UserName)
         {
             var userNameExist = await userRepository.AnyAsync(x => x.UserName.Value == request.UserName, cancellationToken);
             if (userNameExist)
