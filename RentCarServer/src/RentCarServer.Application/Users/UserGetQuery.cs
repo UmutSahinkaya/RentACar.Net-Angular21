@@ -9,7 +9,6 @@ namespace RentCarServer.Application.Users;
 
 public sealed record UserGetQuery(
     Guid Id) : IRequest<Result<UserDto>>;
-
 internal sealed class UserGetQueryHandler(
     IUserRepository userRepository,
     IRoleRepository roleRepository,
