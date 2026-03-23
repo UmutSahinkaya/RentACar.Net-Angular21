@@ -8,7 +8,7 @@ public static class RoleModule
 {
     public static void MapRole(this IEndpointRouteBuilder routeBuilder)
     {
-        var app = routeBuilder.MapGroup("/Roles").WithTags("Roles").RequireRateLimiting("fixed").RequireAuthorization();
+        var app = routeBuilder.MapGroup("/roles").WithTags("Roles").RequireRateLimiting("fixed").RequireAuthorization();
 
         _ = app.MapPost(string.Empty, async (RoleCreateCommand request, ISender sender, CancellationToken cancellationToken) =>
         {
