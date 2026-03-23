@@ -12,18 +12,24 @@ export const navigations: NavigationModel[] = [
     title: 'Dashboard',
     url: '/',
     icon: 'bi-speedometer2',
-    permission: 'dashboard:view'
+    permission: 'dashboard:view',
   },
   {
     title: 'Şubeler',
     url: '/branches',
     icon: 'bi-buildings',
-    permission: 'branch:view'
+    permission: 'branch:view',
   },
   {
     title: 'Roller',
-    url: '/roles',
+    url: '/roles', 
     icon: 'bi-clipboard2-check',
-    permission: 'role:view'
+    permission: 'role:view',
+  },
+  {
+    title: 'Kullanıcılar',
+    url: '/users',
+    icon: 'bi-people',
+    permission: 'user:view',
   }
 ];

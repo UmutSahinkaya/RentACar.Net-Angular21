@@ -5,7 +5,7 @@ namespace RentCarServer.Domain.Users;
 
 public sealed class User : Entity
 {
-    public User(FirstName firstName, LastName lastName, Email email, UserName userName, Password password, IdentityId branchId, IdentityId roleId)
+    public User(FirstName firstName, LastName lastName, Email email, UserName userName, Password password, IdentityId branchId, IdentityId roleId, bool isActive)
     {
         SetFirstName(firstName);
         SetLastName(lastName);
@@ -17,6 +17,7 @@ public sealed class User : Entity
         setTFAStatus(new(false));
         SetBranchId(branchId);
         SetRoleId(roleId);
+        SetStatus(isActive);
     }
 
     private User() { }
