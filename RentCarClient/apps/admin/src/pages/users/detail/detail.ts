@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
 import { Result } from 'apps/admin/src/models/result.model';
 import { initialRole, RoleModel } from 'apps/admin/src/models/role.model';
+import { initialUser, UserModel } from 'apps/admin/src/models/user.model';
 import {
   BreadcrumbModel,
   BreadcrumbService,
@@ -27,12 +28,12 @@ import {
 export default class Detail {
   readonly id = signal<string>('');
   readonly bredcrumbs = signal<BreadcrumbModel[]>([]);
-  readonly result = httpResource<Result<RoleModel>>(
-    () => `/rent/roles/${this.id()}`,
+  readonly result = httpResource<Result<UserModel>>(
+    () => `/rent/users/${this.id()}`,
   );
-  readonly data = computed(() => this.result.value()?.data ?? initialRole);
+  readonly data = computed(() => this.result.value()?.data ?? initialUser);
   readonly loading = computed(() => this.result.isLoading());
-  readonly pageTitle = computed(() => this.data().name);
+  readonly pageTitle = computed(() => this.data().firstName + ' ' + this.data().lastName);
 
   readonly #activated = inject(ActivatedRoute);
   readonly #breadcrumb = inject(BreadcrumbService);
@@ -45,9 +46,9 @@ export default class Detail {
     effect(() => {
       const breadCrumbs: BreadcrumbModel[] = [
         {
-          title: 'Roller',
-          icon: 'bi-clipboard2-check',
-          url: '/roles',
+          title: 'Kullanıcılar',
+          icon: 'bi-people',
+          url: '/users',
         },
       ];
 
@@ -56,9 +57,9 @@ export default class Detail {
         this.bredcrumbs.update((prev) => [
           ...prev,
           {
-            title: this.data().name,
+            title: this.data().fullName,
             icon: 'bi-zoom-in',
-            url: `/roles/detail/${this.id()}`,
+            url: `/users/detail/${this.id()}`,
             isActive: true,
           },
         ]);

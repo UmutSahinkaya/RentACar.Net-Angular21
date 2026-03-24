@@ -22,12 +22,12 @@ const router: Routes = [
       () => inject(CommonService).checkPermissionForRoute('user:edit'),
     ],
   },
-  // {
-  //   path: 'detail/:id',
-  //   loadComponent: () => import('./detail/detail'),
-  //   canActivate: [
-  //     () => inject(CommonService).checkPermissionForRoute('user:view'),
-  //   ],
-  // },
+  {
+    path: 'detail/:id',
+    loadComponent: () => import('./detail/detail'),
+    canActivate: [
+      () => inject(CommonService).checkPermissionForRoute('user:view'),
+    ],
+  },
 ];
 export default router;

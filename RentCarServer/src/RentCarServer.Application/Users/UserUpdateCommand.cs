@@ -54,6 +54,7 @@ internal sealed class UserUpdateCommandHandler(IClaimContext claimContext, IUser
         IdentityId roleId = new(request.RoleId);
         user.SetFirstName(firstName);
         user.SetLastName(lastName);
+        user.SetFullName();
         user.SetEmail(email);
         user.SetUserName(userName);
         user.SetBranchId(branchIdRecord);
