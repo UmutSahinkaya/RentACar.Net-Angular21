@@ -28,6 +28,20 @@ internal sealed class ClaimContext(IHttpContextAccessor httpContextAccessor) : I
         }
     }
 
+    public string GetRoleName()
+    {
+        var httpContext = httpContextAccessor.HttpContext;
+        if (httpContext is null)
+        {
+            throw new ArgumentNullException("context bilgisi bulunamadı");
+        }
+        var claims = httpContext.User.Claims;
+        string? roleName = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+        if (roleName is null)
+            throw new ArgumentException("Rol bilgisi bulunamadı");
+        return roleName;
+    }
+
     public Guid GetUserId()
     {
         var httpContext = httpContextAccessor.HttpContext;
