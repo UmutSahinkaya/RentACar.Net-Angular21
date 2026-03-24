@@ -26,6 +26,12 @@ internal sealed class CategoryUpdateCommandHandler(ICategoryRepository categoryR
         var category = await categoryRepository.FirstOrDefaultAsync(r => r.Id == request.Id, cancellationToken);
         if (category is null) return Result<string>.Failure("Böyle bir kategori bulunmamakta");
 
+        if (category.Name.Value != request.Name)
+        {
+            var nameExists = await categoryRepository.AnyAsync(x => x.Name.Value == request.Name, cancellationToken);
+            if (nameExists) return Result<string>.Failure("Bu kategori adı daha önce kullanılmış");
+        }
+
         Name name = new(request.Name);
         category.SetName(name);
         category.SetStatus(request.IsActive);
