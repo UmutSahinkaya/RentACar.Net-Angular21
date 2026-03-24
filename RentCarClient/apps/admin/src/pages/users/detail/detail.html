@@ -1,0 +1,38 @@
+<!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
+<blank [pageTitle]="pageTitle()" pageIcon="bi-zoom-in" [showStatusCheckbox]="false" [showStatus]="true"
+    [status]="data().isActive" [showAduit]="true" [audit]="data()" [loading]="loading()" size="col-md-5">
+    <div class="admin-card">
+        <div class="card-header">
+            <h6><i class="bi bi-info-circle text-primary me-2"></i>Temel Bilgiler</h6>
+        </div>
+        <div class="card-body">
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <label class="detail-label">Rol Adı</label>
+                    <span class="detail-value">
+                        {{data().name}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="admin-card">
+        <div class="card-header">
+            <h6><i class="bi bi-key text-warning me-2"></i>İzinler</h6>
+        </div>
+        <div class="card-body">
+            <div class="detail-grid">
+                @for(val of data().permissions;track val){
+                <div class="detail-item">
+                    <label class="detail-label">İzin</label>
+                    <span class="detail-value">
+                        {{val}}
+                    </span>
+                </div>
+                }@empty{
+                    <span style="opacity: 0.7;">İzin bulunmamaktadır.</span>
+                }
+            </div>
+        </div>
+    </div>
+</blank>

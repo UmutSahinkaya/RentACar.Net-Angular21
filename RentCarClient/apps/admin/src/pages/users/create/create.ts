@@ -2,6 +2,7 @@
 /* eslint-disable no-var */
 /* eslint-disable @nx/enforce-module-boundaries */
 import { NgClass } from '@angular/common';
+import { httpResource } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -15,18 +16,23 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { RoleModel,initialRole } from 'apps/admin/src/models/role.model';
+import { BranchModel } from 'apps/admin/src/models/branch.model';
+import { ODataModel } from 'apps/admin/src/models/odata.model';
+import { RoleModel } from 'apps/admin/src/models/role.model';
+import { UserModel,initialUser } from 'apps/admin/src/models/user.model';
 import {
   BreadcrumbModel,
   BreadcrumbService,
 } from 'apps/admin/src/services/breadcrumb';
+import { CommonService } from 'apps/admin/src/services/common';
 import { HttpService } from 'apps/admin/src/services/http';
+import { FlexiSelectModule } from 'flexi-select';
 import { FlexiToastService } from 'flexi-toast';
 import { FormValidateDirective } from 'form-validate-angular';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
-  imports: [Blank, FormsModule, FormValidateDirective, NgClass],
+  imports: [Blank, FormsModule, FormValidateDirective, NgClass,FlexiSelectModule],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,17 +43,17 @@ export default class Create {
   readonly #http = inject(HttpService);
   readonly #toast = inject(FlexiToastService);
   readonly #router = inject(Router);
-
+  readonly #common=inject(CommonService);
   readonly id = signal<string | undefined>(undefined);
   readonly bredcrumbs = signal<BreadcrumbModel[]>([
     {
-      title: 'Roller',
-      icon: 'bi-buildings',
-      url: '/roles',
+      title: 'Kullanıcılar',
+      icon: 'bi-people',
+      url: '/users',
     },
   ]);
   readonly pageTitle = computed(() =>
-    this.id() ? 'Rol Güncelle' : 'Rol Ekle',
+    this.id() ? 'Kullanıcı Güncelle' : 'Kullanıcı Ekle',
   );
   readonly pageIcon = computed(() => (this.id() ? 'bi-pen' : 'bi-plus'));
   readonly btnName = computed(() => (this.id() ? 'Güncelle' : 'Kaydet'));
@@ -55,15 +61,15 @@ export default class Create {
     params: () => this.id(),
     loader: async () => {
       var res = await lastValueFrom(
-        this.#http.getResource<RoleModel>(`/rent/roles/${this.id()}`),
+        this.#http.getResource<UserModel>(`/rent/users/${this.id()}`),
       );
 
       this.bredcrumbs.update((prev) => [
         ...prev,
         {
-          title: res.data!.name,
+          title: res.data!.fullName,
           icon: 'bi-pen',
-          url: `/roles/edit/${this.id()}`,
+          url: `/users/edit/${this.id()}`,
           isActive: true,
         },
       ]);
@@ -71,8 +77,16 @@ export default class Create {
       return res.data;
     },
   });
-  readonly data = linkedSignal(() => this.result.value() ?? { ...initialRole });
+  readonly data = linkedSignal(() => this.result.value() ?? { ...initialUser });
   readonly loading = linkedSignal(() => this.result.isLoading());
+
+  readonly branchResult= httpResource<ODataModel<BranchModel>>(()=> '/rent/odata/branches');
+  readonly branches= computed(()=> this.branchResult.value()?.value ?? []);
+  readonly branchLoading= computed(()=> this.branchResult.isLoading());
+
+  readonly roleResult= httpResource<ODataModel<RoleModel>>(()=> '/rent/odata/roles');
+  readonly roles= computed(()=> this.roleResult.value()?.value ?? []);
+  readonly roleLoading= computed(()=> this.roleResult.isLoading());
 
   constructor() {
     this.#activated.params.subscribe((res) => {
@@ -84,7 +98,7 @@ export default class Create {
           {
             title: 'Ekle',
             icon: 'bi-plus',
-            url: '/roles/add',
+            url: '/users/add',
             isActive: true,
           },
         ]);
@@ -98,11 +112,11 @@ export default class Create {
     if (!this.id()) {
       this.loading.set(true);
       this.#http.post<string>(
-        '/rent/roles',
+        '/rent/users',
         this.data(),
         (res) => {
           this.#toast.showToast('Başarılı', res, 'success');
-          this.#router.navigateByUrl('/roles');
+          this.#router.navigateByUrl('/users');
           this.loading.set(false);
         },
         () => this.loading.set(false),
@@ -110,11 +124,11 @@ export default class Create {
     } else {
       this.loading.set(true);
       this.#http.put<string>(
-        '/rent/roles',
+        '/rent/users',
         this.data(),
         (res) => {
           this.#toast.showToast('Başarılı', res, 'info');
-          this.#router.navigateByUrl('/roles');
+          this.#router.navigateByUrl('/users');
           this.loading.set(false);
         },
         () => this.loading.set(false),
@@ -129,5 +143,9 @@ export default class Create {
     }));
 
     console.log(this.data());
+  }
+
+  checkIsAdmin(){
+    return this.#common.decode().role==="sys_admin";
   }
 }

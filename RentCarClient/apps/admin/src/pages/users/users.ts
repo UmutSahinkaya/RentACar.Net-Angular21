@@ -3,10 +3,9 @@ import { CommonService } from '../../services/common';
 import { BreadcrumbModel } from '../../services/breadcrumb';
 import { FlexiGridModule } from 'flexi-grid';
 import Grid from '../../components/grid/grid';
-import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [Grid, FlexiGridModule, RouterLink],
+  imports: [Grid, FlexiGridModule],
   templateUrl: './users.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
