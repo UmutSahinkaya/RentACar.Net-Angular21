@@ -91,6 +91,7 @@ app.MapControllers()
 app.MapAuth();
 app.MapBranch();
 app.MapRole();
+app.MapCategory();
 app.MapPermission();
 app.MapUser();
 
