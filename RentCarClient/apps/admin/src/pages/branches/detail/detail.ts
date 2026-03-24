@@ -20,7 +20,7 @@ import {
 import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
-  imports: [Blank,NgxMaskPipe],
+  imports: [Blank, NgxMaskPipe],
   templateUrl: './detail.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -33,7 +33,7 @@ export default class Detail {
   );
   readonly data = computed(() => this.result.value()?.data ?? initialBranch);
   readonly loading = computed(() => this.result.isLoading());
-  readonly pageTitle = computed(() => this.data().name);
+  readonly pageTitle = signal<string>('Şube Detay');
 
   readonly #activated = inject(ActivatedRoute);
   readonly #breadcrumb = inject(BreadcrumbService);

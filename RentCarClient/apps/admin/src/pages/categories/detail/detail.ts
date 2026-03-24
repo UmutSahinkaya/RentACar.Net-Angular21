@@ -11,13 +11,9 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
+import { CategoryModel, initialCategory } from 'apps/admin/src/models/category.model';
 import { Result } from 'apps/admin/src/models/result.model';
-import { initialRole, RoleModel } from 'apps/admin/src/models/role.model';
-import { initialUser, UserModel } from 'apps/admin/src/models/user.model';
-import {
-  BreadcrumbModel,
-  BreadcrumbService,
-} from 'apps/admin/src/services/breadcrumb';
+import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
 
 @Component({
   imports: [Blank],
@@ -25,15 +21,17 @@ import {
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class Detail {
+export default class CategoryDetail {
   readonly id = signal<string>('');
   readonly bredcrumbs = signal<BreadcrumbModel[]>([]);
-  readonly result = httpResource<Result<UserModel>>(
-    () => `/rent/users/${this.id()}`,
+  readonly result = httpResource<Result<CategoryModel>>(
+    () => `/rent/categories/${this.id()}`,
   );
-  readonly data = computed(() => this.result.value()?.data ?? initialUser);
+  readonly data = computed(
+    () => this.result.value()?.data ?? initialCategory,
+  );
   readonly loading = computed(() => this.result.isLoading());
-  readonly pageTitle = signal<string>('Kullanıcı Detay');
+  readonly pageTitle = signal<string>('Kategori Detay');
 
   readonly #activated = inject(ActivatedRoute);
   readonly #breadcrumb = inject(BreadcrumbService);
@@ -46,9 +44,9 @@ export default class Detail {
     effect(() => {
       const breadCrumbs: BreadcrumbModel[] = [
         {
-          title: 'Kullanıcılar',
-          icon: 'bi-people',
-          url: '/users',
+          title: 'Kategoriler',
+          icon: 'bi-list',
+          url: '/categories',
         },
       ];
 
@@ -57,9 +55,9 @@ export default class Detail {
         this.bredcrumbs.update((prev) => [
           ...prev,
           {
-            title: this.data().fullName,
+            title: this.data().name,
             icon: 'bi-zoom-in',
-            url: `/users/detail/${this.id()}`,
+            url: `/categories/detail/${this.id()}`,
             isActive: true,
           },
         ]);

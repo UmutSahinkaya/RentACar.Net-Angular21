@@ -32,7 +32,7 @@ export default class Detail {
   );
   readonly data = computed(() => this.result.value()?.data ?? initialRole);
   readonly loading = computed(() => this.result.isLoading());
-  readonly pageTitle = computed(() => this.data().name);
+  readonly pageTitle = signal<string>('Rol Detay');
 
   readonly #activated = inject(ActivatedRoute);
   readonly #breadcrumb = inject(BreadcrumbService);
