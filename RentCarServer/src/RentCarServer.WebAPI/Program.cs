@@ -94,6 +94,7 @@ app.MapRole();
 app.MapCategory();
 app.MapPermission();
 app.MapUser();
+app.MapProtectionPackage();
 
 app.MapGet("/", () => "Hello World!").RequireAuthorization();
 
