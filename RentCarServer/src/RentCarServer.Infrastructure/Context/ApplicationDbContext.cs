@@ -21,7 +21,7 @@ internal class ApplicationDbContext : DbContext, IUnitOfWork
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         _ = configurationBuilder.Properties<IdentityId>().HaveConversion<IdentityIdValueConverter>();
-        _ = configurationBuilder.Properties<decimal>().HaveColumnType("decimal(18,2)");
+        _ = configurationBuilder.Properties<decimal>().HaveColumnType("money");
         _ = configurationBuilder.Properties<string>().HaveColumnType("nvarchar(MAX)");
         base.ConfigureConventions(configurationBuilder);
     }
