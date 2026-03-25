@@ -23,7 +23,7 @@ public class MainODataController : ODataController
         _ = builder.EnableLowerCamelCase();
         _ = builder.EntitySet<BranchDto>("branches");
         _ = builder.EntitySet<CategoryDto>("categories");
-        _ = builder.EntitySet<ProtectionPackageDto>("protectionPackages");
+        _ = builder.EntitySet<ProtectionPackageDto>("protection-packages");
         _ = builder.EntitySet<RoleDto>("roles");
         _ = builder.EntitySet<UserDto>("users");
         return builder.GetEdmModel();
@@ -49,7 +49,7 @@ public class MainODataController : ODataController
         => await sender.Send(new UserGetAllQuery(), cancellationToken);
 
 
-    [HttpGet("protectionPackages")]
+    [HttpGet("protection-packages")]
     public IQueryable<ProtectionPackageDto> ProtectionPackages(ISender sender, CancellationToken cancellationToken = default)
         => sender.Send(new ProtectionPackageGetAllQuery(), cancellationToken).Result;
 }

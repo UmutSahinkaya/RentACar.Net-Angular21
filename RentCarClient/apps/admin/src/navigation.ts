@@ -22,9 +22,15 @@ export const navigations: NavigationModel[] = [
   },
   {
     title: 'Roller',
-    url: '/roles', 
+    url: '/roles',
     icon: 'bi-clipboard2-check',
     permission: 'role:view',
+  },
+  {
+    title: 'Koruma Paketleri',
+    url: '/protection-packages',
+    icon: 'bi-shield-check',
+    permission: 'protection_package:view',
   },
   {
     title: 'Kullanıcılar',
@@ -37,5 +43,5 @@ export const navigations: NavigationModel[] = [
     url: '/categories',
     icon: 'bi-list',
     permission: 'category:view',
-  }
+  },
 ];
