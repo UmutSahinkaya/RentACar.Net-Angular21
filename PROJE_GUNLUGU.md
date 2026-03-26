@@ -1,5 +1,137 @@
 # Proje Günlüğü
 
+### [2026-03-26] Extra (Ek Hizmetler) Modülü ve CRUD
+- Commit: f5fd92c, 2e789d8
+- Kapsam: Backend & Frontend — Extra modeli, CRUD, OData, migration, Angular sayfaları
+- Etkilenen Dosyalar:
+  - `RentCarClient/apps/admin/src/models/extra.model.ts`
+  - `RentCarClient/apps/admin/src/pages/extra/create/create.html`
+  - `RentCarClient/apps/admin/src/pages/extra/create/create.ts`
+  - `RentCarClient/apps/admin/src/pages/extra/detail/detail.html`
+  - `RentCarClient/apps/admin/src/pages/extra/detail/detail.ts`
+  - `RentCarClient/apps/admin/src/pages/extra/extra.html`
+  - `RentCarClient/apps/admin/src/pages/extra/extra.ts`
+  - `RentCarClient/apps/admin/src/pages/extra/router.ts`
+  - `RentCarServer/src/RentCarServer.Domain/Extras/Extra.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Extras/IExtraRepository.cs`
+  - `RentCarServer/src/RentCarServer.Application/Extras/ExtraCreateCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/Extras/ExtraDeleteCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/Extras/ExtraDto.cs`
+  - `RentCarServer/src/RentCarServer.Application/Extras/ExtraGetAllQuery.cs`
+  - `RentCarServer/src/RentCarServer.Application/Extras/ExtraGetQuery.cs`
+  - `RentCarServer/src/RentCarServer.Application/Extras/ExtraUpdateCommand.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Configurations/ExtraConfiguration.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Repositories/ExtraRepository.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Migrations/20260326071542_i_added_extras_table.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Modules/ExtraModule.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Controllers/MainODataController.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Program.cs`
+- Yapılanlar:
+  - Extra (ek hizmetler) aggregate ve value object'leri oluşturuldu.
+  - CRUD komutları, sorguları, DTO ve repository ile tam uçtan uca akış sağlandı.
+  - EF Core migration ve configuration ile Extras tablosu oluşturuldu.
+  - OData ve Minimal API endpointleri eklendi.
+  - Angular tarafında Extra için model, router ve CRUD sayfaları geliştirildi.
+
+### [2026-03-25] Protection Package Modülü ve CRUD/OData
+- Commit: b22d1cb, d86e284, 686b1af, 3ecc7f5
+- Kapsam: Backend & Frontend — Protection Package aggregate, CRUD, OData, Angular sayfaları
+- Etkilenen Dosyalar:
+  - `RentCarClient/apps/admin/src/models/protection-package.model.ts`
+  - `RentCarClient/apps/admin/src/pages/protection-packages/create/create.html`
+  - `RentCarClient/apps/admin/src/pages/protection-packages/create/create.ts`
+  - `RentCarClient/apps/admin/src/pages/protection-packages/detail/detail.html`
+  - `RentCarClient/apps/admin/src/pages/protection-packages/detail/detail.ts`
+  - `RentCarClient/apps/admin/src/pages/protection-packages/protection-packages.html`
+  - `RentCarClient/apps/admin/src/pages/protection-packages/protection-packages.ts`
+  - `RentCarClient/apps/admin/src/pages/protection-packages/router.ts`
+  - `RentCarServer/src/RentCarServer.Domain/ProtectionPackages/ProtectionPackage.cs`
+  - `RentCarServer/src/RentCarServer.Domain/ProtectionPackages/ValueObjects/IsRecommended.cs`
+  - `RentCarServer/src/RentCarServer.Domain/ProtectionPackages/ValueObjects/Price.cs`
+  - `RentCarServer/src/RentCarServer.Domain/ProtectionPackages/ValueObjects/ProtectionCoverage.cs`
+  - `RentCarServer/src/RentCarServer.Domain/ProtectionPackages/IProtectionPackageRepository.cs`
+  - `RentCarServer/src/RentCarServer.Application/ProtectionPackages/ProtectionPackageCreateCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/ProtectionPackages/ProtectionPackageDeleteCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/ProtectionPackages/ProtectionPackageDto.cs`
+  - `RentCarServer/src/RentCarServer.Application/ProtectionPackages/ProtectionPackageGetAllQuery.cs`
+  - `RentCarServer/src/RentCarServer.Application/ProtectionPackages/ProtectionPackageGetQuery.cs`
+  - `RentCarServer/src/RentCarServer.Application/ProtectionPackages/ProtectionPackageUpdateCommand.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Configurations/ProtectionPackageConfiguration.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Repositories/ProtectionPackageRepository.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Migrations/20260325073009_i_added_protection_package_table.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Modules/ProtectionPackageModule.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Controllers/MainODataController.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Program.cs`
+- Yapılanlar:
+  - Protection Package aggregate ve value object'leri oluşturuldu.
+  - CRUD komutları, sorguları, DTO ve repository ile tam uçtan uca akış sağlandı.
+  - EF Core migration ve configuration ile ProtectionPackages tablosu oluşturuldu.
+  - OData ve Minimal API endpointleri eklendi.
+  - Angular tarafında Protection Package için model, router ve CRUD sayfaları geliştirildi.
+
+### [2026-03-24] Category Modülü ve CRUD/OData
+- Commit: 7662c46, f796c45, 967855a, ba51ef5
+- Kapsam: Backend & Frontend — Category aggregate, CRUD, OData, Angular sayfaları
+- Etkilenen Dosyalar:
+  - `RentCarClient/apps/admin/src/models/category.model.ts`
+  - `RentCarClient/apps/admin/src/pages/categories/categories.html`
+  - `RentCarClient/apps/admin/src/pages/categories/categories.ts`
+  - `RentCarClient/apps/admin/src/pages/categories/create/create.html`
+  - `RentCarClient/apps/admin/src/pages/categories/create/create.ts`
+  - `RentCarClient/apps/admin/src/pages/categories/detail/detail.html`
+  - `RentCarClient/apps/admin/src/pages/categories/detail/detail.ts`
+  - `RentCarClient/apps/admin/src/pages/categories/router.ts`
+  - `RentCarServer/src/RentCarServer.Domain/Categories/Category.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Categories/ICategoryRepository.cs`
+  - `RentCarServer/src/RentCarServer.Application/Categories/CategoryCreateCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/Categories/CategoryDeleteCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/Categories/CategoryDto.cs`
+  - `RentCarServer/src/RentCarServer.Application/Categories/CategoryGetAllQuery.cs`
+  - `RentCarServer/src/RentCarServer.Application/Categories/CategoryGetQuery.cs`
+  - `RentCarServer/src/RentCarServer.Application/Categories/CategoryUpdateCommand.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Configurations/CategoryConfiguration.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Repositories/CategoryRepository.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Migrations/20260324071025_i_created_category_table.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Modules/CategoryModule.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Controllers/MainODataController.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Program.cs`
+- Yapılanlar:
+  - Category aggregate ve value object'leri oluşturuldu.
+  - CRUD komutları, sorguları, DTO ve repository ile tam uçtan uca akış sağlandı.
+  - EF Core migration ve configuration ile Categories tablosu oluşturuldu.
+  - OData ve Minimal API endpointleri eklendi.
+  - Angular tarafında Category için model, router ve CRUD sayfaları geliştirildi.
+
+### [2026-03-23] User Yönetimi ve CRUD/OData
+- Commit: fa3f25c, 23ab1c5, 51bc78d, 7620cb0, e66001b, 2934776, 018da9b, bea9556, 7cf2a7e
+- Kapsam: Backend & Frontend — User aggregate, CRUD, OData, Angular sayfaları
+- Etkilenen Dosyalar:
+  - `RentCarClient/apps/admin/src/models/user.model.ts`
+  - `RentCarClient/apps/admin/src/pages/users/create/create.html`
+  - `RentCarClient/apps/admin/src/pages/users/create/create.ts`
+  - `RentCarClient/apps/admin/src/pages/users/detail/detail.html`
+  - `RentCarClient/apps/admin/src/pages/users/detail/detail.ts`
+  - `RentCarClient/apps/admin/src/pages/users/users.html`
+  - `RentCarClient/apps/admin/src/pages/users/users.ts`
+  - `RentCarClient/apps/admin/src/pages/users/router.ts`
+  - `RentCarServer/src/RentCarServer.Domain/Users/User.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Users/IUserRepository.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserCreateCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserDeleteCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserDto.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserGetAllQuery.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserGetQuery.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserUpdateCommand.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Modules/UserModule.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Controllers/MainODataController.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Program.cs`
+- Yapılanlar:
+  - User aggregate ve value object'leri oluşturuldu.
+  - CRUD komutları, sorguları, DTO ve repository ile tam uçtan uca akış sağlandı.
+  - EF Core migration ve configuration ile Users tablosu güncellendi.
+  - OData ve Minimal API endpointleri eklendi.
+  - Angular tarafında User için model, router ve CRUD sayfaları geliştirildi.
+
 Bu dosya, projede yapılan işleri adım adım takip etmek içindir. README sade kalır, proje geçmişi burada birikir.
 
 ## Kullanım Kuralı
