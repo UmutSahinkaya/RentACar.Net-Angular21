@@ -77,6 +77,7 @@ app.UseHttpsRedirection();
 app.UseCors(x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod().SetPreflightMaxAge(TimeSpan.FromMinutes(10)));
 
 app.UseResponseCompression();
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
