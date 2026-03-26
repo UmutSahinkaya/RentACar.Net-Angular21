@@ -10,17 +10,11 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { httpResource } from '@angular/common/http';
-import Blank from 'apps/admin/src/components/blank/blank';
-import {
-  ProtectionPackageModel,
-  initialProtectionPackageModel,
-} from 'apps/admin/src/models/protection-package.model';
-import {
-  BreadcrumbModel,
-  BreadcrumbService,
-} from 'apps/admin/src/services/breadcrumb';
-import { Result } from 'apps/admin/src/models/result.model';
 import { TrCurrencyPipe } from 'tr-currency';
+import Blank from 'apps/admin/src/components/blank/blank';
+import { ExtraModel, initialExtraModel } from 'apps/admin/src/models/extra.model';
+import { Result } from 'apps/admin/src/models/result.model';
+import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
 
 @Component({
   imports: [Blank, TrCurrencyPipe],
@@ -28,17 +22,17 @@ import { TrCurrencyPipe } from 'tr-currency';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class ProtectionPackageDetail {
+export default class ExtraDetail {
   readonly id = signal<string>('');
   readonly bredcrumbs = signal<BreadcrumbModel[]>([]);
-  readonly result = httpResource<Result<ProtectionPackageModel>>(
-    () => `/rent/protection-packages/${this.id()}`,
+  readonly result = httpResource<Result<ExtraModel>>(
+    () => `/rent/extras/${this.id()}`,
   );
   readonly data = computed(
-    () => this.result.value()?.data ?? initialProtectionPackageModel,
+    () => this.result.value()?.data ?? initialExtraModel,
   );
   readonly loading = computed(() => this.result.isLoading());
-  readonly pageTitle = signal<string>('Koruma Paketi Detay');
+  readonly pageTitle = signal<string>('Ekstra Detay');
 
   readonly #activated = inject(ActivatedRoute);
   readonly #breadcrumb = inject(BreadcrumbService);
@@ -51,9 +45,9 @@ export default class ProtectionPackageDetail {
     effect(() => {
       const breadCrumbs: BreadcrumbModel[] = [
         {
-          title: 'Koruma Paketleri',
-          icon: 'bi-shield-check',
-          url: '/protection-packages',
+          title: 'Ekstralar',
+          icon: 'bi-plus-square',
+          url: '/extra',
         },
       ];
 
@@ -64,7 +58,7 @@ export default class ProtectionPackageDetail {
           {
             title: this.data().name,
             icon: 'bi-zoom-in',
-            url: `/protection-packages/detail/${this.id()}`,
+            url: `/extra/detail/${this.id()}`,
             isActive: true,
           },
         ]);

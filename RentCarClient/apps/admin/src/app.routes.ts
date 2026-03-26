@@ -48,6 +48,10 @@ export const appRoutes: Route[] = [
         path: 'protection-packages',
         loadChildren: () => import('./pages/protection-packages/router'),
       },
+      {
+        path: 'extra',
+        loadChildren: () => import('./pages/extra/router'),
+      },
     ],
   },
 ];

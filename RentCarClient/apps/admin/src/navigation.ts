@@ -44,4 +44,10 @@ export const navigations: NavigationModel[] = [
     icon: 'bi-list',
     permission: 'category:view',
   },
+  {
+    title: 'Ekstralar',
+    url: '/extra',
+    icon: 'bi-plus-square',
+    permission: 'extra:view',
+  },
 ];
