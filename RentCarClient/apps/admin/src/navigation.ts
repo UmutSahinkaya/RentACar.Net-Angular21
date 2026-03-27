@@ -27,12 +27,6 @@ export const navigations: NavigationModel[] = [
     permission: 'role:view',
   },
   {
-    title: 'Koruma Paketleri',
-    url: '/protection-packages',
-    icon: 'bi-shield-check',
-    permission: 'protection_package:view',
-  },
-  {
     title: 'Kullanıcılar',
     url: '/users',
     icon: 'bi-people',
@@ -43,6 +37,18 @@ export const navigations: NavigationModel[] = [
     url: '/categories',
     icon: 'bi-list',
     permission: 'category:view',
+  },
+  {
+    title: 'Araçlar',
+    url: '/vehicles',
+    icon: 'bi-car-front',
+    permission: 'vehicle:view',
+  },
+  {
+    title: 'Koruma Paketleri',
+    url: '/protection-packages',
+    icon: 'bi-shield-check',
+    permission: 'protection_package:view',
   },
   {
     title: 'Ekstralar',
