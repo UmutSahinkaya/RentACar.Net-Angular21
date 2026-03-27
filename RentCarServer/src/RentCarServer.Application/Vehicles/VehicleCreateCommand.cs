@@ -68,7 +68,7 @@ internal sealed class VehicleCreateCommandHandler(
     public async Task<Result<string>> Handle(VehicleCreateCommand request, CancellationToken cancellationToken)
     {
         if (await vehicleRepository.AnyAsync(p => p.Plate.Value == request.Plate, cancellationToken))
-            return Result<string>.Failure("Bu plaka ile kayýtlý baþka bir araç var.");
+            return Result<string>.Failure("Bu plaka ile kayıtlı başka bir araç var.");
 
         string fileName = FileService.FileSaveToServer(request.File, "wwwroot/images/");
 
