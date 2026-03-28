@@ -144,6 +144,6 @@ internal sealed class VehicleCreateCommandHandler(
         vehicleRepository.Add(vehicle);
         _ = await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return "Araç baþarýyla kaydedildi";
+        return "Araç başarıyla kaydedildi";
     }
 }

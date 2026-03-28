@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
-import { Common, CommonService } from '../../services/common';
+import { CommonService } from '../../services/common';
 
 const router: Routes = [
   {
