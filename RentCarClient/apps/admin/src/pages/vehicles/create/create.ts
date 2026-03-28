@@ -231,6 +231,7 @@ export default class CreateVehicle {
   readonly branchLoading = computed(() => this.branchResource.isLoading());
   featuresInput = '';
   readonly file = signal<any | undefined>(undefined);
+  readonly fileData = signal<string | undefined>(undefined);
 
   readonly fileInput =
     viewChild.required<ElementRef<HTMLInputElement>>('fileInput');
@@ -333,8 +334,6 @@ export default class CreateVehicle {
     // Resim dosyası (fileInput ile seçilen dosya)
     if (this.file()) {
       formData.append('File', this.file(), this.file().name);
-    } else {
-      formData.append('File', 'null');
     }
 
     // Güncellemede Id ekle
@@ -395,9 +394,10 @@ export default class CreateVehicle {
       this.file.set(file);
       const reader = new FileReader();
       reader.onload = () => {
+        this.fileData.set(reader.result as string);
         this.data.update((prev) => ({
           ...prev,
-          imageUrl: reader.result as string,
+          imageUrl: '',
         }));
       };
       reader.readAsDataURL(file);
@@ -423,9 +423,10 @@ export default class CreateVehicle {
       this.file.set(file);
       const reader = new FileReader();
       reader.onload = () => {
+        this.fileData.set(reader.result as string);
         this.data.update((prev) => ({
           ...prev,
-          imageUrl: reader.result as string,
+          imageUrl: '',
         }));
       };
       reader.readAsDataURL(file);
@@ -453,5 +454,14 @@ export default class CreateVehicle {
   // Özellik seçili mi kontrolü
   isFeatureSelected(feature: string): boolean {
     return this.data().features.includes(feature);
+  }
+  showImageUrl() {
+    if (this.fileData()) {
+      return this.fileData();
+    } else if (this.data().imageUrl) {
+      return `https://localhost:7158/images/${this.data().imageUrl}`;
+    } else {
+      return '/no-noimage.png';
+    }
   }
 }
