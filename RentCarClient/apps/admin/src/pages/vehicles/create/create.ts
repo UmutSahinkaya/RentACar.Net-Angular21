@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @nx/enforce-module-boundaries */
 import {
   ChangeDetectionStrategy,
   Component,
@@ -162,14 +165,7 @@ export default class CreateVehicle {
     },
   ];
 
-  readonly insuranceTypeList = signal<string[]>([
-    'Kasko',
-    'Trafik',
-    'Kasko ve Trafik',
-    'Yok',
-    'Full',
-    'Partial',
-  ]);
+  readonly insuranceTypeList = signal<string[]>(['Kasko & Sigorta', 'Sigorta']);
 
   readonly tractionTypeList = [
     'Önden Çekiş',
@@ -337,6 +333,8 @@ export default class CreateVehicle {
     // Resim dosyası (fileInput ile seçilen dosya)
     if (this.file()) {
       formData.append('File', this.file(), this.file().name);
+    } else {
+      formData.append('File', 'null');
     }
 
     // Güncellemede Id ekle

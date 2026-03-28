@@ -36,12 +36,12 @@ public sealed record VehicleCreateCommand(
     decimal WeeklyDiscountRate,
     decimal MonthlyDiscountRate,
     string InsuranceType,
-    DateTimeOffset LastMaintenanceDate,
+    DateOnly LastMaintenanceDate,
     int LastMaintenanceKm,
     int NextMaintenanceKm,
-    DateTimeOffset InspectionDate,
-    DateTimeOffset InsuranceEndDate,
-    DateTimeOffset CascoEndDate,
+    DateOnly InspectionDate,
+    DateOnly InsuranceEndDate,
+    DateOnly? CascoEndDate,
     string TireStatus,
     string GeneralStatus,
     List<string> Features,
@@ -53,12 +53,31 @@ public sealed class VehicleCreateCommandValidator : AbstractValidator<VehicleCre
 {
     public VehicleCreateCommandValidator()
     {
-        _ = RuleFor(p => p.Brand).NotEmpty();
-        _ = RuleFor(p => p.Model).NotEmpty();
-        _ = RuleFor(p => p.ModelYear).GreaterThan(1900);
-        _ = RuleFor(p => p.Plate).NotEmpty();
-        _ = RuleFor(p => p.File).NotEmpty();
+        _ = RuleFor(p => p.Brand)
+            .NotEmpty()
+            .WithMessage("Marka alanı boş bırakılamaz.");
+
+        _ = RuleFor(p => p.Model)
+            .NotEmpty()
+            .WithMessage("Model alanı boş bırakılamaz.");
+
+        _ = RuleFor(p => p.ModelYear)
+            .GreaterThan(1900)
+            .WithMessage("Geçerli bir model yılı seçmelisiniz.");
+
+        _ = RuleFor(p => p.Plate)
+            .NotEmpty()
+            .WithMessage("Plaka bilgisi girilmelidir.");
+
+        _ = RuleFor(p => p.File)
+            .NotEmpty()
+            .WithMessage("Araç görseli yüklemelisiniz.");
+
+        _ = RuleFor(p => p.Features)
+            .Must(i => i != null && i.Any())
+            .WithMessage("En az bir özellik seçmelisiniz.");
     }
+
 }
 
 internal sealed class VehicleCreateCommandHandler(
@@ -100,7 +119,7 @@ internal sealed class VehicleCreateCommandHandler(
         NextMaintenanceKm nextMaintenanceKm = new(request.NextMaintenanceKm);
         InspectionDate inspectionDate = new(request.InspectionDate);
         InsuranceEndDate insuranceEndDate = new(request.InsuranceEndDate);
-        CascoEndDate cascoEndDate = new(request.CascoEndDate);
+        CascoEndDate? cascoEndDate = request.CascoEndDate is not null ? new(request.CascoEndDate.Value) : null;
         TireStatus tireStatus = new(request.TireStatus);
         GeneralStatus generalStatus = new(request.GeneralStatus);
         IEnumerable<Feature> features = request.Features.Select(f => new Feature(f));
