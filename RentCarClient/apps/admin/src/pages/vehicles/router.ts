@@ -6,23 +6,31 @@ const router: Routes = [
   {
     path: '',
     loadComponent: () => import('./vehicles'),
-    canActivate: [() => inject(CommonService).checkPermissionForRoute('vehicle:view')],
+    canActivate: [
+      () => inject(CommonService).checkPermissionForRoute('vehicle:view'),
+    ],
   },
   {
-      path: 'add',
-      loadComponent: () => import('./create/create'),
-      canActivate: [() => inject(CommonService).checkPermissionForRoute('vehicle:create')]
+    path: 'add',
+    loadComponent: () => import('./create/create'),
+    canActivate: [
+      () => inject(CommonService).checkPermissionForRoute('vehicle:create'),
+    ],
   },
   {
-      path: 'edit/:id',
-      loadComponent: () => import('./create/create'),
-      canActivate: [() => inject(CommonService).checkPermissionForRoute('vehicle:edit')]
+    path: 'edit/:id',
+    loadComponent: () => import('./create/create'),
+    canActivate: [
+      () => inject(CommonService).checkPermissionForRoute('vehicle:edit'),
+    ],
   },
   {
-      path: 'detail/:id',
-      loadComponent: () => import('./detail/detail'),
-      canActivate: [() => inject(CommonService).checkPermissionForRoute('vehicle:view')]
-  }
+    path: 'detail/:id',
+    loadComponent: () => import('./detail/detail'),
+    canActivate: [
+      () => inject(CommonService).checkPermissionForRoute('vehicle:view'),
+    ],
+  },
 ];
 
 export default router;
