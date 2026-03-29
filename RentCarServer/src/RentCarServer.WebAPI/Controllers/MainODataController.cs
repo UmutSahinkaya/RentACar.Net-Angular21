@@ -8,10 +8,13 @@ using RentCarServer.Application.Categories;
 using RentCarServer.Application.Customers;
 using RentCarServer.Application.Extras;
 using RentCarServer.Application.ProtectionPackages;
+using RentCarServer.Application.Reservations;
 using RentCarServer.Application.Roles;
 using RentCarServer.Application.Users;
 using RentCarServer.Application.Vehicles;
 using TS.MediatR;
+using CustomerDto = RentCarServer.Application.Customers.CustomerDto;
+using VehicleDto = RentCarServer.Application.Vehicles.VehicleDto;
 
 namespace RentCarServer.WebAPI.Controllers;
 
@@ -32,6 +35,7 @@ public class MainODataController : ODataController
         _ = builder.EntitySet<ExtraDto>("extras");
         _ = builder.EntitySet<VehicleDto>("vehicles");
         _ = builder.EntitySet<CustomerDto>("customers");
+        _ = builder.EntitySet<ReservationDto>("reservations");
         return builder.GetEdmModel();
     }
 
@@ -70,4 +74,8 @@ public class MainODataController : ODataController
     [HttpGet("customers")]
     public IQueryable<CustomerDto> Customers(ISender sender, CancellationToken cancellationToken = default)
         => sender.Send(new CustomerGetAllQuery(), cancellationToken).Result;
+
+    [HttpGet("reservations")]
+    public IQueryable<ReservationDto> Reservations(ISender sender, CancellationToken cancellationToken = default)
+        => sender.Send(new ReservationGetAllQuery(), cancellationToken).Result;
 }
