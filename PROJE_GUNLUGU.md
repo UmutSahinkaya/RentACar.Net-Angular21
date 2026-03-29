@@ -155,6 +155,226 @@ Her commit atmadan önce, aşağıdaki şablonu bu dosyanın en üstüne (Geçmi
 
 ## Geçmiş (Başlangıçtan Bugüne)
 
+### [2026-03-29] Merge: kurtarilan-commitler branch'i birleştirildi
+- Commit: be5b60b
+- Kapsam: Merge — kurtarilan-commitler
+- Etkilenen Dosyalar (örnek):
+  - RentCarClient/apps/admin/src/pages/vehicles/detail/detail.ts
+  - RentCarServer/src/RentCarServer.Domain/Reservations/Reservation.cs
+  - RentCarServer/src/RentCarServer.Infrastructure/Migrations/20260329090011_i_added_reservation_table.Designer.cs
+  - RentCarServer/src/RentCarServer.Infrastructure/Migrations/ApplicationDbContextModelSnapshot.cs
+  - ... (toplam 23 dosya)
+- Yapılanlar:
+  - kurtarilan-commitler branch'inden ana dala (master) çoklu dosya ve migration içeren büyük bir değişiklik birleştirildi.
+  - Reservation aggregate, migration ve ilgili repository dosyaları eklendi.
+
+### [2026-03-29] Merge: master ile remote master birleştirildi
+- Commit: 841572e
+- Kapsam: Merge — remote/master
+- Etkilenen Dosyalar:
+  - (Çeşitli dosyalar, detay git logunda)
+- Yapılanlar:
+  - Remote repository'deki master branch ile yerel master branch birleştirildi.
+
+### [2026-03-24] Kategori (Category) özelliği eklendi
+- Commit: ba51ef5
+- Kapsam: Backend — Kategori CRUD & OData
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Categories/CategoryCreateCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/Categories/CategoryDeleteCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/Categories/CategoryDto.cs`
+  - `RentCarServer/src/RentCarServer.Application/Categories/CategoryGetAllQuery.cs`
+  - ...
+- Yapılanlar:
+  - Kategori için create, delete, get, getAll komutları ve DTO'lar eklendi.
+  - OData ve API endpointleriyle tam CRUD desteği sağlandı.
+
+### [2026-03-24] User Detail sayfası ve model güncellemeleri (Angular)
+- Commit: fa3f25c
+- Kapsam: Frontend — User detay
+- Etkilenen Dosyalar:
+  - `RentCarClient/apps/admin/src/pages/users/detail/detail.html`
+  - `RentCarClient/apps/admin/src/pages/users/detail/detail.ts`
+  - `RentCarClient/apps/admin/src/pages/users/router.ts`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserDto.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserUpdateCommand.cs`
+- Yapılanlar:
+  - Kullanıcı detay sayfası ve detay bileşenleri oluşturuldu.
+  - User modeline yeni alanlar eklendi ve güncellendi.
+
+### [2026-03-24] User listesi role göre filtrelendi
+- Commit: e92e1a7
+- Kapsam: Backend — User listeleme
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Services/IClaimContext.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserDto.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserGetAllQuery.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Services/ClaimContext.cs`
+- Yapılanlar:
+  - Kullanıcı listesi, admin olmayan roller için şube bazında filtrelendi.
+
+### [2026-03-24] User Create/Update sayfaları ve telefon formatı (Angular)
+- Commit: 23ab1c5
+- Kapsam: Frontend — User CRUD
+- Etkilenen Dosyalar:
+  - `RentCarClient/apps/admin/src/pages/users/create/create.html`
+  - `RentCarClient/apps/admin/src/pages/users/create/create.ts`
+  - `RentCarClient/apps/admin/src/pages/users/detail/detail.html`
+  - `RentCarClient/apps/admin/src/pages/users/detail/detail.ts`
+  - `RentCarClient/apps/admin/src/pages/users/router.ts`
+  - `RentCarClient/apps/admin/src/pages/users/users.ts`
+  - ...
+- Yapılanlar:
+  - Kullanıcı oluşturma ve güncelleme sayfaları eklendi.
+  - Telefon numarası formatlama ve validasyonları geliştirildi.
+
+### [2026-03-23] Angular'da Users sayfası ve backend CRUD
+- Commit: 51bc78d
+- Kapsam: Fullstack — User yönetimi
+- Etkilenen Dosyalar:
+  - `RentCarClient/apps/admin/src/pages/users/users.html`
+  - `RentCarClient/apps/admin/src/pages/users/users.ts`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserCreateCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserDeleteCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserDto.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserGetAllQuery.cs`
+  - ...
+- Yapılanlar:
+  - Kullanıcı yönetimi için Angular'da sayfa ve backend'de CRUD komutları eklendi.
+  - Navigation ve routing güncellendi.
+
+### [2026-03-23] .NET User CRUD endpointleri ve OData desteği
+- Commit: 7620cb0
+- Kapsam: Backend — User API
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.WebAPI/Controllers/MainODataController.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Modules/RoleModule.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Modules/UserModule.cs`
+  - `RentCarServer/src/RentCarServer.WebAPI/Program.cs`
+- Yapılanlar:
+  - User için CRUD endpointleri ve OData desteği eklendi.
+  - UserDto OData modeline entegre edildi.
+
+### [2026-03-23] UserGetAllQuery ve UserGetQuery handlerları
+- Commit: e66001b
+- Kapsam: Backend — User sorguları
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Users/UserGetAllQuery.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserGetQuery.cs`
+- Yapılanlar:
+  - Kullanıcıları listeleyen ve tekil getiren query/handler yapıları eklendi.
+
+### [2026-03-23] UserGetQuery ve UserDto ile audit refactor
+- Commit: 2934776
+- Kapsam: Backend — User query & audit
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Users/UserDto.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserGetQuery.cs`
+  - `RentCarServer/src/RentCarServer.Domain/Users/IUserRepository.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Repositories/UserRepository.cs`
+- Yapılanlar:
+  - User sorgularında audit bilgileri ve DTO dönüşümleri iyileştirildi.
+
+### [2026-03-23] UserDeleteCommand ve UserUpdateCommand
+- Commit: 018da9b
+- Kapsam: Backend — User silme/güncelleme
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Users/UserDeleteCommand.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserUpdateCommand.cs`
+- Yapılanlar:
+  - Kullanıcı silme ve güncelleme komutları ile ilgili handlerlar eklendi.
+
+### [2026-03-23] UserUpdateCommand handler ve validasyon
+- Commit: bea9556
+- Kapsam: Backend — User güncelleme
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Users/UserUpdateCommand.cs`
+- Yapılanlar:
+  - Kullanıcı güncelleme için handler ve validasyon akışı eklendi.
+
+### [2026-03-23] UserCreate methodunu yeniden yazdım
+- Commit: 7cf2a7e
+- Kapsam: Backend — User/Branch context
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Behaviors/PermissionBehavior.cs`
+  - `RentCarServer/src/RentCarServer.Application/Services/IClaimContext.cs`
+  - `RentCarServer/src/RentCarServer.Application/Users/UserCreateCommand.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Services/ClaimContext.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Services/JwtProvider.cs`
+- Yapılanlar:
+  - UserCreate işlemi için context ve claim yönetimi yeniden düzenlendi.
+
+### [2026-03-22] Angular'da JWT decode ve permission kontrolü
+- Commit: 9e4f45d
+- Kapsam: Fullstack — Yetkilendirme
+- Etkilenen Dosyalar:
+  - `RentCarClient/apps/admin/src/guards/auth-guard.ts`
+  - `RentCarClient/apps/admin/src/models/decode.model.ts`
+  - `RentCarClient/apps/admin/src/pages/unauthorize/unauthorize.html`
+  - `RentCarClient/apps/admin/src/pages/unauthorize/unauthorize.ts`
+  - `RentCarServer/src/RentCarServer.Application/Roles/RoleUpdatePermissionCommand.cs`
+  - ...
+- Yapılanlar:
+  - JWT decode edilen bilgilerle kullanıcıya özel yetki kontrolü sağlandı.
+  - Frontend ve backend tarafında permission sistemi entegre edildi.
+
+### [2026-03-22] Login'de user permissionlar claims'e eklendi
+- Commit: d109e6b
+- Kapsam: Backend — JWT claims
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Infrastructure/Services/JwtProvider.cs`
+- Yapılanlar:
+  - Kullanıcıya ait rol ve permission bilgileri JWT claims'e eklendi.
+
+### [2026-03-19] User tablosu refactor edildi (BranchId, RoleId)
+- Commit: 64aee42
+- Kapsam: Backend — User tablo güncelleme
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Domain/Users/User.cs`
+  - `RentCarServer/src/RentCarServer.Infrastructure/Migrations/20260319080554_i_added_branchId_roleId_to_usertable.cs`
+  - ...
+- Yapılanlar:
+  - User tablosuna BranchId ve RoleId alanları eklendi, migration güncellendi.
+
+### [2026-03-19] String alanlar nvarchar'a çevrildi
+- Commit: 9e08ae1
+- Kapsam: Backend — Unicode desteği
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Infrastructure/Context/ApplicationDbContext.cs`
+  - ...
+- Yapılanlar:
+  - String alanlar nchar yerine nvarchar(MAX) olarak güncellendi.
+
+### [2026-03-19] Branch tablosuna Contact alanı eklendi
+- Commit: c813d38
+- Kapsam: Backend & Frontend — Branch iletişim
+- Etkilenen Dosyalar:
+  - `RentCarClient/apps/admin/src/models/branch.model.ts`
+  - `RentCarServer/src/RentCarServer.Domain/Branches/Branch.cs`
+  - ...
+- Yapılanlar:
+  - Branch tablosuna Contact (iletişim) alanı eklendi, migration ve model güncellendi.
+
+### [2026-03-19] Permission Attribute silinince Role'dan da silinsin
+- Commit: 2a8da81
+- Kapsam: Backend — Permission temizlik
+- Etkilenen Dosyalar:
+  - `RentCarServer/src/RentCarServer.Application/Services/PermissionCleanerService.cs`
+  - ...
+- Yapılanlar:
+  - Permission attribute silinince, ilgili rollerden de otomatik olarak kaldırılması sağlandı.
+
+### [2026-03-18] Angular'da Role için permission atama
+- Commit: 199b397
+- Kapsam: Fullstack — Role permission yönetimi
+- Etkilenen Dosyalar:
+  - `RentCarClient/apps/admin/src/pages/roles/permissions/permissions.html`
+  - `RentCarClient/apps/admin/src/pages/roles/permissions/permissions.ts`
+  - ...
+- Yapılanlar:
+  - Role permission atama ve yönetim ekranı eklendi.
+  - Backend ile entegre permission güncelleme akışı sağlandı.
+
 ### [2026-03-10] Audit için Generic Extensions yazıldı
 - Commit: fd0dca7
 - Kapsam: Backend - Audit mapping refactor
