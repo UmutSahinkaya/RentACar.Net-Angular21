@@ -4,8 +4,9 @@ using RentCarServer.Domain.Shared;
 
 namespace RentCarServer.Domain.Reservations;
 
-public sealed class Reservation : Entity
+public sealed class Reservation : Entity, IAggregate
 {
+    private readonly List<ReservationExtra> _reservationExtras = new();
     private Reservation() { }
     private Reservation(
         IdentityId customerId,
@@ -18,11 +19,11 @@ public sealed class Reservation : Entity
         Price vehicleDailyPrice,
         IdentityId protectionPackageId,
         Price protectionPackagePrice,
-        IdentityId extraId,
-        Price extraPrice,
+        IEnumerable<ReservationExtra> reservationExtras,
         Note note,
         PaymentInformation paymentInformation,
-        Status status)
+        Status status,
+        Total total)
     {
         SetCustomerId(customerId);
         SetPickUpLocationId(pickUpLocationId);
@@ -34,12 +35,12 @@ public sealed class Reservation : Entity
         SetVehicleDailyPrice(vehicleDailyPrice);
         SetProtectionPackageId(protectionPackageId);
         SetProtectionPackagePrice(protectionPackagePrice);
-        SetExtraId(extraId);
-        SetExtraPrice(extraPrice);
+        SetReservationExtras(reservationExtras);
         SetNote(note);
         SetPaymentInformation(paymentInformation);
         SetStatus(status);
         SetTotalDay();
+        SetTotal(total);
     }
 
     public IdentityId CustomerId { get; private set; } = default!;
@@ -53,11 +54,11 @@ public sealed class Reservation : Entity
     public Price VehicleDailyPrice { get; private set; } = default!;
     public IdentityId ProtectionPackageId { get; private set; } = default!;
     public Price ProtectionPackagePrice { get; private set; } = default!;
-    public IdentityId ExtraId { get; private set; } = default!;
-    public Price ExtraPrice { get; private set; } = default!;
+    public IReadOnlyCollection<ReservationExtra> ReservationExtras => _reservationExtras;
     public Note Note { get; private set; } = default!;
     public PaymentInformation PaymentInformation { get; private set; } = default!;
     public Status Status { get; private set; } = default!;
+    public Total Total { get; private set; } = default!;
 
     #region Behaviors
     public static Reservation Create(
@@ -71,11 +72,11 @@ public sealed class Reservation : Entity
         Price vehicleDailyPrice,
         IdentityId protectionPackageId,
         Price protectionPackagePrice,
-        IdentityId extraId,
-        Price extraPrice,
+        IEnumerable<ReservationExtra> reservationExtras,
         Note note,
         PaymentInformation paymentInformation,
-        Status status)
+        Status status,
+        Total total)
     {
         var reservation = new Reservation(
             customerId,
@@ -88,11 +89,11 @@ public sealed class Reservation : Entity
             vehicleDailyPrice,
             protectionPackageId,
             protectionPackagePrice,
-            extraId,
-            extraPrice,
+            reservationExtras,
             note,
             paymentInformation,
-            status
+            status,
+            total
         );
 
         return reservation;
@@ -171,14 +172,10 @@ public sealed class Reservation : Entity
         ProtectionPackagePrice = protectionPackagePrice;
     }
 
-    public void SetExtraId(IdentityId extraId)
+    public void SetReservationExtras(IEnumerable<ReservationExtra> reservationExtras)
     {
-        ExtraId = extraId;
-    }
-
-    public void SetExtraPrice(Price extraPrice)
-    {
-        ExtraPrice = extraPrice;
+        _reservationExtras.Clear();
+        _reservationExtras.AddRange(reservationExtras);
     }
 
     public void SetNote(Note note)
@@ -196,5 +193,9 @@ public sealed class Reservation : Entity
         Status = status;
     }
 
+    public void SetTotal(Total total)
+    {
+        Total = total;
+    }
     #endregion
 }

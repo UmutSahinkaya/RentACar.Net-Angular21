@@ -11,16 +11,17 @@ internal sealed class ReservationConfiguration : IEntityTypeConfiguration<Reserv
         _ = builder.ToTable("Reservations");
         _ = builder.HasKey(x => x.Id);
 
-        builder.OwnsOne(p => p.PickUpDate);
-        builder.OwnsOne(p => p.PickUpTime);
-        builder.OwnsOne(p => p.DeliveryDate);
-        builder.OwnsOne(p => p.DeliveryTime);
-        builder.OwnsOne(p => p.TotalDay);
+        _ = builder.OwnsOne(p => p.PickUpDate);
+        _ = builder.OwnsOne(p => p.PickUpTime);
+        _ = builder.OwnsOne(p => p.DeliveryDate);
+        _ = builder.OwnsOne(p => p.DeliveryTime);
+        _ = builder.OwnsOne(p => p.TotalDay);
         _ = builder.OwnsOne(p => p.VehicleDailyPrice);
         _ = builder.OwnsOne(p => p.ProtectionPackagePrice);
-        _ = builder.OwnsOne(p => p.ExtraPrice);
-        builder.OwnsOne(p => p.Note);
-        builder.OwnsOne(p => p.PaymentInformation);
-        builder.OwnsOne(p => p.Status);
+        _ = builder.OwnsMany(p => p.ReservationExtras);
+        _ = builder.OwnsOne(p => p.Note);
+        _ = builder.OwnsOne(p => p.PaymentInformation);
+        _ = builder.OwnsOne(p => p.Status);
+        _ = builder.OwnsOne(p => p.Total);
     }
 }
