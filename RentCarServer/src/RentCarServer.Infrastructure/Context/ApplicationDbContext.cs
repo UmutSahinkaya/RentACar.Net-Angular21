@@ -23,6 +23,7 @@ internal class ApplicationDbContext : DbContext, IUnitOfWork
         _ = configurationBuilder.Properties<IdentityId>().HaveConversion<IdentityIdValueConverter>();
         _ = configurationBuilder.Properties<decimal>().HaveColumnType("money");
         _ = configurationBuilder.Properties<string>().HaveColumnType("nvarchar(MAX)");
+        _ = configurationBuilder.Properties<TimeOnly>().HaveColumnType("time(7)");
         base.ConfigureConventions(configurationBuilder);
     }
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
