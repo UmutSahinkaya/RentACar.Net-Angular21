@@ -47,13 +47,12 @@ public sealed record VehicleUpdateCommand(
     string TireStatus,
     string GeneralStatus,
     List<string> Features,
-    [property: FromForm] IFormFile? File,
     bool IsActive
-) : IRequest<Result<string>>;
-//{
-//    [FromForm]
-//    public IFormFile? File { get; set; }
-//}
+) : IRequest<Result<string>>
+{
+    [FromForm]
+    public IFormFile? File { get; set; }
+}
 
 public sealed class VehicleUpdateCommandValidator : AbstractValidator<VehicleUpdateCommand>
 {
