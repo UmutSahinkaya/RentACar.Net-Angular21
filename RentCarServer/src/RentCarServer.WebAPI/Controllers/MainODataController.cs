@@ -5,6 +5,7 @@ using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using RentCarServer.Application.Branches;
 using RentCarServer.Application.Categories;
+using RentCarServer.Application.Customers;
 using RentCarServer.Application.Extras;
 using RentCarServer.Application.ProtectionPackages;
 using RentCarServer.Application.Roles;
@@ -30,6 +31,7 @@ public class MainODataController : ODataController
         _ = builder.EntitySet<UserDto>("users");
         _ = builder.EntitySet<ExtraDto>("extras");
         _ = builder.EntitySet<VehicleDto>("vehicles");
+        _ = builder.EntitySet<CustomerDto>("customers");
         return builder.GetEdmModel();
     }
 
@@ -60,7 +62,12 @@ public class MainODataController : ODataController
     [HttpGet("extras")]
     public IQueryable<ExtraDto> Extras(ISender sender, CancellationToken cancellationToken = default)
        => sender.Send(new ExtraGetAllQuery(), cancellationToken).Result;
+
     [HttpGet("vehicles")]
     public IQueryable<VehicleDto> Vehicles(ISender sender, CancellationToken cancellationToken = default)
         => sender.Send(new VehicleGetAllQuery(), cancellationToken).Result;
+
+    [HttpGet("customers")]
+    public IQueryable<CustomerDto> Customers(ISender sender, CancellationToken cancellationToken = default)
+        => sender.Send(new CustomerGetAllQuery(), cancellationToken).Result;
 }

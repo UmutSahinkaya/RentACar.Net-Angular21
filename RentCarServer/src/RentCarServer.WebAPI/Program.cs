@@ -99,6 +99,7 @@ app.MapProtectionPackage();
 app.MapExtra();
 app.MapVehicle();
 app.MapSeedData();
+app.MapCustomer();
 
 app.MapGet("/", () => "Hello World!").RequireAuthorization();
 
