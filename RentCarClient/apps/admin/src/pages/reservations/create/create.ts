@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @nx/enforce-module-boundaries */
 import { DatePipe, NgClass, NgTemplateOutlet } from '@angular/common';
@@ -15,6 +16,7 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
+import { BranchModel } from 'apps/admin/src/models/branch.model';
 import {
   CustomerModel,
   initialCustomerModel,
@@ -28,9 +30,11 @@ import {
   BreadcrumbModel,
   BreadcrumbService,
 } from 'apps/admin/src/services/breadcrumb';
+import { CommonService } from 'apps/admin/src/services/common';
 import { HttpService } from 'apps/admin/src/services/http';
 import { FlexiGridModule, FlexiGridService, StateModel } from 'flexi-grid';
 import { FlexiPopupModule } from 'flexi-popup';
+import { FlexiSelectModule } from 'flexi-select';
 import { FlexiToastService } from 'flexi-toast';
 import { FormValidateDirective } from 'form-validate-angular';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
@@ -48,6 +52,8 @@ import { lastValueFrom } from 'rxjs';
     FlexiGridModule,
     NgxMaskPipe,
     NgTemplateOutlet,
+    FlexiSelectModule,
+    DatePipe,
   ],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
@@ -114,6 +120,22 @@ export default class Create {
   );
   readonly customersLoading = computed(() => this.customersResult.isLoading());
   readonly selectedCustomer = signal<CustomerModel | undefined>(undefined);
+  readonly branchesResult = httpResource<ODataModel<BranchModel>>(
+    () => '/rent/odata/branches',
+  );
+  readonly branchesData = computed(
+    () => this.branchesResult.value()?.value ?? [],
+  );
+  readonly branchesLoading = computed(() => this.branchesResult.isLoading());
+  readonly isAdmin = computed(() => this.#common.decode().role === 'sys_admin');
+  readonly timeData = signal<string[]>(
+    Array.from({ length: 31 }, (_, i) => {
+      const hour = 9 + Math.floor(i / 2);
+      const minute = i % 2 === 0 ? '00' : '30';
+      return `${hour.toString().padStart(2, '0')}:${minute}`;
+    }),
+  );
+  readonly branchName = linkedSignal(() => this.#common.decode().branch);
 
   readonly #breadcrumb = inject(BreadcrumbService);
   readonly #activated = inject(ActivatedRoute);
@@ -122,6 +144,7 @@ export default class Create {
   readonly #router = inject(Router);
   readonly #date = inject(DatePipe);
   readonly #grid = inject(FlexiGridService);
+  readonly #common = inject(CommonService);
 
   constructor() {
     this.#activated.params.subscribe((res) => {
@@ -144,6 +167,18 @@ export default class Create {
           dateOfBirth: date,
           drivingLicenseIssuanceDate: date,
         }));
+        const now = this.#date.transform(new Date(), 'yyyy-MM-dd')!;
+        const tomorrowDate = new Date();
+        tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+        const tomorrow = this.#date.transform(tomorrowDate, 'yyyy-MM-dd')!;
+
+        this.data.update((prev) => ({
+          ...prev,
+          pickUpDate: now,
+          deliveryDate: tomorrow,
+        }));
+
+        this.calculateDayDifference();
       }
     });
   }
@@ -204,5 +239,34 @@ export default class Create {
   clearCustomer() {
     this.selectedCustomer.set(undefined);
     this.data.update((prev) => ({ ...prev, customerId: '' }));
+  }
+
+  calculateDayDifference() {
+    const pickUpDateTime = new Date(
+      `${this.data().pickUpDate}T${this.data().pickUpTime}`,
+    );
+    const deliveryDateTime = new Date(
+      `${this.data().deliveryDate}T${this.data().deliveryTime}`,
+    );
+
+    const diffMs = deliveryDateTime.getTime() - pickUpDateTime.getTime();
+
+    if (diffMs <= 0) {
+      this.data.update((prev) => ({ ...prev, totalDay: 0 }));
+      return;
+    }
+
+    const oneDayMs = 24 * 60 * 60 * 1000;
+
+    const fullDays = Math.floor(diffMs / oneDayMs);
+    const remainder = diffMs % oneDayMs;
+
+    const totalDay = remainder > 0 ? fullDays + 1 : fullDays;
+    this.data.update((prev) => ({ ...prev, totalDay: totalDay }));
+  }
+
+  setLocation(id: any) {
+    const branch = this.branchesData().find((i) => i.id == id)!;
+    this.branchName.set(branch.name);
   }
 }

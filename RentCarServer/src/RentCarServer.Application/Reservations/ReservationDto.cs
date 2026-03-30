@@ -131,7 +131,7 @@ public static class ReservationExtensions
                 PickUp = new PickUpDto
                 {
                     Name = s.Branch.Name.Value,
-                    FullAddress = s.Branch.Address.FullAddress,
+                    FullAddress = s.Branch.Address.FullAdress,
                     PhoneNumber = s.Branch.Contact.PhoneNumber1
                 },
                 PickUpDate = s.Entity.PickUpDate.Value,
