@@ -1,4 +1,5 @@
 ﻿using GenericRepository;
+using RentCarServer.Application.Behaviors;
 using RentCarServer.Domain.Reservations;
 using RentCarServer.Domain.Reservations.ValueObjects;
 using TS.MediatR;
@@ -8,7 +9,8 @@ namespace RentCarServer.Application.Reservations;
 
 public sealed record ReservationDeleteCommand(
     Guid Id) : IRequest<Result<string>>;
-
+    
+[Permission("reservation:delete")]
 internal sealed class ReservationDeleteCommandHandler(
     IReservationRepository reservationRepository,
     IUnitOfWork unitOfWork) : IRequestHandler<ReservationDeleteCommand, Result<string>>

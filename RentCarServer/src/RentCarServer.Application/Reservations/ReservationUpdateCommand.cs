@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using GenericRepository;
+using RentCarServer.Application.Behaviors;
 using RentCarServer.Application.Services;
 using RentCarServer.Domain.Abstractions;
 using RentCarServer.Domain.Branches;
@@ -13,6 +14,7 @@ using TS.Result;
 
 namespace RentCarServer.Application.Reservations;
 
+[Permission("reservation:edit")]
 public sealed record ReservationUpdateCommand(
     Guid Id,
     Guid CustomerId,

@@ -17,7 +17,7 @@ public sealed class BranchCreateCommandValidator : AbstractValidator<BranchCreat
         _ = RuleFor(x => x.Name).NotEmpty().WithMessage("Geçerli bir şube adı giriniz.");
         _ = RuleFor(x => x.Address.City).NotEmpty().WithMessage("Geçerli bir şehir giriniz.");
         _ = RuleFor(x => x.Address.District).NotEmpty().WithMessage("Geçerli bir ilçe giriniz.");
-        _ = RuleFor(x => x.Address.FullAdress).NotEmpty().WithMessage("Geçerli bir tam adress giriniz.");
+        _ = RuleFor(x => x.Address.FullAddress).NotEmpty().WithMessage("Geçerli bir tam adress giriniz.");
         _ = RuleFor(x => x.Contact.PhoneNumber1).NotEmpty().WithMessage("Geçerli bir telefon numarası giriniz.");
     }
 }

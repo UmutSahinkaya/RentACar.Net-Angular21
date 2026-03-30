@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using GenericRepository;
+using RentCarServer.Application.Behaviors;
 using RentCarServer.Application.Services;
 using RentCarServer.Domain.Abstractions;
 using RentCarServer.Domain.Branches;
@@ -18,7 +19,8 @@ public sealed record CreditCartInformation(
     string Owner,
     string Expiry,
     string CCV);
-
+    
+[Permission("reservation:create")]
 public sealed record ReservationCreateCommand(
     Guid CustomerId,
     Guid? PickUpLocationId,
