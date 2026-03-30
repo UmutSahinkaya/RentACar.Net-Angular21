@@ -11,20 +11,26 @@ const router: Routes = [
     ],
   },
   {
-      path: 'add',
-      loadComponent: () => import('./create/create'),
-      canActivate: [() => inject(CommonService).checkPermissionForRoute('reservation:create')]
+    path: 'add',
+    loadComponent: () => import('./create/create'),
+    canActivate: [
+      () => inject(CommonService).checkPermissionForRoute('reservation:create'),
+    ],
   },
   {
-      path: 'edit/:id',
-      loadComponent: () => import('./create/create'),
-      canActivate: [() => inject(CommonService).checkPermissionForRoute('reservation:edit')]
+    path: 'edit/:id',
+    loadComponent: () => import('./create/create'),
+    canActivate: [
+      () => inject(CommonService).checkPermissionForRoute('reservation:edit'),
+    ],
   },
   {
-      path: 'detail/:id',
-      loadComponent: () => import('./detail/detail'),
-      canActivate: [() => inject(CommonService).checkPermissionForRoute('reservation:view')]
-  }
+    path: 'detail/:id',
+    loadComponent: () => import('./detail/detail'),
+    canActivate: [
+      () => inject(CommonService).checkPermissionForRoute('reservation:view'),
+    ],
+  },
 ];
 
 export default router;
