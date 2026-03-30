@@ -1,4 +1,4 @@
-import { EntityModel } from "./entity.model";
+import { EntityModel } from './entity.model';
 
 export interface ReservationModel extends EntityModel {
   customerId: string;
@@ -17,8 +17,10 @@ export interface ReservationModel extends EntityModel {
   };
   pickUpDate: string;
   pickUpTime: string;
+  pickUpDateTime: string;
   deliveryDate: string;
   deliveryTime: string;
+  deliveryDateTime: string;
   vehicleId: string;
   vehicleDailyPrice: number;
   vehicle: {
@@ -32,6 +34,7 @@ export interface ReservationModel extends EntityModel {
     seatCount: number;
     tractionType: string;
     kilometer: number;
+    imageUrl: string;
   };
   protectionPackageId: string;
   protectionPackagePrice: number;
@@ -54,18 +57,20 @@ export const initialReservation: ReservationModel = {
     identityNumber: '',
     phoneNumber: '',
     email: '',
-    fullAddress: ''
+    fullAddress: '',
   },
   pickUpLocationId: '',
   pickUp: {
     name: '',
     fullAddress: '',
-    phoneNumber: ''
+    phoneNumber: '',
   },
   pickUpDate: '',
   pickUpTime: '',
+  pickUpDateTime: '',
   deliveryDate: '',
   deliveryTime: '',
+  deliveryDateTime: '',
   vehicleId: '',
   vehicleDailyPrice: 0,
   vehicle: {
@@ -78,7 +83,8 @@ export const initialReservation: ReservationModel = {
     fuelConsumption: 0,
     seatCount: 0,
     tractionType: '',
-    kilometer: 0
+    kilometer: 0,
+    imageUrl: '',
   },
   protectionPackageId: '',
   protectionPackagePrice: 0,
@@ -92,5 +98,5 @@ export const initialReservation: ReservationModel = {
   isActive: true,
   createdAt: '',
   createdBy: '',
-  createdFullName: ''
+  createdFullName: '',
 };
