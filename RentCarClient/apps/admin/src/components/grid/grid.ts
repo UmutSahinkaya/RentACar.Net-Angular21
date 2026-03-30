@@ -53,6 +53,7 @@ export default class Grid implements AfterViewInit {
   readonly commandColumnWidth = input<string>('150px');
   readonly showIndex = input<boolean>(true);
   readonly captionTitle = input<string>('');
+  readonly showIsActive = input<boolean>(true);
 
   readonly columns = contentChildren(FlexiGridColumnComponent, {
     descendants: true,
@@ -65,7 +66,12 @@ export default class Grid implements AfterViewInit {
 
   readonly state = signal<StateModel>(new StateModel());
   readonly result = httpResource<ODataModel<any>>(() => {
-    let enpoint = this.endpoint() + '?$count=true';
+    let enpoint = this.endpoint();
+    if (enpoint.includes('?')) {
+      enpoint += '&$count=true';
+    } else {
+      enpoint += '?$count=true';
+    }
     const part = this.#grid.getODataEndpoint(this.state());
     enpoint += `&${part}`;
 
@@ -79,7 +85,7 @@ export default class Grid implements AfterViewInit {
   readonly #grid = inject(FlexiGridService);
   readonly #toast = inject(FlexiToastService);
   readonly #http = inject(HttpService);
-  readonly #common= inject(CommonService);
+  readonly #common = inject(CommonService);
 
   ngAfterViewInit(): void {
     this.#breadcrumb.reset(this.breadcrumbs());
@@ -97,7 +103,7 @@ export default class Grid implements AfterViewInit {
       });
     });
   }
-  checkPermission(permission:string){
+  checkPermission(permission: string) {
     return this.#common.checkPermission(permission);
   }
 }

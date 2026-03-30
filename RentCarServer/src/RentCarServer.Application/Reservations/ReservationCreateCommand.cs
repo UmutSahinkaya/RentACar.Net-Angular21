@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using GenericRepository;
+using Microsoft.EntityFrameworkCore;
 using RentCarServer.Application.Behaviors;
 using RentCarServer.Application.Services;
 using RentCarServer.Domain.Abstractions;
@@ -19,7 +20,7 @@ public sealed record CreditCartInformation(
     string Owner,
     string Expiry,
     string CCV);
-    
+
 [Permission("reservation:create")]
 public sealed record ReservationCreateCommand(
     Guid CustomerId,
@@ -106,16 +107,22 @@ internal sealed class ReservationCreateCommandHandler(
         var requestedPickUp = request.PickUpDate.ToDateTime(request.PickUpTime);
         var requestedDelivery = request.DeliveryDate.ToDateTime(request.DeliveryTime);
 
-        // Aynı araç için bu zaman aralığında çakışan rezervasyon var mı kontrol et
-        var overlaps = await reservationRepository.AnyAsync(r =>
-                r.VehicleId.Value == request.VehicleId &&
+        var possibleOverlaps = await reservationRepository
+            .Where(r => r.VehicleId == request.VehicleId)
+            .Select(s => new
+            {
+                Id = s.Id,
+                VehicleId = s.VehicleId,
+                DeliveryDate = s.DeliveryDate.Value,
+                DeliveryTime = s.DeliveryTime.Value,
+                PickUpDate = s.PickUpDate.Value,
+                PickUpTime = s.PickUpTime.Value,
+            })
+            .ToListAsync(cancellationToken);
 
-                    requestedPickUp < r.DeliveryDate.Value.ToDateTime(r.DeliveryTime.Value).AddHours(1) &&
-                    // yeni başlangıç, mevcut +1 saatten önce başlıyorsa
-                    requestedDelivery > r.PickUpDate.Value.ToDateTime(r.PickUpTime.Value)
-                // yeni bitiş, mevcut başlangıçtan sonra bitiyorsa
-                ,
-            cancellationToken: cancellationToken
+        var overlaps = possibleOverlaps.Any(r =>
+            requestedPickUp < r.DeliveryDate.ToDateTime(r.DeliveryTime).AddHours(1) &&
+            requestedDelivery > r.PickUpDate.ToDateTime(r.PickUpTime)
         );
 
         if (overlaps)
