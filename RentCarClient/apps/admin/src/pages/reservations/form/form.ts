@@ -192,10 +192,10 @@ export default class Form {
       return;
     }
 
-    if (!this.customerApproval()) {
-      this.#toast.showToast('Hata', 'Formu onaylamalısınız', 'error');
-      return;
-    }
+     if (!this.customerApproval() && this.type() === 'pickup') {
+       this.#toast.showToast('Hata', 'Formu onaylamalısınız', 'error');
+       return;
+     }
 
     const formData = new FormData();
     formData.append('ReservationId', this.data().reservationId);

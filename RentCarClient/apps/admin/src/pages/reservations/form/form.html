@@ -247,7 +247,7 @@
                                         </label>
                                     </div>
 
-                                    @if(showButton()){
+                                    @if(showButton() && type()==='pickup'){
                                         <!-- Hasar Ekleme Formu -->
                                         <div class="damage-add-form mb-2">
                                             <h6>Yeni Hasar Ekle:</h6>
@@ -300,9 +300,13 @@
                                 <h5><i class="bi bi-sticky me-2"></i>Ek Notlar ve Açıklamalar</h5>
                             </div>
                             <div class="section-content">
-                                <textarea class="form-control delivery-notes" rows="4"
-                                    placeholder="Araç durumu, eksik malzemeler, özel durumlar vb. notlarınızı buraya yazınız..." [(ngModel)]="data().note" name="note"></textarea>
-                            </div>
+                                 <textarea
+                                   class="form-control delivery-notes"
+                                   rows="4"
+                                   placeholder="Araç durumu, eksik malzemeler, özel durumlar vb. notlarınızı buraya yazınız..."
+                                   [(ngModel)]="data().note"
+                                   name="note"
+                                   [disabled]="!showButton()"></textarea></div>
                         </div>
 
                         @if(showButton()){
