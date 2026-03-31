@@ -7,8 +7,17 @@
   [deleteOptions]="{url: '/rent/reservations', permission: 'reservation:delete'}"
   [breadcrumbs]="bredcrumbs()"
   captionTitle="Rezervasyon Listesi"
-  [showIsActive]="false"
+  [showIsActive]="false",
+  [filter]='{
+    field: "status",
+    value: "Bekliyor",
+    value2: "",
+    operator: "eq",
+    type: "select"
+  }'
 >
+
+  <!-- [sort]="{field:'PickUpDateTime', dir:''}" -->
     <flexi-grid-column field="reservationNumber" title="Rez.Numarası"/>
     <flexi-grid-column field="status" title="Durum" filterType="select" [filterData]="statusFilterData()" textAlign="center">
         <ng-template flexiGridCellTemplate let-item>
