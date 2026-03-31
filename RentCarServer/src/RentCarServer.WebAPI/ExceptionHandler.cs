@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using RentCarServer.Application.Behaviors;
-using RentCarServer.WebAPI.MiddleWares;
+using RentCarServer.WebAPI.Middlewares;
 using TS.Result;
 
 namespace RentCarServer.WebAPI;

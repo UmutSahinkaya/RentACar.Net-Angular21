@@ -4,7 +4,7 @@ using RentCarServer.Application;
 using RentCarServer.Infrastructure;
 using RentCarServer.WebAPI;
 using RentCarServer.WebAPI.Controllers;
-using RentCarServer.WebAPI.MiddleWares;
+using RentCarServer.WebAPI.Middlewares;
 using RentCarServer.WebAPI.Modules;
 using Scalar.AspNetCore;
 using System.Threading.RateLimiting;
@@ -101,6 +101,7 @@ app.MapVehicle();
 //app.MapSeedData();
 app.MapCustomer();
 app.MapReservation();
+app.MapReservationForm();
 
 app.MapGet("/", () => "Hello World!").RequireAuthorization();
 

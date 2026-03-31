@@ -11,9 +11,10 @@ import { BreadcrumbModel } from '../../services/breadcrumb';
 import { Common } from '../../services/common';
 import { NgxMaskPipe } from 'ngx-mask';
 import { NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [Grid, FlexiGridModule, NgClass, NgxMaskPipe,],
+  imports: [Grid, FlexiGridModule, NgClass, NgxMaskPipe, RouterLink],
   templateUrl: './reservations.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

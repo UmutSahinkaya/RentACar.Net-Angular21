@@ -26,6 +26,52 @@ internal sealed class ReservationConfiguration : IEntityTypeConfiguration<Reserv
         _ = builder.OwnsOne(p => p.Total);
         _ = builder.OwnsOne(p => p.PickUpDatetime);
         _ = builder.OwnsOne(p => p.DeliveryDatetime);
-        builder.OwnsMany(p => p.Histories);
+        _ = builder.OwnsMany(p => p.Histories);
+        _ = builder.OwnsOne(p => p.PickUpForm, modelBuilder =>
+        {
+            _ = modelBuilder.OwnsOne(i => i.Kilometer);
+            _ = modelBuilder.OwnsMany(i => i.ImageUrls, x =>
+            {
+                _ = x.ToTable("PickUpForm_ImageUrls");
+            });
+
+            _ = modelBuilder.OwnsMany(i => i.Supplies, x =>
+            {
+                _ = x.ToTable("PickUpForm_Supplies");
+            });
+
+            _ = modelBuilder.OwnsMany(i => i.Damages, x =>
+            {
+                _ = x.ToTable("PickUpForm_Damages");
+            });
+
+            _ = modelBuilder.OwnsOne(i => i.Note, x =>
+            {
+                _ = x.ToTable("PickUpForm_Note");
+            });
+        });
+        _ = builder.OwnsOne(p => p.DeliveryForm, modelBuilder =>
+        {
+            _ = modelBuilder.OwnsOne(i => i.Kilometer);
+            _ = modelBuilder.OwnsMany(i => i.ImageUrls, x =>
+            {
+                _ = x.ToTable("DeliveryForm_ImageUrls");
+            });
+
+            _ = modelBuilder.OwnsMany(i => i.Supplies, x =>
+            {
+                _ = x.ToTable("DeliveryForm_Supplies");
+            });
+
+            _ = modelBuilder.OwnsMany(i => i.Damages, x =>
+            {
+                _ = x.ToTable("DeliveryForm_Damages");
+            });
+
+            _ = modelBuilder.OwnsOne(i => i.Note, x =>
+            {
+                _ = x.ToTable("DeliveryForm_Note");
+            });
+        });
     }
 }
