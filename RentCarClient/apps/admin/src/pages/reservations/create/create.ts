@@ -82,7 +82,9 @@ export default class Create {
     this.id() ? 'Rezervasyon Güncelle' : 'Rezervasyon Ekle',
   );
   readonly pageIcon = computed(() => (this.id() ? 'bi-pen' : 'bi-plus'));
-  readonly btnName = computed(() => (this.id() ? 'Güncelle' : 'Kaydet'));
+  readonly btnName = computed(() =>
+    this.id() ? 'Rezervasyonu Güncelle' : 'Rezervasyon Oluştur',
+  );
   readonly result = resource({
     params: () => this.id(),
     loader: async () => {
@@ -240,6 +242,18 @@ export default class Create {
 
   save(form: NgForm) {
     if (!form.valid) return;
+
+     if (!this.data().protectionPackageId) {
+       this.#toast.showToast('Uyarı', 'Güvence paketi seçmelisiniz', 'warning');
+       return;
+     }
+
+     const cartInformation = { ...this.data().creditCartInformation };
+     cartInformation.ccv = cartInformation.ccv.toString();
+     this.data.update((prev) => ({
+       ...prev,
+       creditCartInformation: { ...cartInformation },
+     }));
 
     this.loading.set(true);
     if (!this.id()) {
