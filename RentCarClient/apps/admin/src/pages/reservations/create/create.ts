@@ -27,7 +27,7 @@ import {
   initialReservation,
   ReservationModel,
 } from 'apps/admin/src/models/reservation.model';
-import { VehicleModel } from 'apps/admin/src/models/vehicle.model';
+import { initialVehicleModel, VehicleModel } from 'apps/admin/src/models/vehicle.model';
 import { VehiclePipe } from 'apps/admin/src/pipes/vehicle-pipe';
 import {
   BreadcrumbModel,
@@ -113,6 +113,30 @@ export default class Create {
         phoneNumber: customer.phoneNumber,
         email: customer.email,
       });
+      const vehicle = res.data!.vehicle;
+      this.selectedVehicle.set({
+        ...initialVehicleModel,
+        id: vehicle.id,
+        brand: vehicle.brand,
+        model: vehicle.model,
+        modelYear: vehicle.modelYear,
+        color: vehicle.color,
+        categoryName: vehicle.categoryName,
+        fuelConsumption: vehicle.fuelConsumption,
+        seatCount: vehicle.seatCount,
+        tractionType: vehicle.tractionType,
+        kilometer: vehicle.kilometer,
+        imageUrl: vehicle.imageUrl,
+        dailyPrice: res.data!.vehicleDailyPrice,
+      });
+
+      this.vehicles.set([{ ...this.selectedVehicle()! }]);
+
+      let totalExtra = 0;
+      res.data!.reservationExtras.forEach((val) => {
+        totalExtra += val.price * res.data!.totalDay;
+      });
+      this.totalExtra.set(totalExtra);
       return res.data;
     },
   });
@@ -213,7 +237,7 @@ export default class Create {
           {
             title: 'Ekle',
             icon: 'bi-plus',
-            url: '/reservation/add',
+            url: '/reservations/add',
             isActive: true,
           },
         ]);
@@ -244,25 +268,24 @@ export default class Create {
     if (!form.valid) return;
 
      if (!this.data().protectionPackageId) {
-       this.#toast.showToast('Uyarı', 'Güvence paketi seçmelisiniz', 'warning');
+       this.#toast.showToast('Uyarı', 'Güvence paketi seçmelisiniz', 'error');
        return;
      }
 
-     const cartInformation = { ...this.data().creditCartInformation };
-     cartInformation.ccv = cartInformation.ccv.toString();
-     this.data.update((prev) => ({
-       ...prev,
-       creditCartInformation: { ...cartInformation },
-     }));
-
     this.loading.set(true);
     if (!this.id()) {
+      const cartInformation = { ...this.data().creditCartInformation };
+      cartInformation.ccv = cartInformation.ccv.toString();
+      this.data.update((prev) => ({
+        ...prev,
+        creditCartInformation: { ...cartInformation },
+      }));
       this.#http.post<string>(
         '/rent/reservations',
         this.data(),
         (res) => {
           this.#toast.showToast('Başarılı', res, 'success');
-          this.#router.navigateByUrl('/reservation');
+          this.#router.navigateByUrl('/reservations');
           this.loading.set(false);
         },
         () => this.loading.set(false),
@@ -273,7 +296,7 @@ export default class Create {
         this.data(),
         (res) => {
           this.#toast.showToast('Başarılı', res, 'info');
-          this.#router.navigateByUrl('/reservation');
+          this.#router.navigateByUrl('/reservations');
           this.loading.set(false);
         },
         () => this.loading.set(false),
