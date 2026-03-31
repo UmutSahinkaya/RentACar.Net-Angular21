@@ -13,7 +13,7 @@ import { NgxMaskPipe } from 'ngx-mask';
 import { NgClass } from '@angular/common';
 
 @Component({
-  imports: [Grid, FlexiGridModule, NgClass, NgxMaskPipe],
+  imports: [Grid, FlexiGridModule, NgClass, NgxMaskPipe,],
   templateUrl: './reservations.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

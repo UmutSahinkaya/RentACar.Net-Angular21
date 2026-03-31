@@ -21,6 +21,7 @@ import {
   FlexiGridService,
   StateFilterModel,
   StateModel,
+  StateSortModel,
 } from 'flexi-grid';
 import { ODataModel } from '../../models/odata.model';
 import { RouterLink } from '@angular/router';
@@ -56,8 +57,8 @@ export default class Grid implements AfterViewInit {
   readonly showIndex = input<boolean>(true);
   readonly captionTitle = input<string>('');
   readonly showIsActive = input<boolean>(true);
-  // readonly sort = input<StateOrderModel>(new StateOrderModel());
-  readonly filter = input<StateFilterModel>(new StateFilterModel());
+  readonly sort = input<StateSortModel>({ field: '', dir: 'asc' });
+  readonly filter = input<StateFilterModel[]>([]);
   readonly columns = contentChildren(FlexiGridColumnComponent, {
     descendants: true,
   });
@@ -66,9 +67,7 @@ export default class Grid implements AfterViewInit {
   readonly columnCommandTemplateRef = contentChild<TemplateRef<any>>(
     'columnCommandTemplate',
   );
-  // ngOnInit() {
-  //   this.state.update((prev) => ({ ...prev, sort: this.sort(), filter: [{...this.filter()}]}))
-  // }
+
 
   readonly state = signal<StateModel>(new StateModel());
   readonly result = httpResource<ODataModel<any>>(() => {
