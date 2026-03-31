@@ -65,6 +65,9 @@ export const colorList = [
   'Kahverengi',
   'Mor',
 ];
+export const fuelTypeList = ['Benzin', 'Dizel', 'LPG', 'Elektrik', 'Hibrit'];
+
+export const transmissionList = ['Manuel', 'Otomatik', 'CVT'];
 
 export const modelYearList = Array.from({ length: 16 }, (_, i) => 2010 + i);
 

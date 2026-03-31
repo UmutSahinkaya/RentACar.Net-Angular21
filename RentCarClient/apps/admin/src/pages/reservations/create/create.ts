@@ -17,6 +17,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
 import { BranchModel } from 'apps/admin/src/models/branch.model';
+import { CategoryModel } from 'apps/admin/src/models/category.model';
 import {
   CustomerModel,
   initialCustomerModel,
@@ -27,6 +28,7 @@ import {
   ReservationModel,
 } from 'apps/admin/src/models/reservation.model';
 import { VehicleModel } from 'apps/admin/src/models/vehicle.model';
+import { VehiclePipe } from 'apps/admin/src/pipes/vehicle-pipe';
 import {
   BreadcrumbModel,
   BreadcrumbService,
@@ -41,6 +43,7 @@ import { FormValidateDirective } from 'form-validate-angular';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { lastValueFrom } from 'rxjs';
 import { TrCurrencyPipe } from 'tr-currency';
+import { fuelTypeList, transmissionList } from '../../vehicles/create/create';
 
 @Component({
   imports: [
@@ -57,6 +60,7 @@ import { TrCurrencyPipe } from 'tr-currency';
     FlexiSelectModule,
     DatePipe,
     TrCurrencyPipe,
+    VehiclePipe,
   ],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
@@ -141,6 +145,26 @@ export default class Create {
   readonly branchName = linkedSignal(() => this.#common.decode().branch);
   readonly vehicles = signal<VehicleModel[]>([]);
   readonly vehicleLoading = signal<boolean>(false);
+
+  readonly categoryResult = httpResource<ODataModel<CategoryModel>>(
+    () => '/rent/odata/categories',
+  );
+  readonly categoriesData = computed(
+    () => this.categoryResult.value()?.value ?? [],
+  );
+  readonly categoriesLoading = computed(() => this.categoryResult.isLoading());
+  readonly fuelTypeList = () => fuelTypeList;
+  readonly transmissionList = () => transmissionList;
+  readonly vehicleFilter = signal<{
+    categoryName: string;
+    fuelType: string;
+    transmission: string;
+  }>({
+    categoryName: '',
+    fuelType: '',
+    transmission: '',
+  });
+  readonly selectedVehicle = signal<VehicleModel | undefined>(undefined);
 
   readonly #breadcrumb = inject(BreadcrumbService);
   readonly #activated = inject(ActivatedRoute);
@@ -298,9 +322,19 @@ export default class Create {
       () => this.vehicleLoading.set(false),
     );
   }
+  selectVehicle(item: VehicleModel) {
+    this.selectedVehicle.set(item);
+    this.data.update((prev) => ({
+      ...prev,
+      vehicleId: item.id,
+      vehicle: item,
+      vehicleDailyPrice: item.dailyPrice,
+      total: item.dailyPrice * prev.totalDay,
+    }));
+  }
 
   getVehicleImage(vehicle: VehicleModel) {
-    const endpoint = 'https://localhost:7207/images/';
+    const endpoint = 'https://localhost:7158/images/';
     return endpoint + vehicle.imageUrl;
   }
 }

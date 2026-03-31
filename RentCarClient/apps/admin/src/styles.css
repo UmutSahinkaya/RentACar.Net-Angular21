@@ -4143,6 +4143,10 @@ body {
   overflow: hidden;
   transition: all 0.3s ease;
 }
+.vehicle-selected {
+    background: #e3f2fd;
+    border-color: #1976d2;
+}
 
 .vehicle-card.unavailable {
   opacity: 0.6;
