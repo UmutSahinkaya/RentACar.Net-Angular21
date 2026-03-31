@@ -1,5 +1,6 @@
 <!-- [sort]="{field: 'OrderNumber', dir: ''}" -->
 <grid
+  #grid
   pageTitle="Koruma Paketleri"
   endpoint="/rent/odata/protection-packages"
   [addOptions]="{url: '/protection-packages/add', permission: 'protectionpackage:create' }"
@@ -9,6 +10,8 @@
   [breadcrumbs]="bredcrumbs()"
   captionTitle="Güvence Paketi Listesi"
   [sort]="{field: 'orderNumber', dir: 'asc'}"
+ [reorderable]="true"
+  (onReorder)="onReorder($event)"
 >
   <flexi-grid-column field="name" title="Paket Adı" />
   <flexi-grid-column

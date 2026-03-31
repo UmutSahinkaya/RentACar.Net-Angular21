@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -11,6 +12,7 @@ import {
   contentChildren,
   inject,
   input,
+  output,
   signal,
   TemplateRef,
   ViewEncapsulation,
@@ -18,6 +20,7 @@ import {
 import {
   FlexiGridColumnComponent,
   FlexiGridModule,
+  FlexiGridReorderModel,
   FlexiGridService,
   StateFilterModel,
   StateModel,
@@ -57,8 +60,13 @@ export default class Grid implements AfterViewInit {
   readonly showIndex = input<boolean>(true);
   readonly captionTitle = input<string>('');
   readonly showIsActive = input<boolean>(true);
+
   readonly sort = input<StateSortModel>({ field: '', dir: 'asc' });
   readonly filter = input<StateFilterModel[]>([]);
+  readonly reorderable = input<boolean>(false);
+
+  readonly onReorder = output<FlexiGridReorderModel>();
+
   readonly columns = contentChildren(FlexiGridColumnComponent, {
     descendants: true,
   });
@@ -67,7 +75,6 @@ export default class Grid implements AfterViewInit {
   readonly columnCommandTemplateRef = contentChild<TemplateRef<any>>(
     'columnCommandTemplate',
   );
-
 
   readonly state = signal<StateModel>(new StateModel());
   readonly result = httpResource<ODataModel<any>>(() => {
@@ -110,5 +117,8 @@ export default class Grid implements AfterViewInit {
   }
   checkPermission(permission: string) {
     return this.#common.checkPermission(permission);
+  }
+  onReorderMethod(event: FlexiGridReorderModel) {
+    this.onReorder.emit(event);
   }
 }

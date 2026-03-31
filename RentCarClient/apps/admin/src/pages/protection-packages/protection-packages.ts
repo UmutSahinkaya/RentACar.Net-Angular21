@@ -1,14 +1,19 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ChangeDetectionStrategy,
   Component,
   inject,
   signal,
+  viewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { FlexiGridModule } from 'flexi-grid';
+import { FlexiGridModule, FlexiGridReorderModel } from 'flexi-grid';
 import Grid from '../../components/grid/grid';
 import { BreadcrumbModel } from '../../services/breadcrumb';
 import { Common } from '../../services/common';
+import { HttpService } from '../../services/http';
+import { ProtectionPackageModel } from '../../models/protection-package.model';
 
 @Component({
   imports: [Grid, FlexiGridModule],
@@ -25,10 +30,19 @@ export default class ProtectionPackages {
       isActive: true,
     },
   ]);
-
+  readonly grid = viewChild<any>('grid');
   readonly #common = inject(Common);
+  readonly #http = inject(HttpService);
 
   checkPermission(permission: string) {
     return this.#common.checkPermission(permission);
+  }
+  onReorder(event: FlexiGridReorderModel) {
+    const data: ProtectionPackageModel = event.previousData;
+    data.orderNumber = event.currentData.orderNumber;
+
+    this.#http.put('/rent/protection-packages', data, () => {
+      this.grid()!.result.reload();
+    });
   }
 }

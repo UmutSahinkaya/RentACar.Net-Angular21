@@ -1,9 +1,11 @@
-﻿using RentCarServer.Domain.LoginTokens;
+﻿
 using System.Security.Claims;
+using RentCarServer.Domain.LoginTokens;
 
-namespace RentCarServer.WebAPI.MiddleWares;
+namespace RentCarServer.WebAPI.Middlewares;
 
-public class CheckTokenMiddleware(ILoginTokenRepository loginTokenRepository) : IMiddleware
+public sealed class CheckTokenMiddleware(
+    ILoginTokenRepository loginTokenRepository) : IMiddleware
 {
     public async Task InvokeAsync(HttpContext httpContext, RequestDelegate next)
     {
@@ -15,23 +17,32 @@ public class CheckTokenMiddleware(ILoginTokenRepository loginTokenRepository) : 
                 await next(httpContext);
                 return;
             }
-            var userId = httpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-            if (userId is null) throw new TokenException();
 
-            var cancellationToken = httpContext.RequestAborted;
-            var isTokenAvaliable = await loginTokenRepository.AnyAsync(
-                x => x.UserId == userId && x.Token.Value == token && x.IsActive.Value == true,
-                cancellationToken);
+            var userId = httpContext.User.Claims
+                .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?
+                .Value;
+            if (userId is null)
+            {
+                throw new TokenException();
+            }
 
-            if (!isTokenAvaliable) throw new TokenException();
+            var isTokenAvailable = await loginTokenRepository.AnyAsync(p =>
+                p.UserId == userId
+                && p.Token.Value == token
+                && p.IsActive.Value == true);
+            if (!isTokenAvailable)
+            {
+                throw new TokenException();
+            }
 
             await next(httpContext);
         }
-        catch (OperationCanceledException)
+        catch (Exception)
         {
-            // İstek iptal edildiyse sessizce sonlandır
-            return;
+            throw;
         }
+
     }
 }
+
 public sealed class TokenException : Exception;
