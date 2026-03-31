@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal, ViewEncapsulation } from '@angular/core';
-import { CommonService } from '../../services/common';
+import { Common } from '../../services/common';
 import { BreadcrumbModel } from '../../services/breadcrumb';
 import { FlexiGridModule } from 'flexi-grid';
 import Grid from '../../components/grid/grid';
@@ -20,7 +20,7 @@ export default class Users {
     },
   ]);
 
-  readonly #common = inject(CommonService);
+  readonly #common = inject(Common);
 
   checkPermission(permission: string): boolean {
     return this.#common.checkPermission(permission);

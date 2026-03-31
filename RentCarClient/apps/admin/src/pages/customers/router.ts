@@ -1,34 +1,34 @@
 import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
-import { CommonService } from '../../services/common';
+import { Common } from '../../services/common';
 
 const router: Routes = [
   {
     path: '',
     loadComponent: () => import('./customers'),
     canActivate: [
-      () => inject(CommonService).checkPermissionForRoute('customer:view'),
+      () => inject(Common).checkPermissionForRoute('customer:view'),
     ],
   },
   {
     path: 'add',
     loadComponent: () => import('./create/create'),
     canActivate: [
-      () => inject(CommonService).checkPermissionForRoute('customer:create'),
+      () => inject(Common).checkPermissionForRoute('customer:create'),
     ],
   },
   {
     path: 'edit/:id',
     loadComponent: () => import('./create/create'),
     canActivate: [
-      () => inject(CommonService).checkPermissionForRoute('customer:edit'),
+      () => inject(Common).checkPermissionForRoute('customer:edit'),
     ],
   },
   {
     path: 'detail/:id',
     loadComponent: () => import('./detail/detail'),
     canActivate: [
-      () => inject(CommonService).checkPermissionForRoute('customer:view'),
+      () => inject(Common).checkPermissionForRoute('customer:view'),
     ],
   },
 ];

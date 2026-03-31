@@ -8,7 +8,7 @@ import {
 import { FlexiGridModule } from 'flexi-grid';
 import Grid from '../../components/grid/grid';
 import { BreadcrumbModel } from '../../services/breadcrumb';
-import { CommonService } from '../../services/common';
+import { Common } from '../../services/common';
 
 @Component({
   imports: [Grid, FlexiGridModule],
@@ -26,7 +26,7 @@ export default class Extra {
     },
   ]);
 
-  readonly #common = inject(CommonService);
+  readonly #common = inject(Common);
 
   checkPermission(permission: string) {
     return this.#common.checkPermission(permission);

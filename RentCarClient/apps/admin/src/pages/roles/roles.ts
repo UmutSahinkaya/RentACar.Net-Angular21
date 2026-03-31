@@ -3,7 +3,7 @@ import { BreadcrumbModel } from '../../services/breadcrumb';
 import Grid from '../../components/grid/grid';
 import { FlexiGridModule } from 'flexi-grid';
 import { RouterLink } from "@angular/router";
-import { CommonService } from '../../services/common';
+import { Common } from '../../services/common';
 
 @Component({
   imports: [Grid, FlexiGridModule, RouterLink],
@@ -21,7 +21,7 @@ export default class Roles {
     },
   ]);
 
-  readonly #common=inject(CommonService);
+  readonly #common=inject(Common);
 
   checkPermission(permission: string): boolean {
     return this.#common.checkPermission(permission);

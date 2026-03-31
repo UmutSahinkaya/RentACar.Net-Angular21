@@ -8,7 +8,7 @@ import {
 import Grid from '../../components/grid/grid';
 import { FlexiGridFilterDataModel, FlexiGridModule } from 'flexi-grid';
 import { BreadcrumbModel } from '../../services/breadcrumb';
-import { CommonService } from '../../services/common';
+import { Common } from '../../services/common';
 import { NgxMaskPipe } from 'ngx-mask';
 import { NgClass } from '@angular/common';
 
@@ -47,7 +47,7 @@ export default class Reservations {
     },
   ]);
 
-  readonly #common = inject(CommonService);
+  readonly #common = inject(Common);
 
   checkPermission(permission: string) {
     return this.#common.checkPermission(permission);

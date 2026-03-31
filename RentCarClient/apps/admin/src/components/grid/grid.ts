@@ -27,7 +27,7 @@ import { FlexiToastService } from 'flexi-toast';
 import { HttpService } from '../../services/http';
 import { BreadcrumbModel, BreadcrumbService } from '../../services/breadcrumb';
 import { NgTemplateOutlet } from '@angular/common';
-import { CommonService } from '../../services/common';
+import { Common } from '../../services/common';
 
 export interface btnOptions{
   url:string;
@@ -85,7 +85,7 @@ export default class Grid implements AfterViewInit {
   readonly #grid = inject(FlexiGridService);
   readonly #toast = inject(FlexiToastService);
   readonly #http = inject(HttpService);
-  readonly #common = inject(CommonService);
+  readonly #common = inject(Common);
 
   ngAfterViewInit(): void {
     this.#breadcrumb.reset(this.breadcrumbs());

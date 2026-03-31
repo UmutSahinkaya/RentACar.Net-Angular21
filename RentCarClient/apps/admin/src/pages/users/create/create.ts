@@ -24,7 +24,7 @@ import {
   BreadcrumbModel,
   BreadcrumbService,
 } from 'apps/admin/src/services/breadcrumb';
-import { CommonService } from 'apps/admin/src/services/common';
+import { Common } from 'apps/admin/src/services/common';
 import { HttpService } from 'apps/admin/src/services/http';
 import { FlexiSelectModule } from 'flexi-select';
 import { FlexiToastService } from 'flexi-toast';
@@ -43,7 +43,7 @@ export default class Create {
   readonly #http = inject(HttpService);
   readonly #toast = inject(FlexiToastService);
   readonly #router = inject(Router);
-  readonly #common=inject(CommonService);
+  readonly #common=inject(Common);
   readonly id = signal<string | undefined>(undefined);
   readonly bredcrumbs = signal<BreadcrumbModel[]>([
     {

@@ -4,12 +4,12 @@
 import { inject } from '@angular/core';
 import { CanActivateChildFn, Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { CommonService } from '../services/common';
+import { Common } from '../services/common';
 
 export const authGuard: CanActivateChildFn = (childRoute, state) => {
   const token = localStorage.getItem('response');
   const router = inject(Router);
-  const commonService=inject(CommonService);
+  const commonService=inject(Common);
   if (!token) {
     router.navigateByUrl('/login');
     return false;
@@ -24,6 +24,7 @@ export const authGuard: CanActivateChildFn = (childRoute, state) => {
     commonService.decode().role = decode['role'] ?? '';
     commonService.decode().permissions = JSON.parse(decode['permissions']);
     commonService.decode().branch = decode['branch'] ?? '';
+    commonService.decode().branchId = decode['branchId'];
 
     console.log(commonService.decode());
 

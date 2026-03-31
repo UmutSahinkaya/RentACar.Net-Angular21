@@ -6,7 +6,7 @@ import { inject, Injectable, signal } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class CommonService {
+export class Common {
   readonly decode = signal<DecodeModel>({ ...initialDecode });
   readonly #router = inject(Router);
 

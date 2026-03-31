@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
-import {CommonService } from '../../services/common';
+import {Common } from '../../services/common';
 
 const router: Routes = [
   {
@@ -8,7 +8,7 @@ const router: Routes = [
     loadComponent: () => import('./protection-packages'),
     canActivate: [
       () =>
-        inject(CommonService).checkPermissionForRoute(
+        inject(Common).checkPermissionForRoute(
           'protection_package:view',
         ),
     ],
@@ -18,7 +18,7 @@ const router: Routes = [
     loadComponent: () => import('./create/create'),
     canActivate: [
       () =>
-        inject(CommonService).checkPermissionForRoute(
+        inject(Common).checkPermissionForRoute(
           'protection_package:create',
         ),
     ],
@@ -28,7 +28,7 @@ const router: Routes = [
     loadComponent: () => import('./create/create'),
     canActivate: [
       () =>
-        inject(CommonService).checkPermissionForRoute(
+        inject(Common).checkPermissionForRoute(
           'protection_package:edit',
         ),
     ],
@@ -38,7 +38,7 @@ const router: Routes = [
     loadComponent: () => import('./detail/detail'),
     canActivate: [
       () =>
-        inject(CommonService).checkPermissionForRoute(
+        inject(Common).checkPermissionForRoute(
           'protection_package:view',
         ),
     ],

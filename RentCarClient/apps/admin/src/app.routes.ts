@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import { authGuard } from './guards/auth-guard';
-import { CommonService } from './services/common';
+import { Common } from './services/common';
 import { inject } from '@angular/core';
 
 export const appRoutes: Route[] = [
@@ -29,7 +29,7 @@ export const appRoutes: Route[] = [
         path: '',
         loadComponent: () => import('./pages/dashboard/dashboard'),
         canActivate: [
-          () => inject(CommonService).checkPermissionForRoute('dashboard:view'),
+          () => inject(Common).checkPermissionForRoute('dashboard:view'),
         ],
       },
       {

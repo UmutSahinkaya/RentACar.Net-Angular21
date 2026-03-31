@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { CommonService } from '../../services/common';
+import { Common } from '../../services/common';
 import { inject } from '@angular/core';
 
 const router: Routes = [
@@ -11,21 +11,21 @@ const router: Routes = [
     path: 'add',
     loadComponent: () => import('./create/create'),
     canActivate: [
-      () => inject(CommonService).checkPermissionForRoute('role:create'),
+      () => inject(Common).checkPermissionForRoute('role:create'),
     ],
   },
   {
     path: 'edit/:id',
     loadComponent: () => import('./create/create'),
     canActivate: [
-      () => inject(CommonService).checkPermissionForRoute('role:edit'),
+      () => inject(Common).checkPermissionForRoute('role:edit'),
     ],
   },
   {
     path: 'detail/:id',
     loadComponent: () => import('./detail/detail'),
     canActivate: [
-      () => inject(CommonService).checkPermissionForRoute('role:view'),
+      () => inject(Common).checkPermissionForRoute('role:view'),
     ],
   },
   {
@@ -33,7 +33,7 @@ const router: Routes = [
     loadComponent: () => import('./permissions/permissions'),
     canActivate: [
       () =>
-        inject(CommonService).checkPermissionForRoute(
+        inject(Common).checkPermissionForRoute(
           'role:updated_permissions',
         ),
     ],

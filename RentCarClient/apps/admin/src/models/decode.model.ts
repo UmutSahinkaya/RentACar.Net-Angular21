@@ -5,6 +5,7 @@ export interface DecodeModel {
   email: string;
   role: string;
   branch: string;
+  branchId: string;
   permissions: string[];
 }
 export const initialDecode:DecodeModel={
@@ -14,5 +15,6 @@ export const initialDecode:DecodeModel={
   email: '',
   role: '',
   branch:'',
+  branchId: '',
   permissions: []
 }

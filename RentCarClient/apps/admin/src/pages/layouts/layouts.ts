@@ -5,7 +5,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, R
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { NavigationModel, navigations } from '../../navigation';
 import Breadcrumb from './breadcrumb/breadcrumb';
-import { CommonService } from '../../services/common';
+import { Common } from '../../services/common';
 
 @Component({
   imports: [NgClass, RouterLink,RouterLinkActive, RouterOutlet,Breadcrumb],
@@ -21,7 +21,7 @@ export default class Layouts implements OnInit, OnDestroy {
   readonly #elementRef = inject(ElementRef);
   readonly #renderer = inject(Renderer2);
   readonly #router = inject(Router);
-  readonly #common= inject(CommonService);
+  readonly #common= inject(Common);
 
   ngOnInit(): void {
     this.initializeSidebar();

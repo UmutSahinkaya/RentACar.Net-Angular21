@@ -9,7 +9,7 @@ import {
 import { FlexiGridFilterDataModel, FlexiGridModule } from 'flexi-grid';
 import Grid from '../../components/grid/grid';
 import { BreadcrumbModel } from '../../services/breadcrumb';
-import { CommonService } from '../../services/common';
+import { Common } from '../../services/common';
 import { brandList, colorList, modelYearList } from './create/create';
 
 @Component({
@@ -45,7 +45,7 @@ export default class Vehicles {
       name: val,
     })),
   );
-  readonly #common = inject(CommonService);
+  readonly #common = inject(Common);
 
   checkPermission(permission: string) {
     return this.#common.checkPermission(permission);
