@@ -36,7 +36,8 @@ public sealed record ReservationCreateCommand(
     List<ReservationExtra> ReservationExtras,
     string Note,
     CreditCartInformation CreditCartInformation,
-    decimal Total
+    decimal Total,
+    int TotalDay
 ) : IRequest<Result<string>>;
 
 public sealed class ReservationCreateCommandValidator : AbstractValidator<ReservationCreateCommand>
@@ -153,6 +154,7 @@ internal sealed class ReservationCreateCommandHandler(
         PaymentInformation paymentInformation = new(last4Digits, request.CreditCartInformation.Owner);
         Status status = Status.Pending;
         Total total = new(request.Total);
+        TotalDay totalDay = new(request.TotalDay);
 
         Reservation reservation = Reservation.Create(
             customerId,
@@ -169,7 +171,8 @@ internal sealed class ReservationCreateCommandHandler(
             note,
             paymentInformation,
             status,
-            total
+            total,
+            totalDay
         );
         #endregion
 

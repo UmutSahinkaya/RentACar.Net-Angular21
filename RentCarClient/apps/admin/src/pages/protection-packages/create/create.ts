@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @nx/enforce-module-boundaries */
 import {
   ChangeDetectionStrategy,
   Component,
@@ -42,7 +44,7 @@ export default class CreateProtectionPackage {
   readonly id = signal<string | undefined>(undefined);
   readonly bredcrumbs = signal<BreadcrumbModel[]>([
     {
-      title: 'Koruma Paketleri',
+      title: 'Güvence Paketleri',
       icon: 'bi-shield-check',
       url: '/protection-packages',
     },

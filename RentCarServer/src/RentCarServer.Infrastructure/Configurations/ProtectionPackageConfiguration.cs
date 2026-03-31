@@ -15,5 +15,6 @@ internal sealed class ProtectionPackageConfiguration : IEntityTypeConfiguration<
         _ = builder.OwnsOne(x => x.Price);
         _ = builder.OwnsOne(x => x.IsRecommended);
         _ = builder.OwnsMany(x => x.Coverages);
+        _ = builder.OwnsOne(x => x.OrderNumber);
     }
 }

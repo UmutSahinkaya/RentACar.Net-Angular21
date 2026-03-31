@@ -19,7 +19,7 @@ import { Common } from '../../services/common';
 export default class ProtectionPackages {
   readonly bredcrumbs = signal<BreadcrumbModel[]>([
     {
-      title: 'Koruma Paketleri',
+      title: 'Güvence Paketleri',
       icon: 'bi-shield-check',
       url: '/protection-packages',
       isActive: true,

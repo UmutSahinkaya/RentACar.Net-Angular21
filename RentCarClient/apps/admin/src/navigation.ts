@@ -57,7 +57,7 @@ export const navigations: NavigationModel[] = [
     permission: 'vehicle:view',
   },
   {
-    title: 'Koruma Paketleri',
+    title: 'Güvence Paketleri',
     url: '/protection-packages',
     icon: 'bi-shield-check',
     permission: 'protection_package:view',

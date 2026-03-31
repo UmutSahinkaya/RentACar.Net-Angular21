@@ -29,6 +29,7 @@ import { BreadcrumbModel, BreadcrumbService } from '../../services/breadcrumb';
 import { NgTemplateOutlet } from '@angular/common';
 import { Common } from '../../services/common';
 
+
 export interface btnOptions{
   url:string;
   permission:string;
@@ -54,7 +55,7 @@ export default class Grid implements AfterViewInit {
   readonly showIndex = input<boolean>(true);
   readonly captionTitle = input<string>('');
   readonly showIsActive = input<boolean>(true);
-
+  readonly sort = input<StateOrderModel>(new StateOrderModel());
   readonly columns = contentChildren(FlexiGridColumnComponent, {
     descendants: true,
   });
@@ -63,6 +64,9 @@ export default class Grid implements AfterViewInit {
   readonly columnCommandTemplateRef = contentChild<TemplateRef<any>>(
     'columnCommandTemplate',
   );
+  ngOnInit() {
+    this.state.update((prev) => ({ ...prev, sort: this.sort() }));
+  }
 
   readonly state = signal<StateModel>(new StateModel());
   readonly result = httpResource<ODataModel<any>>(() => {
