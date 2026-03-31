@@ -1,3 +1,3 @@
 ﻿namespace RentCarServer.Domain.Reservations.ValueObjects;
 
-public sealed record DeliveryTime(TimeOnly Value);
+public sealed record ReservationNumber(string Value);
