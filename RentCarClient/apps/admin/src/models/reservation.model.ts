@@ -1,6 +1,7 @@
 import { EntityModel } from './entity.model';
 
 export interface ReservationModel extends EntityModel {
+  reservationNumber: string;
   customerId: string;
   customer: {
     fullName: string;
