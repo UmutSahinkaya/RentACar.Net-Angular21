@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, signal, ViewEncapsulation } from '@angular/core';
 import { Common } from '../../services/common';
-import { BreadcrumbModel } from '../../services/breadcrumb';
 import { FlexiGridModule } from 'flexi-grid';
 import Grid from '../../components/grid/grid';
+import { BreadcrumbModel } from '../../services/breadcrumb';
 
 @Component({
   imports: [Grid, FlexiGridModule],

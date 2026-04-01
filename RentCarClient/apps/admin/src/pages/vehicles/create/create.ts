@@ -23,18 +23,18 @@ import Blank from 'apps/admin/src/components/blank/blank';
 import {
   VehicleModel,
   initialVehicleModel,
-} from 'apps/admin/src/models/vehicle.model';
+} from '@shared/lib/models/vehicle.model';
 import {
   BreadcrumbModel,
   BreadcrumbService,
-} from 'apps/admin/src/services/breadcrumb';
-import { HttpService } from 'apps/admin/src/services/http';
+} from '../../../services/breadcrumb';
+import { HttpService } from '@shared/lib/services/http';
 import { DatePipe, NgClass } from '@angular/common';
 import { httpResource } from '@angular/common/http';
 import { FlexiSelectModule } from 'flexi-select';
-import { ODataModel } from 'apps/admin/src/models/odata.model';
-import { CategoryModel } from 'apps/admin/src/models/category.model';
-import { BranchModel } from 'apps/admin/src/models/branch.model';
+import { ODataModel } from '@shared/lib/models/odata.model';
+import { CategoryModel } from '@shared/lib/models/category.model';
+import { BranchModel } from '@shared/lib/models/branch.model';
 
 export interface FeatureGroup {
   group: string;

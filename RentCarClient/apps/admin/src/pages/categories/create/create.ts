@@ -14,9 +14,9 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { CategoryModel, initialCategory } from 'apps/admin/src/models/category.model';
-import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
-import { HttpService } from 'apps/admin/src/services/http';
+import { CategoryModel, initialCategory } from '@shared/lib/models/category.model';
+import { BreadcrumbModel, BreadcrumbService } from '../../../services/breadcrumb';
+import { HttpService } from '@shared/lib/services/http';
 import { FlexiToastService } from 'flexi-toast';
 import { FormValidateDirective } from 'form-validate-angular';
 import { lastValueFrom } from 'rxjs';

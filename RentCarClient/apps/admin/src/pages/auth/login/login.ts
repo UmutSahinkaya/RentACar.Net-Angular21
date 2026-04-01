@@ -2,7 +2,7 @@
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { HttpService } from './../../../services/http';
+import { HttpService } from '@shared/lib/services/http';
 import {
   ChangeDetectionStrategy,
   Component,

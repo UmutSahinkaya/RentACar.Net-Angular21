@@ -14,9 +14,9 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { CustomerModel, initialCustomerModel } from 'apps/admin/src/models/customer.model';
-import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
-import { HttpService } from 'apps/admin/src/services/http';
+import { CustomerModel, initialCustomerModel } from '@shared/lib/models/customer.model';
+import { BreadcrumbModel, BreadcrumbService } from '../../../services/breadcrumb';
+import { HttpService } from '@shared/lib/services/http';
 import { FlexiToastService } from 'flexi-toast';
 import { FormValidateDirective } from 'form-validate-angular';
 import { NgxMaskDirective } from 'ngx-mask';

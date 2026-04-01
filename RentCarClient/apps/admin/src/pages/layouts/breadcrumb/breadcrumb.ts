@@ -1,4 +1,4 @@
-import { BreadcrumbService } from './../../../services/breadcrumb';
+
 import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -7,6 +7,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { BreadcrumbService } from '../../../services/breadcrumb';
 
 @Component({
   selector: 'app-breadcrumb',

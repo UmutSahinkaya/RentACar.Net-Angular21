@@ -12,9 +12,9 @@ import { ActivatedRoute } from '@angular/router';
 import { httpResource } from '@angular/common/http';
 import { TrCurrencyPipe } from 'tr-currency';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { ExtraModel, initialExtraModel } from 'apps/admin/src/models/extra.model';
-import { Result } from 'apps/admin/src/models/result.model';
-import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
+import { ExtraModel, initialExtraModel } from '@shared/lib/models/extra.model';
+import { Result } from '@shared/lib/models/result.model';
+import { BreadcrumbModel, BreadcrumbService } from '../../../services/breadcrumb';
 
 @Component({
   imports: [Blank, TrCurrencyPipe],

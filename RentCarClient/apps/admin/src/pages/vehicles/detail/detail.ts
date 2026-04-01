@@ -9,19 +9,19 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import Blank from 'apps/admin/src/components/blank/blank';
 import {
   VehicleModel,
   initialVehicleModel,
-} from 'apps/admin/src/models/vehicle.model';
-import { Result } from 'apps/admin/src/models/result.model';
+} from '@shared/lib/models/vehicle.model';
+import { Result } from '@shared/lib/models/result.model';
 import {
   BreadcrumbModel,
   BreadcrumbService,
-} from 'apps/admin/src/services/breadcrumb';
+} from '../../../services/breadcrumb';
 import { CommonModule } from '@angular/common';
 import { TrCurrencyPipe } from 'tr-currency';
 import { FeatureGroup } from '../create/create';
+import Blank from '../../../components/blank/blank';
 
 @Component({
   imports: [Blank, CommonModule, TrCurrencyPipe],

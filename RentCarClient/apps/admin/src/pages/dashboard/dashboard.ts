@@ -10,12 +10,12 @@ import {
   viewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { BreadcrumbService } from '../../services/breadcrumb';
 import Blank from '../../components/blank/blank';
 import { httpResource } from '@angular/common/http';
-import { Result } from '../../models/result.model';
+import { Result } from '@shared/lib/models/result.model';
 import Loading from '../../components/loading/loading';
 import { Chart, ChartConfiguration, ChartType, registerables } from 'chart.js';
+import { BreadcrumbService } from '../../services/breadcrumb';
 
 Chart.register(...registerables);
 

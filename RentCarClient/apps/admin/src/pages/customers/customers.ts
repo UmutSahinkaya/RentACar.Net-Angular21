@@ -8,7 +8,7 @@ import {
 import {
   BreadcrumbModel,
   BreadcrumbService,
-} from 'apps/admin/src/services/breadcrumb';
+} from '../../services/breadcrumb';
 import { inject } from '@angular/core';
 import Grid from '../../components/grid/grid';
 import { FlexiGridModule } from 'flexi-grid';

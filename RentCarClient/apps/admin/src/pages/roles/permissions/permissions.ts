@@ -6,10 +6,10 @@ import { Location } from '@angular/common';
 import { httpResource } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, computed, effect, inject, linkedSignal, signal, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Result } from 'apps/admin/src/models/result.model';
-import { initialRole, RoleModel } from 'apps/admin/src/models/role.model';
-import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
-import { HttpService } from 'apps/admin/src/services/http';
+import { Result } from '@shared/lib/models/result.model';
+import { initialRole, RoleModel } from '@shared/lib/models/role.model';
+import { BreadcrumbModel, BreadcrumbService } from '../../../services/breadcrumb';
+import { HttpService } from '@shared/lib/services/http';
 import { FlexiToastService } from 'flexi-toast';
 import { FlexiTreeNode, FlexiTreeviewComponent, FlexiTreeviewService } from 'flexi-treeview';
 

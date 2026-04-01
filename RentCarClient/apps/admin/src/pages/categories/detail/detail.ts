@@ -11,9 +11,9 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { CategoryModel, initialCategory } from 'apps/admin/src/models/category.model';
-import { Result } from 'apps/admin/src/models/result.model';
-import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
+import { CategoryModel, initialCategory } from '@shared/lib/models/category.model';
+import { Result } from '@shared/lib/models/result.model';
+import { BreadcrumbModel, BreadcrumbService } from '../../../services/breadcrumb';
 
 @Component({
   imports: [Blank],

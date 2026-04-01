@@ -4,7 +4,7 @@
 - Commit: f5fd92c, 2e789d8
 - Kapsam: Backend & Frontend — Extra modeli, CRUD, OData, migration, Angular sayfaları
 - Etkilenen Dosyalar:
-  - `RentCarClient/apps/admin/src/models/extra.model.ts`
+  - `RentCarClient/@shared/lib/models/extra.model.ts`
   - `RentCarClient/apps/admin/src/pages/extra/create/create.html`
   - `RentCarClient/apps/admin/src/pages/extra/create/create.ts`
   - `RentCarClient/apps/admin/src/pages/extra/detail/detail.html`
@@ -37,7 +37,7 @@
 - Commit: b22d1cb, d86e284, 686b1af, 3ecc7f5
 - Kapsam: Backend & Frontend — Protection Package aggregate, CRUD, OData, Angular sayfaları
 - Etkilenen Dosyalar:
-  - `RentCarClient/apps/admin/src/models/protection-package.model.ts`
+  - `RentCarClient/@shared/lib/models/protection-package.model.ts`
   - `RentCarClient/apps/admin/src/pages/protection-packages/create/create.html`
   - `RentCarClient/apps/admin/src/pages/protection-packages/create/create.ts`
   - `RentCarClient/apps/admin/src/pages/protection-packages/detail/detail.html`
@@ -73,7 +73,7 @@
 - Commit: 7662c46, f796c45, 967855a, ba51ef5
 - Kapsam: Backend & Frontend — Category aggregate, CRUD, OData, Angular sayfaları
 - Etkilenen Dosyalar:
-  - `RentCarClient/apps/admin/src/models/category.model.ts`
+  - `RentCarClient/@shared/lib/models/category.model.ts`
   - `RentCarClient/apps/admin/src/pages/categories/categories.html`
   - `RentCarClient/apps/admin/src/pages/categories/categories.ts`
   - `RentCarClient/apps/admin/src/pages/categories/create/create.html`
@@ -106,7 +106,7 @@
 - Commit: fa3f25c, 23ab1c5, 51bc78d, 7620cb0, e66001b, 2934776, 018da9b, bea9556, 7cf2a7e
 - Kapsam: Backend & Frontend — User aggregate, CRUD, OData, Angular sayfaları
 - Etkilenen Dosyalar:
-  - `RentCarClient/apps/admin/src/models/user.model.ts`
+  - `RentCarClient/@shared/lib/models/user.model.ts`
   - `RentCarClient/apps/admin/src/pages/users/create/create.html`
   - `RentCarClient/apps/admin/src/pages/users/create/create.ts`
   - `RentCarClient/apps/admin/src/pages/users/detail/detail.html`
@@ -309,7 +309,7 @@ Her commit atmadan önce, aşağıdaki şablonu bu dosyanın en üstüne (Geçmi
 - Kapsam: Fullstack — Yetkilendirme
 - Etkilenen Dosyalar:
   - `RentCarClient/apps/admin/src/guards/auth-guard.ts`
-  - `RentCarClient/apps/admin/src/models/decode.model.ts`
+  - `RentCarClient/@shared/lib/models/decode.model.ts`
   - `RentCarClient/apps/admin/src/pages/unauthorize/unauthorize.html`
   - `RentCarClient/apps/admin/src/pages/unauthorize/unauthorize.ts`
   - `RentCarServer/src/RentCarServer.Application/Roles/RoleUpdatePermissionCommand.cs`
@@ -349,7 +349,7 @@ Her commit atmadan önce, aşağıdaki şablonu bu dosyanın en üstüne (Geçmi
 - Commit: c813d38
 - Kapsam: Backend & Frontend — Branch iletişim
 - Etkilenen Dosyalar:
-  - `RentCarClient/apps/admin/src/models/branch.model.ts`
+  - `RentCarClient/@shared/lib/models/branch.model.ts`
   - `RentCarServer/src/RentCarServer.Domain/Branches/Branch.cs`
   - ...
 - Yapılanlar:
@@ -531,8 +531,8 @@ Her commit atmadan önce, aşağıdaki şablonu bu dosyanın en üstüne (Geçmi
   - `RentCarClient/apps/admin/src/app.config.ts`
   - `RentCarClient/apps/admin/src/interceptors/error-interceptor.ts`
   - `RentCarClient/apps/admin/src/pages/dashboard/dashboard.ts`
-  - `RentCarClient/apps/admin/src/services/error.ts`
-  - `RentCarClient/apps/admin/src/services/http.ts`
+  - `RentCarClient/@shared/lib/services/httperror.ts`
+  - `RentCarClient/@shared/lib/services/http.ts`
 - Yapılanlar:
   - `error-interceptor` içinde API hatalarını merkezi biçimde yakalayan ve normalize eden akış yeniden düzenlendi.
   - `HttpContext` tabanlı istek senaryolarında hata yönetimi davranışları (`skip/handle`) servis katmanıyla uyumlu hale getirildi.
@@ -700,7 +700,7 @@ Her commit atmadan önce, aşağıdaki şablonu bu dosyanın en üstüne (Geçmi
 - Etkilenen Dosyalar:
   - `RentCarClient/apps/admin/src/pages/layouts/breadcrumb/breadcrumb.html`
   - `RentCarClient/apps/admin/src/pages/layouts/breadcrumb/breadcrumb.ts`
-  - `RentCarClient/apps/admin/src/services/breadcrumb.ts`
+  - `RentCarClient/../../../services/breadcrumb.ts`
 - Yapılanlar:
   - Breadcrumb bileşeni ve servisi oluşturuldu.
   - Dashboard navigasyonu için breadcrumb entegre edildi.
@@ -711,7 +711,7 @@ Her commit atmadan önce, aşağıdaki şablonu bu dosyanın en üstüne (Geçmi
 - Etkilenen Dosyalar:
   - `RentCarClient/apps/admin/src/components/blank/blank.html`
   - `RentCarClient/apps/admin/src/components/blank/blank.ts`
-  - `RentCarClient/apps/admin/src/models/entity.model.ts`
+  - `RentCarClient/@shared/lib/models/entity.model.ts`
   - `RentCarClient/apps/admin/src/pages/dashboard/dashboard.html`
   - `RentCarClient/apps/admin/src/pages/dashboard/dashboard.ts`
 - Yapılanlar:
@@ -856,7 +856,7 @@ Her commit atmadan önce, aşağıdaki şablonu bu dosyanın en üstüne (Geçmi
 - Kapsam: Frontend — Login
 - Etkilenen Dosyalar:
   - `RentCarClient/apps/admin/src/interceptors/http-interceptor.ts`
-  - `RentCarClient/apps/admin/src/models/result.model.ts`
+  - `RentCarClient/@shared/lib/models/result.model.ts`
   - `RentCarClient/apps/admin/src/pages/login/login.html`
   - `RentCarClient/apps/admin/src/pages/login/login.ts`
 - Yapılanlar:
@@ -882,7 +882,7 @@ Her commit atmadan önce, aşağıdaki şablonu bu dosyanın en üstüne (Geçmi
 - Etkilenen Dosyalar:
   - `RentCarClient/apps/admin/src/app.config.ts`
   - `RentCarClient/apps/admin/src/interceptors/error-interceptor.ts`
-  - `RentCarClient/apps/admin/src/services/error.ts`
+  - `RentCarClient/@shared/lib/services/httperror.ts`
   - `RentCarClient/apps/admin/src/styles.css`
 - Yapılanlar:
   - Error interceptor oluşturuldu.
@@ -905,7 +905,7 @@ Her commit atmadan önce, aşağıdaki şablonu bu dosyanın en üstüne (Geçmi
   - `RentCarClient/apps/admin/src/interceptors/error-interceptor.ts`
   - `RentCarClient/apps/admin/src/pages/login/login.html`
   - `RentCarClient/apps/admin/src/pages/login/login.ts`
-  - `RentCarClient/apps/admin/src/services/http.ts`
+  - `RentCarClient/@shared/lib/services/http.ts`
 - Yapılanlar:
   - Merkezi HttpService oluşturuldu.
   - Login sayfası HttpService'i kullanacak şekilde güncellendi.
@@ -1050,8 +1050,8 @@ Her commit atmadan önce, aşağıdaki şablonu bu dosyanın en üstüne (Geçmi
   - `RentCarClient/apps/admin/src/pages/auth/reset-password/reset-password.ts`
   - `RentCarClient/apps/admin/src/pages/dashboard/dashboard.html`
   - `RentCarClient/apps/admin/src/pages/dashboard/dashboard.ts`
-  - `RentCarClient/apps/admin/src/services/error.ts`
-  - `RentCarClient/apps/admin/src/services/http.ts`
+  - `RentCarClient/@shared/lib/services/httperror.ts`
+  - `RentCarClient/@shared/lib/services/http.ts`
   - `RentCarServer/src/RentCarServer.Application/Auth/ResetPasswordCommand.cs`
   - `RentCarServer/src/RentCarServer.WebAPI/ExceptionHandler.cs`
   - `RentCarServer/src/RentCarServer.WebAPI/MiddleWares/CheckTokenMiddleware.cs`

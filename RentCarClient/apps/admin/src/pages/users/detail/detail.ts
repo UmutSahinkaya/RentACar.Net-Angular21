@@ -11,13 +11,10 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { Result } from 'apps/admin/src/models/result.model';
-import { initialRole, RoleModel } from 'apps/admin/src/models/role.model';
-import { initialUser, UserModel } from 'apps/admin/src/models/user.model';
-import {
-  BreadcrumbModel,
-  BreadcrumbService,
-} from 'apps/admin/src/services/breadcrumb';
+import { Result } from '@shared/lib/models/result.model';
+import { initialUser, UserModel } from '@shared/lib/models/user.model';
+import { BreadcrumbModel, BreadcrumbService } from '../../../services/breadcrumb';
+
 
 @Component({
   imports: [Blank],

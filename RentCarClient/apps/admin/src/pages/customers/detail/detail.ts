@@ -15,12 +15,12 @@ import Blank from 'apps/admin/src/components/blank/blank';
 import {
   CustomerModel,
   initialCustomerModel,
-} from 'apps/admin/src/models/customer.model';
-import { Result } from 'apps/admin/src/models/result.model';
+} from '@shared/lib/models/customer.model';
+import { Result } from '@shared/lib/models/result.model';
 import {
   BreadcrumbModel,
   BreadcrumbService,
-} from 'apps/admin/src/services/breadcrumb';
+} from '../../../services/breadcrumb';
 
 @Component({
   imports: [Blank, DatePipe],

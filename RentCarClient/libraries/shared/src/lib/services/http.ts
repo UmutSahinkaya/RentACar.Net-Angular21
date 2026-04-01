@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HttpClient, HttpContext, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpContextToken, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ErrorService } from './error';
 import { Result } from '../models/result.model';
-import { catchError, of } from 'rxjs';
-import { SKIP_ERROR_HANDLER } from '../app.config';
 
+export const SKIP_ERROR_HANDLER = new HttpContextToken<boolean>(() => false);
 @Injectable({
   providedIn: 'root',
 })
