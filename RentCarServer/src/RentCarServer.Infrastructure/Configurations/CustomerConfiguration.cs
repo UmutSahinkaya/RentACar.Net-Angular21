@@ -20,5 +20,6 @@ internal sealed class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         _ = builder.OwnsOne(x => x.Email);
         _ = builder.OwnsOne(x => x.DrivingLicenseIssuanceDate);
         _ = builder.OwnsOne(x => x.FullAddress);
+        _ = builder.OwnsOne(x => x.Password);
     }
 }
